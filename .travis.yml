@@ -4,4 +4,4 @@ node_js:
 before_script:
  - "npm run-script setup"
  - "npm run-script build"
- - "npm run-script dev-server"
+ - "npm run-script dev-server-travis"
