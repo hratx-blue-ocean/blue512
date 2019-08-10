@@ -60,7 +60,7 @@ export default function CardMaker( {event} ) {
           </Avatar>
         }
         title={event.name}
-        subheader={event.time_start}
+        subheader={event.venue}
       />
       <CardMedia
         className={classes.media}
