@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fetch from 'node-fetch';
-import Button from '@material-ui/core/Button';
+import CardContainer from './components/CardContainer.js'
 // import './App.css';
 
 export default class App extends Component {
@@ -23,6 +23,7 @@ export default class App extends Component {
     return (
       <>
         <h1>Welcome to Blue Ocean!</h1>
+        <CardContainer />
         <ul>
           {this.state.seaCreatures.map((creature, index) => (
             <li key={index}>{creature}</li>
