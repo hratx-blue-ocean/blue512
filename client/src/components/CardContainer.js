@@ -12,7 +12,7 @@ export default class CardContainer extends Component {
     };
   }
   componentDidMount() {
-
+ 
   }
 
   render() {
