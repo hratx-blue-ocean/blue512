@@ -3,5 +3,5 @@ node_js:
  - "10.6.0 "
 before_script:
  - "npm run-script setup"
- - "npm run-script launch"
- - "npm run dev-server"
+ - "npm run-script build"
+ - "npm run-script dev-server"
