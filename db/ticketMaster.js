@@ -28,7 +28,7 @@ const restructureData= (data) => {
 
         restructured.image = event.images[0].url;
         restructured.venue = event._embedded.venues[0].name;
-        restructured.location = event._embedded.venues[0].city;
+        restructured.location = event._embedded.venues[0].city.name;
         restructured.price_min = null;
         restructured.price_max = null;
         if(event.priceRanges) {

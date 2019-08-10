@@ -6,7 +6,7 @@ const app = express();
 const query = require('../db/query.js')
 
 // here is an example query
-query.test('Chris').then(data => console.log(data.rows[0]))
+query.getAllCategories().then(data => console.log(data.rows[0]))
 
 // open up CORS 
 app.use((_, res, next) => {
@@ -18,8 +18,8 @@ app.use((_, res, next) => {
 app.use(logger('dev'));
 
 // You can place your routes here, feel free to refactor:
-const { example } = require('./routes');
-app.use('/api/example', example)
+const { api } = require('./routes');
+app.use('/api/', api)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
