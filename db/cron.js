@@ -8,26 +8,16 @@ const saveTicketMasterData = () => {
     .then(categories => {
 			return getAllAPISources()
 			.then(sources => {
-
 				TicketMaster.getData().then(events => {
 					return events.forEach(async event => {
-						console.log(sources.rows.findIndex(row => row.name === event.source_API));
-						if (categories.includes(event.category)) {
-							event.category = categories.indexOf(event.category);
-							event.source_API = sources.rows.findIndex(row => row.name === event.source_API) + 1;
-							return await addEvent(event);
-						} else {
-							return addCategory(event.category)
-							.then(async _ => {
-								event.category = categories.length;
-								event.source_API = sources.rows.findIndex(row => row.name === event.source_API) + 1;
-								await addEvent(event);
-							})
-						}
+						let source_API_ID = sources.rows.findIndex(row => row.name === event.source_API);
+						source_API_ID = source_API_ID === -1 ? null : source_API_ID + 1
+							event.source_API = source_API_ID;
+							return await addEvent(event).catch(console.log);
 					});
-				});
+				})
 			})
-    });
+		})
 };
 
 saveTicketMasterData()

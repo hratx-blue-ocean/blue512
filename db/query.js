@@ -6,11 +6,11 @@ const db = require('./db.js');
 const getAllEvents = () => {
     const query =  {
         name : 'test',
-        text : 'SELECT * FROM experiences',
+        text : 'SELECT e.name, e.description, e.url, e.img, e.venue, e.location, e.time_start, e.time_end, e.price_min, e.price_max, c.name AS category FROM experiences e LEFT OUTER JOIN categories c ON e.category_id=c.id',
         values : []
     };
 
-    return db.query(query);
+    return db.query(query)
 }
 
 const getAllCategories = () => {
@@ -47,7 +47,7 @@ const addEvent = (event) => {
     const { name, source_API, event_id, description, url, image, venue, location, time_start, time_end, price_min, price_max, category } = event;
     const query = {
         name : 'addEvent',
-        text : 'INSERT INTO experiences (name, source_api_id, experience_api_id, description, url, img, venue, location, time_start, time_end, price_min, price_max, category_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)',
+        text : 'INSERT INTO experiences (name, source_api_id, experience_api_id, description, url, img, venue, location, time_start, time_end, price_min, price_max, category) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)',
         values : [name, source_API, event_id, description, url, image, venue, location, time_start, time_end, price_min, price_max, category]
     }
 
