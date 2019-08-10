@@ -1,4 +1,4 @@
-const { Pool, Client } = require('pg');
+const { Pool } = require('pg');
 
 const {DB_USERNAME, DB_HOSTNAME, DB_DATABASE, DB_PASSWORD, DB_PORT} = process.env;
 
