@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Card from './Card.js'
+import CardMaker from './CardMaker.js';
 // import fetch from 'node-fetch';
 
 
@@ -18,9 +18,9 @@ export default class CardContainer extends Component {
   render() {
     return (
       <>
-      <Card />
-      <Card />
-      <Card />
+      <CardMaker />
+      <CardMaker />
+      <CardMaker />
       </>
     );
   }
