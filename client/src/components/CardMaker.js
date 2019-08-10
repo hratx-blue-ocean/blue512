@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CardMaker() {
+export default function CardMaker( {event} ) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -55,8 +55,8 @@ export default function CardMaker() {
             R
           </Avatar>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={event.name}
+        subheader={event.time_start}
       />
       <CardMedia
         className={classes.media}

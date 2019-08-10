@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CardContainer() {
+export default function CardContainer({ events }) {
   const classes = useStyles();
 
   return (
@@ -32,13 +32,13 @@ export default function CardContainer() {
       <Container maxWidth="lg">
         <Grid container>
           <Grid item xs={4} className={classes.cardColumn}>
-            <CardMaker/>
+            <CardMaker event={events[0]}/>
           </Grid>
           <Grid item xs={4} className={classes.cardColumn}>
-            <CardMaker/>
+            <CardMaker event={events[1]}/>
           </Grid>
           <Grid item xs={4} className={classes.cardColumn}>
-            <CardMaker/>
+            <CardMaker event={events[2]}/>
           </Grid>
         </Grid>
       </Container>
