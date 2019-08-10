@@ -1,8 +1,12 @@
+require('dotenv').config();
 const createError = require('http-errors');
 const logger = require('morgan');
 const express = require('express');
 const app = express();
+const query = require('../db/query.js')
 
+// here is an example query
+query.test('Chris').then(data => console.log(data.rows[0]))
 
 // open up CORS 
 app.use((_, res, next) => {
