@@ -11,10 +11,9 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-// import FavoriteIcon from '@material-ui/icons/Favorite';
-// import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddCircle from '@material-ui/icons/AddCircle';
+
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -47,12 +46,17 @@ export default function CardMaker( {event} ) {
     setExpanded(!expanded);
   }
 
+  function addToCalendar() {
+  }
+
+  let eventStart = Date(event.time_start)
+
   return (
     <Card className={classes.card}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {event.name.substring(0,3)}
           </Avatar>
         }
         title={event.name}
@@ -65,8 +69,7 @@ export default function CardMaker( {event} ) {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+        {eventStart.split("GMT")[0]}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -76,7 +79,10 @@ export default function CardMaker( {event} ) {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton> */}
-        <IconButton aria-label="add to calendar">
+        <IconButton 
+          aria-label="add to calendar"
+          onClick={addToCalendar}
+          >
           <AddCircle />
         </IconButton>
         <IconButton
@@ -92,10 +98,9 @@ export default function CardMaker( {event} ) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
+          <Typography paragraph>Description:</Typography>
           <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-            minutes.
+            {}
           </Typography>
           <Typography paragraph>
             Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
