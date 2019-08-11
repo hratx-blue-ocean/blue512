@@ -1,5 +1,6 @@
-const { getAllCategories, addEvent, addNewCategory, addNewAPISource, getAllAPISources } = require("./query.js");
+const { addEvent, addNewCategory, addNewAPISource } = require("./query.js");
 const TicketMaster = require("./ticketMaster.js");
+const CronJob = require('cron').CronJob;
 
 const saveTicketMasterData = async () => {
 	const events = await TicketMaster.getData();
@@ -9,9 +10,12 @@ const saveTicketMasterData = async () => {
 			.then(_ => addEvent(event))
 			.catch(console.log);
 		});
-	// })
 };
 
-saveTicketMasterData()
-  .then(console.log)
-  .catch(console.log);
+const atMidnightEveryDay = new CronJob('0 0 0 * * *', () => {
+	saveTicketMasterData().then(console.log).catch(console.log);
+});
+
+module.export = {
+	atMidnightEveryDay
+}

@@ -1,9 +1,11 @@
 const db = require("./db.js");
 
 /**
- * @param {String} name - The screen name of the user.
+ * @param {String} token Returns events that fit specificed users avilability and preferences. Accepted values (Google OAuth token)
+ * @param {String} day Returns only events for a specific day. Accepted values (today, tomorrow, tomorrow++)
+ * @param {Number} limit Returns only a specific number of events. Accepted values (1-100)
  */
-const getAllEvents = () => {
+const getAllEvents = (token, day, limit) => {
   const query = {
     name: "test",
     text: `SELECT e.name, e.description, e.url, e.img, e.venue, e.location, e.time_start, 
@@ -25,16 +27,6 @@ const getAllCategories = () => {
   return db.query(query);
 };
 
-const getAllAPISources = () => {
-  const query = {
-    name: "APISources",
-    text: "SELECT * FROM api",
-    values: []
-  };
-
-  return db.query(query);
-};
-
 const addNewCategory = category => {
   const query = {
     name: "addNewCategory",
@@ -46,11 +38,12 @@ const addNewCategory = category => {
   return db.query(query);
 };
 
-const addNewAPISource = source => {
+const addNewAPISource = api => {
   const query = {
     name: "addNewAPISource",
-    text: "INSERT INTO api (name) VALUES ($1) ON CONFLICT (name) DO NOTHING",
-    values: [source]
+    text:
+      "INSERT INTO api (name) VALUES ($1) ON CONFLICT (name) DO NOTHING",
+    values: [api]
   };
 
   return db.query(query);
@@ -75,7 +68,13 @@ const addEvent = event => {
   const query = {
     name: "addEvent",
     text:
-      "INSERT INTO experiences (name, source_api_id, experience_api_id, description, url, img, venue, location, time_start, time_end, price_min, price_max, category_id) VALUES ($1, (SELECT id FROM api WHERE name=$2), $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, (SELECT id FROM categories WHERE name=$13))",
+      `INSERT INTO experiences (name, source_api_id, 
+       experience_api_id, description, url, img, venue, 
+       location, time_start, time_end, price_min, price_max, category_id) 
+       VALUES ($1, (SELECT id FROM api WHERE name=$2), 
+       $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, 
+      (SELECT id FROM categories WHERE name=$13))
+      ON CONFLICT (experience_api_id) DO NOTHING`,
     values: [
       name,
       source_API,
@@ -101,6 +100,5 @@ module.exports = {
   getAllCategories,
   addEvent,
   addNewCategory,
-  addNewAPISource,
-  getAllAPISources
+  addNewAPISource
 };

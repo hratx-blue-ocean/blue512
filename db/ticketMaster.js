@@ -22,11 +22,10 @@ const restructureData= (data) => {
         if(event.dates.end) {
             restructured.time_end = event.dates.end.dateTime;
         }
-        restructured.category = null;
+        restructured.category = 'undefined';
         if(event.classifications) {
-          restructured.category = event.classifications[0].segment.name;
+            restructured.category = event.classifications[0].segment.name;
         }
-
         restructured.image = event.images[0].url;
         restructured.venue = event._embedded.venues[0].name;
         restructured.location = event._embedded.venues[0].city.name;
@@ -50,7 +49,4 @@ const getData = () => {
     return callAPI().then(data => restructureData(data))
 }
 
-module.exports = {
-    callAPI,
-    getData
-}
+module.exports = { getData }

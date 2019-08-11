@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const query = require('../../db/query.js')
-// const ticketMaster = require('../sample.json');
+const query = require('../../db/query.js');
 
 router.get('/getAllEvents', (req, res) => {
     query.getAllEvents()

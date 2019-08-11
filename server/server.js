@@ -3,10 +3,29 @@ const createError = require('http-errors');
 const logger = require('morgan');
 const express = require('express');
 const app = express();
-const query = require('../db/query.js')
+const query = require('../db/query.js');
+const cronOperations = require('../db/cron.js');
 
-// here is an example query
-query.getAllCategories().then(data => console.log(data.rows[0]))
+/*
+// here is an example of how to query the database
+
+app.get('/someRoute', (req, res) => {
+    query.getAllEvents()
+    .then(data => {
+        // server logic
+        res.send(data);
+    })
+    .catch(console.log);
+});
+
+// or
+
+xapp.get('/someOtherRoute', async(req, res) => {
+    const events = await query.getAllEvents();
+    // server logic
+    res.send(events);
+}
+*/
 
 // open up CORS 
 app.use((_, res, next) => {
