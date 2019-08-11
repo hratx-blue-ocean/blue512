@@ -10,6 +10,7 @@ CREATE TABLE sessions (
   id serial NOT NULL,
   user_id int,
   token varchar,
+  CONSTRAINT unique_token UNIQUE (token),
   CONSTRAINT pk_sessions PRIMARY KEY (
     id
    )
@@ -40,6 +41,7 @@ CREATE TABLE experiences (
   price_min varchar,
   price_max varchar,
   category_id int,
+  CONSTRAINT unique_source_id UNIQUE (source_api_id),
   CONSTRAINT pk_experiences PRIMARY KEY (
     id
    )
@@ -48,6 +50,7 @@ CREATE TABLE experiences (
 CREATE TABLE api (
   id serial NOT NULL,
   name varchar,
+  CONSTRAINT unique_api_name UNIQUE(name),
   CONSTRAINT pk_api PRIMARY KEY (
     id
    )
@@ -56,6 +59,7 @@ CREATE TABLE api (
 CREATE TABLE categories (
   id serial NOT NULL,
   name varchar,
+  CONSTRAINT unique_categories_name UNIQUE(name),
   CONSTRAINT pk_categories PRIMARY KEY (
     id
    )
