@@ -12,6 +12,24 @@ const restructureData = (data) => {
     data.forEach(event => {
         let restructured = {};
         
+        restructured.source_API = 'predictHQ';
+        const { title, url } = event;
+        restructured.name = title || null;
+        restructured.url = url || null;
+
+        restructured.event_id = event.id;
+        restructured.time_start = event.start;
+        restructured.time_end = null;
+        if(event.end){
+            restructured.time_end = event.end;
+        }
+        restructured.category = 'undefined';
+        if(event.category){
+            restructured.category = event.category;
+        }
+        restructured.image = 
+
+        
 
     });
 
