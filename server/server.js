@@ -3,13 +3,8 @@ const createError = require('http-errors');
 const logger = require('morgan');
 const express = require('express');
 const app = express();
-<<<<<<< HEAD
-const zipcodes = require('zipcodes');
-
-=======
 const query = require('../db/query.js');
 const cronOperations = require('../db/cron.js');
->>>>>>> 69f5626cbef06356892123cf1f748445e6abca71
 
 
 /*
