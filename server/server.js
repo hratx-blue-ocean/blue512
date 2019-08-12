@@ -28,6 +28,9 @@ xapp.get('/someOtherRoute', async(req, res) => {
 }
 */
 
+//test route for testing OAuth configuration
+app.use('/OAuthTest/', express.static('../client/oauth/'))
+
 // open up CORS 
 app.use((_, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
