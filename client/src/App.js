@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fetch from 'node-fetch';
-import CardContainer from './components/CardContainer.js'
+import MainView from './components/MainView.js'
+import Navbar from './components/Navbar'
 // import './App.css';
 
 export default class App extends Component {
@@ -71,8 +72,10 @@ export default class App extends Component {
   render() {
     return (
       <>
+
         <h1>Welcome to Blue Ocean!</h1>
-        <CardContainer events={this.state.eventsPlaceHolder}/>
+        <Navbar />
+        <MainView events={this.state.eventsPlaceHolder}/>
       </>
     );
   }
