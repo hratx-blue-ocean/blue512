@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 const query = require('../db/query.js');
 const cronOperations = require('../db/cron.js');
+const path = require('path');
 
 
 /*
@@ -29,7 +30,6 @@ xapp.get('/someOtherRoute', async(req, res) => {
 */
 
 //test route for testing OAuth configuration
-app.use('/OAuthTest/', express.static('../client/oauth/'))
 
 // open up CORS 
 app.use((_, res, next) => {
@@ -40,6 +40,7 @@ app.use((_, res, next) => {
 
 app.use(logger('dev'));
 
+app.use('/', express.static(path.join(__dirname,'../client/oauth/')));
 // You can place your routes here, feel free to refactor:
 const { api } = require('./routes');
 app.use('/api/', api)
