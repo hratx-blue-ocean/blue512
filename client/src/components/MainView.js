@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import CardMaker from './CardMaker.js';
+import CardContainer from './CardContainer.js';
 // import fetch from 'node-fetch';
 
 
 import { makeStyles } from '@material-ui/core/styles';
-// import Paper from '@material-ui/core/Paper';
-// import Grid from '@material-ui/core/Grid';
-// import Container from '@material-ui/core/Container';
-
 import { Paper, Grid, Container, Typography } from '@material-ui/core/';
 
 const useStyles = makeStyles(theme => ({
@@ -18,9 +15,6 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
-  },
-  cardColumn: {
-    padding: 20
   }
 }));
 
@@ -31,15 +25,9 @@ export default function MainView({ events }) {
     <>
       <Container maxWidth="lg">
         <Grid container>
-          <Grid item xs={12} md={4} className={classes.cardColumn}>
-            <CardMaker event={events[0]}/>
-          </Grid>
-          <Grid item xs={12} md={4} className={classes.cardColumn}>
-            <CardMaker event={events[1]}/>
-          </Grid>
-          <Grid item xs={12} md={4} className={classes.cardColumn}>
-            <CardMaker event={events[2]}/>
-          </Grid>
+          <CardContainer event={events[0]} day={'placeholder day 1'}/>
+          <CardContainer event={events[1]} day={'placeholder day 2'}/>
+          <CardContainer event={events[2]} day={'placeholder day 3'}/>
         </Grid>
       </Container>
     </>
