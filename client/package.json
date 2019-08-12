@@ -27,7 +27,8 @@
     "node-fetch": "^2.5.0",
     "path": "^0.12.7",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
