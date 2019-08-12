@@ -6,6 +6,11 @@ const app = express();
 const query = require('../db/query.js');
 const cronOperations = require('../db/cron.js');
 const path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 
 /*
@@ -39,7 +44,6 @@ app.use((_, res, next) => {
 });
 
 app.use(logger('dev'));
-
 app.use('/', express.static(path.join(__dirname,'../client/oauth/')));
 // You can place your routes here, feel free to refactor:
 const { api } = require('./routes');
