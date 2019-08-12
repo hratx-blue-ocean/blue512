@@ -1,9 +1,10 @@
 const axios = require('axios');
 
 const callAPI = () => {
-    //return axios.get('https://app.ticketmaster.com/discovery/v2/events?apikey=HpN96WzAyrvtyuExzzl2Jvg9AM7sR8Ci&latlong=30.2671530,-97.7430608&radius=50&unit=miles&locale=*&startDateTime=2019-08-10T05:00:00Z&endDateTime=2019-08-13T04:00:00Z&size=100')
-    return axios.get('http://localhost:8000/api/example')
-    .then(response => response.data.events)
+    return axios.get(`https://app.ticketmaster.com/discovery/v2/events?apikey=${process.env.API_KEY_TICKETMASTER}&latlong=30.2671530,-97.7430608&radius=50&unit=miles&locale=*&startDateTime=2019-08-10T05:00:00Z&endDateTime=2019-08-13T04:00:00Z&size=100`)
+    .then(response => {
+        return response.data._embedded.events
+    })
     .catch(console.log)
 }
 
@@ -21,19 +22,18 @@ const restructureData= (data) => {
         if(event.dates.end) {
             restructured.time_end = event.dates.end.dateTime;
         }
-        restructured.category = null;
+        restructured.category = 'undefined';
         if(event.classifications) {
-          restructured.category = event.classifications[0].segment.name;
+            restructured.category = event.classifications[0].segment.name;
         }
-
         restructured.image = event.images[0].url;
         restructured.venue = event._embedded.venues[0].name;
-        restructured.location = event._embedded.venues[0].city;
+        restructured.location = event._embedded.venues[0].city.name;
         restructured.price_min = null;
         restructured.price_max = null;
         if(event.priceRanges) {
-            restructured.price_min = event.priceRanges.min;
-            restructured.price_max = event.priceRanges.max;
+            restructured.price_min = event.priceRanges[0].min;
+            restructured.price_max = event.priceRanges[0].max;
         }
         restructured.description = null;
         if(event.description) {
@@ -49,7 +49,4 @@ const getData = () => {
     return callAPI().then(data => restructureData(data))
 }
 
-module.exports = {
-    callAPI,
-    getData
-}
+module.exports = { getData }

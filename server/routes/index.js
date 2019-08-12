@@ -1,3 +1,3 @@
-const example = require('./example');
+const api = require('./api');
 
-module.exports = { example }
+module.exports = { api }
