@@ -15,7 +15,7 @@ CREATE TABLE sessions (
    )
 );
 
-CREATE TABLE unvailable (
+CREATE TABLE unavailable (
   id serial NOT NULL,
   time_Start varchar,
   time_End varchar,
@@ -28,11 +28,10 @@ CREATE TABLE unvailable (
 CREATE TABLE experiences (
   id serial NOT NULL,
   name varchar,
-  source_api_id int,
+  source_api_id varchar,
   experience_api_id varchar,
   description varchar,
   url varchar,
-  img varchar,
   venue varchar,
   location varchar,
   time_start varchar,
@@ -40,6 +39,7 @@ CREATE TABLE experiences (
   price_min varchar,
   price_max varchar,
   category_id int,
+  img varchar,
   CONSTRAINT pk_experiences PRIMARY KEY (
     id
    )
