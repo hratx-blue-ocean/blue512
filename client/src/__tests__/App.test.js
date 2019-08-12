@@ -18,6 +18,6 @@ describe("Top level App component", () => {
     expect(wrapper.find(NavBar)).toHaveLength(1);
   });
   test("it has the correct state shape", () => {
-    expect(wrapper.state().eventsPlaceHolder).toBeTruthy();
+    expect(wrapper.state().eventsPlaceHolder).toBeInstanceOf(Object);
   });
 });
