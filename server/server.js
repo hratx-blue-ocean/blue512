@@ -1,10 +1,37 @@
+require('dotenv').config();
 const createError = require('http-errors');
 const logger = require('morgan');
 const express = require('express');
 const app = express();
+<<<<<<< HEAD
 const zipcodes = require('zipcodes');
 
+=======
+const query = require('../db/query.js');
+const cronOperations = require('../db/cron.js');
+>>>>>>> 69f5626cbef06356892123cf1f748445e6abca71
 
+
+/*
+// here is an example of how to query the database
+
+app.get('/someRoute', (req, res) => {
+    query.getAllEvents()
+    .then(data => {
+        // server logic
+        res.send(data);
+    })
+    .catch(console.log);
+});
+
+// or
+
+xapp.get('/someOtherRoute', async(req, res) => {
+    const events = await query.getAllEvents();
+    // server logic
+    res.send(events);
+}
+*/
 
 // open up CORS 
 app.use((_, res, next) => {
@@ -16,8 +43,8 @@ app.use((_, res, next) => {
 app.use(logger('dev'));
 
 // You can place your routes here, feel free to refactor:
-const { example } = require('./routes');
-app.use('/api/example', example)
+const { api } = require('./routes');
+app.use('/api/', api)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
