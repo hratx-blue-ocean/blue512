@@ -1,17 +1,23 @@
-import React from 'react'
-import {render, fireEvent, cleanup, waitForElement} from 'react-testing-library'
+import Enzyme, { shallow } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import App from "../App";
+import React from "react";
+import NavBar from "../components/Navbar";
 
-// this adds custom jest matchers from jest-dom
-import 'jest-dom/extend-expect'
-import App from '../App';
+Enzyme.configure({ adapter: new Adapter() });
 
-afterEach(cleanup);
-
-
-it('CheckboxWithLabel changes the text after click', async () => {
-    const { getByText } = render(<App/>,);
-
-    const dolphin = await waitForElement(() => getByText(/dolphin/i),)
-
-    expect(dolphin).toBeTruthy();
+describe("Top level App component", () => {
+  let wrapper;
+  beforeAll(() => {
+    wrapper = shallow(<App />);
+  });
+  test("it renders without crashing", () => {
+    expect(wrapper).toBeTruthy();
+  });
+  test("it has a single NavBar child", () => {
+    expect(wrapper.find(NavBar)).toHaveLength(1);
+  });
+  test("it has the correct state shape", () => {
+    expect(wrapper.state().eventsPlaceHolder).toBeTruthy();
+  });
 });

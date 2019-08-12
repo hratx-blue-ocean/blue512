@@ -1,9 +1,17 @@
-import Enzyme, { shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
-import App from "../App";
+import React from 'react'
+import {render, fireEvent, cleanup, waitForElement} from 'react-testing-library'
 
-Enzyme.configure({ adapter: new Adapter() });
+// this adds custom jest matchers from jest-dom
+import 'jest-dom/extend-expect'
+import App from '../App';
 
-test("example test 1", () => {
-  expect(1).toBe(1);
+afterEach(cleanup);
+
+
+it('CheckboxWithLabel changes the text after click', async () => {
+    const { getByText } = render(<App/>,);
+
+    const dolphin = await waitForElement(() => getByText(/dolphin/i),)
+
+    expect(dolphin).toBeTruthy();
 });
