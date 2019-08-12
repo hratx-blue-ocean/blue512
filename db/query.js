@@ -1,17 +1,42 @@
 const db = require("./db.js");
 
-/**
- * @param {String} token Returns events that fit specificed users avilability and preferences. Accepted values (Google OAuth token)
- * @param {String} day Returns only events for a specific day. Accepted values (today, tomorrow, tomorrow++)
- * @param {Number} limit Returns only a specific number of events. Accepted values (1-100)
- */
-const getAllEvents = (token, day, limit) => {
+const getAllEvents = () => {
   const query = {
-    name: "test",
+    name: "getAllEvents",
     text: `SELECT e.name, e.description, e.url, e.img, e.venue, e.location, e.time_start, 
             e.time_end, e.price_min, e.price_max, c.name AS category FROM experiences e 
             LEFT OUTER JOIN categories c ON e.category_id=c.id`,
     values: []
+  };
+
+  return db.query(query);
+};
+
+const getAllEventsExcludingCategories = arrayOfCategories => {
+  const buildConditional = length => {
+    let str = "";
+    if (!length) {
+      return str;
+    }
+    str += "WHERE ";
+    let i = 1;
+    while (i <= length) {
+      str += `c.name != $${i}`;
+      if (i < length) {
+				str += ` AND `;
+      }
+			i++;
+		}
+    return str;
+	};
+	
+	const conditionalString = buildConditional(arrayOfCategories.length);
+
+  const query = {
+    text: `SELECT e.name, e.description, e.url, e.img, e.venue, e.location, e.time_start, 
+              e.time_end, e.price_min, e.price_max, c.name AS category FROM experiences e 
+              LEFT OUTER JOIN categories c ON e.category_id=c.id ${conditionalString}`,
+    values: [...arrayOfCategories]
   };
 
   return db.query(query);
@@ -41,8 +66,7 @@ const addNewCategory = category => {
 const addNewAPISource = api => {
   const query = {
     name: "addNewAPISource",
-    text:
-      "INSERT INTO api (name) VALUES ($1) ON CONFLICT (name) DO NOTHING",
+    text: "INSERT INTO api (name) VALUES ($1) ON CONFLICT (name) DO NOTHING",
     values: [api]
   };
 
@@ -67,8 +91,7 @@ const addEvent = event => {
   } = event;
   const query = {
     name: "addEvent",
-    text:
-      `INSERT INTO experiences (name, source_api_id, 
+    text: `INSERT INTO experiences (name, source_api_id, 
        experience_api_id, description, url, img, venue, 
        location, time_start, time_end, price_min, price_max, category_id) 
        VALUES ($1, (SELECT id FROM api WHERE name=$2), 
@@ -97,6 +120,7 @@ const addEvent = event => {
 
 module.exports = {
   getAllEvents,
+  getAllEventsExcludingCategories,
   getAllCategories,
   addEvent,
   addNewCategory,

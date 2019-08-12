@@ -6,6 +6,7 @@ const app = express();
 const query = require('../db/query.js');
 const cronOperations = require('../db/cron.js');
 
+
 /*
 // here is an example of how to query the database
 
