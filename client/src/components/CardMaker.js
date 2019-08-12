@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CardMaker( {event} ) {
+export default function CardMaker({ event }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -57,7 +57,7 @@ export default function CardMaker( {event} ) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            {event.name.substring(0,3)}
+            {event.name.substring(0, 3)}
           </Avatar>
         }
         title={event.name}
@@ -70,14 +70,14 @@ export default function CardMaker( {event} ) {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-        {eventStart}
+          {eventStart}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton 
+        <IconButton
           aria-label="add to calendar"
           onClick={addToCalendar}
-          >
+        >
           <AddCircle />
         </IconButton>
         <IconButton
@@ -98,11 +98,11 @@ export default function CardMaker( {event} ) {
             This should link to boilerplate message based on catagory
           </Typography>
           <Typography paragraph>
-          This should link to event.description if it exists
+            This should link to event.description if it exists
           </Typography>
-          <Button className="next suggestion">Next Suggestion</Button>
-          <Button className="add to calendar">Add to Calendar</Button>
-          <Button className="buy tickets">Buy Tickets</Button>
+          <Button>Next Suggestion</Button>
+          <Button>Add to Calendar</Button>
+          <Button>Buy Tickets</Button>
         </CardContent>
       </Collapse>
     </Card>
