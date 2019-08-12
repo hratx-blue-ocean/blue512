@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddCircle from '@material-ui/icons/AddCircle';
+import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles(theme => ({
@@ -38,7 +39,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CardMaker( {event} ) {
+export default function CardMaker({ event }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -49,14 +50,14 @@ export default function CardMaker( {event} ) {
   function addToCalendar() {
   }
 
-  let eventStart = Date(event.time_start)
+  let eventStart = Date(event.time_start).split("GMT")[0]
 
   return (
     <Card className={classes.card}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            {event.name.substring(0,3)}
+            {event.name.substring(0, 3)}
           </Avatar>
         }
         title={event.name}
@@ -69,20 +70,14 @@ export default function CardMaker( {event} ) {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-        {eventStart.split("GMT")[0]}
+          {eventStart}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        {/* <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton> */}
-        <IconButton 
+        <IconButton
           aria-label="add to calendar"
           onClick={addToCalendar}
-          >
+        >
           <AddCircle />
         </IconButton>
         <IconButton
@@ -100,26 +95,14 @@ export default function CardMaker( {event} ) {
         <CardContent>
           <Typography paragraph>Description:</Typography>
           <Typography paragraph>
-            {}
+            This should link to boilerplate message based on catagory
           </Typography>
           <Typography paragraph>
-            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving chicken
-            and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion, salt and
-            pepper, and cook, stirring often until thickened and fragrant, about 10 minutes. Add
-            saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
+            This should link to event.description if it exists
           </Typography>
-          <Typography paragraph>
-            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat to
-            medium-low, add reserved shrimp and mussels, tucking them down into the rice, and cook
-            again without stirring, until mussels have opened and rice is just tender, 5 to 7
-            minutes more. (Discard any mussels that don’t open.)
-          </Typography>
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
+          <Button>Next Suggestion</Button>
+          <Button>Add to Calendar</Button>
+          <Button>Buy Tickets</Button>
         </CardContent>
       </Collapse>
     </Card>
