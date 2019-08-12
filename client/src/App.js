@@ -71,26 +71,15 @@ export default class App extends Component {
 
   }
 
-  routeMainView() {
-    return <MainView events={this.state.eventsPlaceHolder} />
-  }
-
-  routeTest() {
-    return <h1>Test of alt route</h1>
-  }
-
   render() {
     return (
-      <>
-        <h1>Welcome to Blue Ocean!</h1>
+      <Router>
         <Navbar />
-<<<<<<< HEAD
-        <MainView events={this.state.eventsPlaceHolder} />
-=======
-        <MainView events={this.state.eventsPlaceHolder}/>
-        {/* <DetailedView events={this.state.eventsPlaceHolder} /> */}
->>>>>>> development
-      </>
+        <Switch>
+          <Route path='/' exact render={() => <MainView events={this.state.eventsPlaceHolder} />} />
+          <Route path='/detailed' exact render={() => <DetailedView events={this.state.eventsPlaceHolder} />} />
+        </Switch>
+      </Router>
     );
   }
 }
