@@ -1,5 +1,8 @@
 const axios = require('axios');
 const config = {"Authorization":"Bearer gWxFwg4Ohs4lLCQAgEr9SVsZbIQ7rC"};
+const getZipCode = require('latlng-to-zip'); //here for scaling 
+const zipToCity = require('zipcodes');
+
 const callAPI = () => {
     return axios.get("https://api.predicthq.com/v1/events?within=10km@30.267153,-97.7430608", {headers: config})
     .then(res => {
@@ -7,7 +10,7 @@ const callAPI = () => {
     })
 }
 
-const restructureData = (data) => {
+const restructureData = async (data) => {
     let events = [];
     data.forEach(event => {
         let restructured = {};
@@ -27,14 +30,22 @@ const restructureData = (data) => {
         if(event.category){
             restructured.category = event.category;
         }
-        restructured.image = 
-
+        restructured.image = null;
+        restructured.venue = event.entities[0].name;
         
+        restructured.location = 'Austin'; 
 
+        restructured.price_min = null;
+        restructured.price_max = null;
+        restructured.description = null;
+        event.push(restructured);
     });
+    return events;
 
 }
 
-const getData = () => {
+const getPredictData = () => {
     return callAPI().then(data => restructureData(data))
 }
+
+module.exports = { getPredictData };
