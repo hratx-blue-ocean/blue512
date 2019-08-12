@@ -1,12 +1,14 @@
 import { shallow } from 'enzyme';
 import React from 'react';
-import NavBar from '../components/Navbar';
+import MainView from '../components/MainView';
 
-describe('Nav Bar component', () => {
+describe('Main View component', () => {
   let wrapper;
+
   beforeAll(() => {
-    wrapper = shallow(<NavBar />);
+    wrapper = shallow(<MainView events={['foo', 'bar', 'baz']} />);
   });
+
   test('it renders without crashing', () => {
     expect(wrapper).toBeTruthy();
   });
