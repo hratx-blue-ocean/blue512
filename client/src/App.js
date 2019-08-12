@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import fetch from 'node-fetch';
 import MainView from './components/MainView.js'
+import DetailedView from './components/DetailedView.js'
 import Navbar from './components/Navbar'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import './App.css';
@@ -81,10 +82,14 @@ export default class App extends Component {
   render() {
     return (
       <>
-
         <h1>Welcome to Blue Ocean!</h1>
         <Navbar />
+<<<<<<< HEAD
         <MainView events={this.state.eventsPlaceHolder} />
+=======
+        <MainView events={this.state.eventsPlaceHolder}/>
+        {/* <DetailedView events={this.state.eventsPlaceHolder} /> */}
+>>>>>>> development
       </>
     );
   }
