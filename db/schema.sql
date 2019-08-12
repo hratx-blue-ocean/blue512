@@ -16,12 +16,12 @@ CREATE TABLE sessions (
    )
 );
 
-CREATE TABLE unvailable (
+CREATE TABLE unavailable (
   id serial NOT NULL,
   time_Start varchar,
   time_End varchar,
   user_id int,
-  CONSTRAINT pk_unvailable PRIMARY KEY (
+  CONSTRAINT pk_unavailable PRIMARY KEY (
     id
    )
 );
@@ -86,7 +86,7 @@ CREATE TABLE users_categories (
 ALTER TABLE sessions ADD CONSTRAINT fk_sessions_user_id FOREIGN KEY(user_id)
 REFERENCES users (id);
 
-ALTER TABLE unvailable ADD CONSTRAINT fk_unvailable_user_id FOREIGN KEY(user_id)
+ALTER TABLE unavailable ADD CONSTRAINT fk_unvailable_user_id FOREIGN KEY(user_id)
 REFERENCES users (id);
 
 ALTER TABLE experiences ADD CONSTRAINT fk_experiences_source_api_id FOREIGN KEY(source_api_id)
