@@ -1,32 +1,6 @@
 const axios = require('axios');
 
-//https://www.eventbriteapi.com/v3/events/search/?token=54HPNTYMHA4EVXWDU73B&location.address=Austin&start_date.range_end=2019-08-15T00:00:00
-
-const eventbriteCategories = {
-    103: "Music",
-    101: "Business", 
-    110: "Food & Drink", 
-    113: "Community", 
-    105: "Arts", 
-    104: "Film & Media", 
-    108: "Sports & Fitness", 
-    107: "Health", 
-    102: "Science & Tech", 
-    109: "Travel & Outdoor", 
-    111: "Charity & Causes", 
-    114: "Spirituality", 
-    115: "Family & Education", 
-    116: "Holiday", 
-    112: "Government", 
-    106: "Fashion", 
-    117: "Home & Lifestyle", 
-    118: "Auto, Boat & Air", 
-    119: "Hobbies", 
-    199: "Other", 
-    120: "School Activities"
-}
-
-const eventbriteVenues = {}
+//https://www.eventbriteapi.com/v3/events/search/?token=${process.env.API_KEY_EVENTBRITE}B&location.latitude=30.2671530&location.longitude=-97.7430608&start_date.range_end=2019-08-15T00:00:00Z&expand=ticket_classes,category,venue
 
 const getDate = () => {
     let currentDate = new Date
