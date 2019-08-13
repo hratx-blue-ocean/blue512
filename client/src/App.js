@@ -103,7 +103,7 @@ export default class App extends Component {
     const tomorrowPlusPlusArr = [];
 
     events.forEach(event => {
-      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today) { // make sure to remove the minus 2 for development
+      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today - 2) { // make sure to remove the minus 2 for development
         todayArr.push(event);
       }
       if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today + 1) {
