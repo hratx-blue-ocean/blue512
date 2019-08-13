@@ -22,9 +22,9 @@ export default function MainView({ events }) {
     <>
       <Container maxWidth="lg">
         <Grid container>
-          <CardContainer event={events[0]} day={today} />
-          <CardContainer event={events[1]} day={tomorrow} />
-          <CardContainer event={events[2]} day={tomorrowPlusPlus} />
+          <CardContainer event={events[0]} day={today} animationTime={400} />
+          <CardContainer event={events[1]} day={tomorrow} animationTime={600} />
+          <CardContainer event={events[2]} day={tomorrowPlusPlus} animationTime={800} />
         </Grid>
       </Container>
     </>
