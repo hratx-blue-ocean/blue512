@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import fetch from 'node-fetch';
 import MainView from './components/MainView.js'
 import DetailedView from './components/DetailedView.js'
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar.js'
+import SettingsView from './components/SettingsView'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import './App.css';
 
@@ -81,8 +82,9 @@ export default class App extends Component {
       <Router>
         <Navbar />
         <Switch>
-          <Route path='/' exact render={() => <MainView events={this.state.eventsAll} />} />
-          <Route path='/detailed' exact render={() => <DetailedView events={this.state.eventsAll} />} />
+          <Route path='/' exact render={() => <MainView events={this.state.eventsPlaceHolder} />} />
+          <Route path='/detailed' exact render={() => <DetailedView events={this.state.eventsPlaceHolder} />} />
+          <Route path='/settings' exact render={() => <SettingsView />} />
         </Switch>
       </Router>
     );
