@@ -157,13 +157,8 @@ export default class App extends Component {
           isSignedIn={isSignedIn}
         />
         <Switch>
-<<<<<<< HEAD
-          <Route path='/' exact render={() => <MainView events={eventsAll} eventsToday={eventsToday} eventsTomorrow={eventsTomorrow} eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />} />
-          <Route path='/detailed' exact render={() => <DetailedView events={eventsAll} />} />
-=======
-          <Route path='/' exact render={() => <MainView events={eventsAll} />} />
+          <Route path='/' exact render={() => <MainView events={eventsAll} />} eventsToday={eventsToday} eventsTomorrow={eventsTomorrow} eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />
           <Route path='/detailed' exact render={() => <DetailedView events={eventsAll} eventsToday={eventsToday} eventsTomorrow={eventsTomorrow} eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />} />
->>>>>>> development
           <Route path='/settings' exact render={() => <SettingsView />} />
         </Switch>
       </Router>
