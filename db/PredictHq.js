@@ -41,10 +41,10 @@ const restructureData = async (data) => {
             let restructured = {};
 
             restructured.source_API = 'predictHQ';
-            const { title, url } = event;
+            const { title } = event;
 
             restructured.name = title || null;
-            restructured.url = url || null;
+            restructured.url = null;
 
             restructured.event_id = event.id;
             restructured.time_start = event.start;
@@ -65,6 +65,9 @@ const restructureData = async (data) => {
             restructured.price_min = null;
             restructured.price_max = null;
             restructured.description = null;
+            if (event.description !== '') {
+                restructured.description = event.description;
+            }
             events.push(restructured);
         }
 
