@@ -1,28 +1,6 @@
-function getData(id_token, calendar_items) {
-  console.log(calendar_items);
-  axios
-    .post("http://localhost:8000/api/events", {
-      token: id_token,
-      calendar_items,
-      limit: null,
-      day: null
-    })
-    .then(res => console.log(res.data))
-    .catch(console.log);
-}
-
-function signOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(function() {
-    console.log("User signed out.");
-  });
-}
-
 function onSuccess(googleUser) {
   const id_token = googleUser.getAuthResponse().id_token;
-  getCalData(data => {
-    getData(id_token, data.result.items);
-  });
+  window.getCalData(id_token);
 }
 
 function onFailure(error) {
@@ -39,21 +17,6 @@ function renderButton() {
     onsuccess: onSuccess,
     onfailure: onFailure
   });
-}
-
-function getCalData(cb) {
-  gapi.client.calendar.events
-    .list({
-      calendarId: "primary",
-      timeMin: new Date().toISOString(),
-      showDeleted: false,
-      singleEvents: true,
-      maxResults: 10,
-      orderBy: "startTime"
-    })
-    .then(response => {
-      cb(response);
-    });
 }
 
 function handleClientLoad() {
