@@ -17,6 +17,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
 import Button from '@material-ui/core/Button';
 import { Grow, Fab } from '@material-ui/core/';
+import moment from 'moment';
 
 
 
@@ -83,7 +84,6 @@ export default function CardMaker({ event, animationTime }) {
 
   }
 
-  let eventStart = Date(event.time_start).split("GMT")[0]
 
   return (
     <Grow in={true} timeout={animationTime}>
@@ -105,7 +105,7 @@ export default function CardMaker({ event, animationTime }) {
 
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            {eventStart}
+            {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
           </Typography>
         </CardContent>
 
@@ -133,6 +133,7 @@ export default function CardMaker({ event, animationTime }) {
         </CardActions>
 
         {/* Collapse Section */}
+
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph>Description:</Typography>
