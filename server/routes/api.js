@@ -49,23 +49,45 @@ router.post('/events', (req, res) => {
 });
 
 router.get('/categories', async (req, res) => {
-  const categories = await query
-    .getAllCategories()
-    .then(({ rows }) => rows.map(category => category.name));
   const { token } = req.query;
-  if (!token) {
-    res.send({ categories });
+  verifyTokenAndSendUserCategories(token, res);
+});
+
+router.post('/categories', async (req, res) => {
+  const { category, token, id, preferred } = req.body;
+  if (id) {
+    if (preferred === null) {
+      query
+        .deleteUserCategoryPreference(id)
+        .then(_ => {
+          verifyTokenAndSendUserCategories(token, res);
+        })
+        .catch(_ => {
+          verifyTokenAndSendUserCategories(token, res);
+        });
+    } else {
+      query
+        .changeUserCategoryPreference({ id, category, preferred })
+        .then(_ => {
+          verifyTokenAndSendUserCategories(token, res);
+        })
+        .catch(_ => {
+          verifyTokenAndSendUserCategories(token, res);
+        });
+    }
   } else {
     verify(token)
-      .then(user => {
+      .then(({ id }) => {
         query
-          .getUserCategoryPreferences(user.id)
-          .then(({ rows }) => res.send({ categories, userPreferences: rows }));
+          .addUserCategoryPreference({ user_id: id, category, preferred })
+          .then(_ => {
+            verifyTokenAndSendUserCategories(token, res);
+          })
+          .catch(_ => {
+            verifyTokenAndSendUserCategories(token, res);
+          });
       })
-      .catch(err => {
-        console.log('there was an error', err);
-        res.send({ categories });
-      });
+      .catch(console.log);
   }
 });
 
@@ -82,6 +104,26 @@ async function verify(token) {
   const last_name = payload['family_name'];
   const avatar_url = payload['picture'];
   return { id, email, first_name, last_name, avatar_url };
+}
+
+//Verify with token and get user category preferred
+async function verifyTokenAndSendUserCategories(token, res) {
+  const categories = await query
+    .getAllCategories()
+    .then(({ rows }) => rows.map(category => category.name));
+  if (!token) {
+    res.send({ categories });
+  } else {
+    verify(token)
+      .then(({ id }) => {
+        query
+          .getUserCategoryPreferences(id)
+          .then(({ rows }) => res.send({ categories, userPreferences: rows }));
+      })
+      .catch(_ => {
+        res.send({ categories });
+      });
+  }
 }
 
 module.exports = router;

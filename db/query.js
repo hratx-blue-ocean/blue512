@@ -67,20 +67,39 @@ const getUserCategoryPreferences = user_id => {
   const query = {
     name: "getUserCategoryPreferences",
     text:
-      "SELECT c.name, uc.preferred FROM users_categories uc LEFT OUTER JOIN categories c ON uc.category_id=c.id WHERE user_id=$1",
+      "SELECT uc.id, c.name, uc.preferred FROM users_categories uc LEFT OUTER JOIN categories c ON uc.category_id=c.id WHERE user_id=$1",
     values: [user_id]
   };
 
   return db.query(query);
 };
 
-const changeUserCategoryPreference = data => {
-  const { user_id, category, preferred } = data;
+const addUserCategoryPreference = ({ user_id, category, preferred }) => {
+  const query = {
+    name: "addNewUserCategoryPreference",
+    text: `INSERT INTO users_categories (user_id, category_id, preferred) 
+    VALUES ($1, (SELECT id FROM categories WHERE name=$2), $3)`,
+    values: [user_id, category, preferred]
+  };
+
+  return db.query(query);
+};
+
+const changeUserCategoryPreference = ({ id, preferred }) => {
   const query = {
     name: "changeUserCategoryPreference",
-    text:
-      "INSERT INTO users_categories (user_id, category_id, preferred) VALUES ($1, (SELECT id FROM categories WHERE name=$2), $3)",
-    values: [user_id, category, preferred]
+    text: "UPDATE users_categories SET preferred=$2 WHERE id=$1",
+    values: [id, preferred]
+  };
+
+  return db.query(query);
+};
+
+const deleteUserCategoryPreference = id => {
+  const query = {
+    name: "deleteUserCategoryPreference",
+    text: "DELETE FROM users_categories WHERE id=$1",
+    values: [id]
   };
 
   return db.query(query);
@@ -96,22 +115,21 @@ const addNewAPISource = api => {
   return db.query(query);
 };
 
-const addEvent = event => {
-  const {
-    name,
-    source_API,
-    event_id,
-    description,
-    url,
-    image,
-    venue,
-    location,
-    time_start,
-    time_end,
-    price_min,
-    price_max,
-    category
-  } = event;
+const addEvent = ({
+  name,
+  source_API,
+  event_id,
+  description,
+  url,
+  image,
+  venue,
+  location,
+  time_start,
+  time_end,
+  price_min,
+  price_max,
+  category
+}) => {
   const query = {
     name: "addEvent",
     text: `INSERT INTO experiences (name, source_api_id, 
@@ -141,8 +159,7 @@ const addEvent = event => {
   return db.query(query);
 };
 
-const addNewUser = data => {
-  const { id, first_name, last_name, email, avatar_url } = data;
+const addNewUser = ({ id, first_name, last_name, email, avatar_url }) => {
   const query = {
     text:
       "INSERT INTO users (id, first_name, last_name, email, avatar_url) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO NOTHING",
@@ -161,15 +178,6 @@ const getUserData = id => {
   return db.query(query);
 };
 
-// const getUserPreferences = id => {
-//   const query = {
-//     text:
-//       "SELECT c.name FROM users_categories uc INNER JOIN categories c ON uc.category_id=c.id WHERE uc.user_id = $1",
-//     values: [id]
-//   };
-
-//   return db.query(query);
-// };
 const addNewUnavailable = data => {
   const time_start = data.start.dateTime;
   const time_end = data.end.dateTime;
@@ -195,5 +203,8 @@ module.exports = {
   addNewUser,
   getUserData,
   addNewUnavailable,
-  getUserCategoryPreferences
+  getUserCategoryPreferences,
+  changeUserCategoryPreference,
+  addUserCategoryPreference,
+  deleteUserCategoryPreference
 };
