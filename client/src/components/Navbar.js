@@ -87,23 +87,25 @@ export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
 
   const getData = function(id_token, calendar_items) {
-    console.log(calendar_items);
     axios
-      .post("http://localhost:8000/api/events", {
-        token: id_token,
-        calendar_items,
-        limit: null,
-        day: null
-      })
+      .post(
+        `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${
+          props.port
+        }/api/events`,
+        {
+          token: id_token,
+          calendar_items,
+          limit: null,
+          day: null
+        }
+      )
       .then(res => props.loadEvents(res.data))
       .catch(console.log);
   };
 
   const signOut = function() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function() {
-      console.log("User signed out.");
-    });
+    var auth2 = window.gapi.auth2.getAuthInstance();
+    auth2.signOut().then(() => {});
   };
 
   window.getCalData = id_token => {
@@ -153,11 +155,18 @@ export default function PrimarySearchAppBar(props) {
           </Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {/* <Button className={classes.Signupbutton} variant="h6" noWrap>
-              Sign up
-          </Button> */}
-            <div id="my-signin2" data-onsuccess="onSignIn" />
-            <div onClick={signOut}>Sign out</div>
+            <div
+              className={classes.button}
+              id="my-signin2"
+              data-onsuccess="onSignIn"
+            />
+            {props.isSignedIn ? (
+              <Button className={classes.button} onClick={signOut}>
+                Sign Out
+              </Button>
+            ) : (
+              <></>
+            )}
           </div>
           <div className={classes.sectionMobile} />
         </Toolbar>

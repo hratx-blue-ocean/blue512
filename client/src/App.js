@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import fetch from "node-fetch";
 import MainView from "./components/MainView.js";
 import DetailedView from "./components/DetailedView.js";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import axios from "axios";
-// import './App.css';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.handleLoadEvents = this.handleLoadEvents.bind(this);
     this.state = {
+      isSignedIn: null,
+      PORT: 9000,
       eventsPlaceHolder: [
         {
           source_API: "TicketMaster",
@@ -69,41 +69,64 @@ export default class App extends Component {
     this.api = `http://localhost:8000/api/example`;
   }
   componentDidMount() {
-    //This will be a post request, that expects location and returns cardData
-    // fetch(this.api)
-    //   .then(res => res.json())
-    //   .then(events => {
-    //     this.setState({ eventsPlaceHolder: events.data });
-    //   });
-    setTimeout(() => {
-      if (!window.gapi.auth2.getAuthInstance().isSignedIn.Ab) {
-        axios
-          .get("http://localhost:8000/api/events")
-          .then(data => this.setState({ eventsPlaceHolder: data.data.events }));
+    window.addEventListener("GoogleAuthInit", e => {
+      const { init, isSignedIn } = e.detail;
+      if (init && !isSignedIn) {
+        this.loadEventsAnon(isSignedIn);
       }
-    }, 1500);
+    });
+
+    window.addEventListener("GoogleAuthChange", e => {
+      const { isSignedIn } = e.detail;
+      if (!isSignedIn) {
+        this.loadEventsAnon(isSignedIn);
+      }
+    });
   }
 
   handleLoadEvents(data) {
-    this.setState({ eventsPlaceHolder: data.events, user: data.userInfo });
+    this.setState({
+      eventsPlaceHolder: data.events,
+      user: data.userInfo,
+      isSignedIn: true
+    });
+  }
+
+  loadEventsAnon(isSignedIn) {
+    axios
+      .get(
+        `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${
+          this.state.PORT
+        }/api/events`
+      )
+      .then(data =>
+        this.setState({
+          eventsPlaceHolder: data.data.events,
+          isSignedIn: isSignedIn
+        })
+      )
+      .catch(console.log);
   }
 
   render() {
+    const { isSignedIn, eventsPlaceHolder, PORT } = this.state;
     return (
       <Router>
-        <Navbar loadEvents={this.handleLoadEvents} />
+        <Navbar
+          port={PORT}
+          loadEvents={this.handleLoadEvents}
+          isSignedIn={isSignedIn}
+        />
         <Switch>
           <Route
             path="/"
             exact
-            render={() => <MainView events={this.state.eventsPlaceHolder} />}
+            render={() => <MainView events={eventsPlaceHolder} />}
           />
           <Route
             path="/detailed"
             exact
-            render={() => (
-              <DetailedView events={this.state.eventsPlaceHolder} />
-            )}
+            render={() => <DetailedView events={eventsPlaceHolder} />}
           />
         </Switch>
       </Router>
