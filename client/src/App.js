@@ -26,7 +26,7 @@ export default class App extends Component {
           time_start: "2019-08-11T02:00:00Z",
           time_end: null,
           category: "Music",
-          image:
+          img:
             "https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg",
           venue: "Gruene Hall",
           location: "New Braunfels",
@@ -43,7 +43,7 @@ export default class App extends Component {
           time_start: "2019-08-11T02:00:00Z",
           time_end: null,
           category: "Music",
-          image:
+          img:
             "https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg",
           venue: "Gruene Hall",
           location: "New Braunfels",
@@ -60,7 +60,7 @@ export default class App extends Component {
           time_start: "2019-08-11T02:00:00Z",
           time_end: null,
           category: "Music",
-          image:
+          img:
             "https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg",
           venue: "Gruene Hall",
           location: "New Braunfels",
@@ -72,11 +72,15 @@ export default class App extends Component {
       eventsToday: [],
       eventsTomorrow: [],
       eventsTomorrowPlusPlus: [],
-      clickedMicroCard: []
+      clickedMicroCard: [],
+      today: ''
     };
     this.api = `http://localhost:8000/api/example`;
   }
+
   componentDidMount() {
+    let today = new Date();
+    this.setState({ today: Number(String(today.getDate()).padStart(2, 0)) });
     window.addEventListener("GoogleAuthInit", e => {
       const { init, isSignedIn } = e.detail;
       if (init && !isSignedIn) {
@@ -90,6 +94,30 @@ export default class App extends Component {
         this.loadEventsAnon(isSignedIn);
       }
     });
+  }
+
+  seperateEventsByDate(events) {
+    // console.log(events || `testing and didn't get events`); 
+    const todayArr = [];
+    const tomorrowArr = [];
+    const tomorrowPlusPlusArr = [];
+
+    events.forEach(event => {
+      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today) { // make sure to remove the minus 2 for development
+        todayArr.push(event);
+      }
+      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today + 1) {
+        tomorrowArr.push(event);
+      }
+      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today + 2) {
+        tomorrowPlusPlusArr.push(event);
+      }
+    })
+    this.setState({
+      eventsToday: todayArr,
+      eventsTomorrow: tomorrowArr,
+      eventsTomorrowPlusPlus: tomorrowPlusPlusArr
+    })
   }
 
   handleLoadEvents(data) {
@@ -113,11 +141,14 @@ export default class App extends Component {
           isSignedIn: isSignedIn
         })
       )
+      .then(() => {
+        this.seperateEventsByDate(this.state.eventsAll)
+      })
       .catch();
   }
 
   render() {
-    const { isSignedIn, eventsAll, PORT } = this.state;
+    const { isSignedIn, eventsAll, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, PORT } = this.state;
     return (
       <Router>
         <Navbar
@@ -127,7 +158,7 @@ export default class App extends Component {
         />
         <Switch>
           <Route path='/' exact render={() => <MainView events={eventsAll} />} />
-          <Route path='/detailed' exact render={() => <DetailedView events={eventsAll} />} />
+          <Route path='/detailed' exact render={() => <DetailedView events={eventsAll} eventsToday={eventsToday} eventsTomorrow={eventsTomorrow} eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />} />
           <Route path='/settings' exact render={() => <SettingsView />} />
         </Switch>
       </Router>
