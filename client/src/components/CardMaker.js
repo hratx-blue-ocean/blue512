@@ -13,8 +13,10 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddCircle from '@material-ui/icons/AddCircle';
+import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
-import Grow from '@material-ui/core/Grow';
+import { Grow, Fab } from '@material-ui/core/';
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -73,6 +75,8 @@ export default function CardMaker({ event, animationTime }) {
       resource: gCalEvent
     });
     request.execute(function (event) {
+      // console.log('event successfully added')
+      //Add notification or toast
       // console.log(event.htmlLink);
     });
 
@@ -111,6 +115,11 @@ export default function CardMaker({ event, animationTime }) {
           >
             <AddCircle />
           </IconButton>
+
+          <Fab color="primary" aria-label="add" className={classes.fab}>
+            <AddIcon />
+          </Fab>
+
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
