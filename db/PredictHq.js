@@ -28,7 +28,7 @@ let dates = _getDate();
 
 
 const callAPI = () => {
-    return axios.get(`https://api.predicthq.com/v1/events?active.gte=${dates.currentDateStr}&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`, { headers: config })
+    return axios.get(`https://api.predicthq.com/v1/events?active.gte=${dates.currentDateStr}&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`, { headers: proccess.env.API_KEY_PREDICTHQ })
         .then(res => {
             return res.data.results;
         })
