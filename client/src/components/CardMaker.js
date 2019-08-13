@@ -48,12 +48,40 @@ export default function CardMaker({ event, animationTime }) {
     setExpanded(!expanded);
   }
 
-  function addToCalendar() {
+  function addToCalendar(event) {
+    console.log('Clicked on:', event)
+    let eventStart = new Date(event.time_start);
+    let eventEnd;
+    if (event.time_end) {
+      eventEnd = new Date(event_time.start);
+    } else {
+      eventEnd = new Date(eventStart)
+      eventEnd.setHours(eventEnd.getHours() + 2);
+    }
+    const gCalEvent = {
+      summary: event.name,
+      start: {
+        dateTime: eventStart
+      },
+      end: {
+        dateTime: eventEnd
+      }
+    };
+    console.log(gCalEvent)
+    let request = window.gapi.client.calendar.events.insert({
+      calendarId: 'primary',
+      resource: gCalEvent
+    });
+    request.execute(function (event) {
+      console.log(event.htmlLink);
+    });
+
   }
 
   let eventStart = Date(event.time_start).split("GMT")[0]
 
   return (
+<<<<<<< HEAD
     <Grow in={true} timeout={animationTime}>
       <Card className={classes.card}>
         <CardHeader
@@ -70,6 +98,47 @@ export default function CardMaker({ event, animationTime }) {
           image={event.img}
           title="Paella dish"
         />
+=======
+    <Card className={classes.card}>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="recipe" className={classes.avatar}>
+            {event.name.substring(0, 3)}
+          </Avatar>
+        }
+        title={event.name}
+        subheader={event.venue}
+      />
+      <CardMedia
+        className={classes.media}
+        image={event.img}
+        title="Paella dish"
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {eventStart}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton
+          aria-label="add to calendar"
+          onClick={() => { addToCalendar(event) }}
+        >
+          <AddCircle />
+        </IconButton>
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded,
+          })}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+>>>>>>> development
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {eventStart}
