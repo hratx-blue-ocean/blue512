@@ -1,4 +1,5 @@
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { MemoryRouter } from 'react-router-dom';
 import App from '../App';
 import React from 'react';
 import NavBar from '../components/Navbar';
@@ -15,8 +16,13 @@ describe('Top level App component', () => {
   test('it renders a single NavBar child', () => {
     expect(wrapper.find(NavBar)).toHaveLength(1);
   });
-  test('it renders a single MainView child', () => {
-    expect(wrapper.find(MainView)).toHaveLength(1);
+  test('it renders a single MainView child when / route is hit', () => {
+    let mountedWrapper = mount(
+      <MemoryRouter initialEntries={['/']}>
+        <App />
+      </MemoryRouter>
+    );
+    expect(mountedWrapper.find(MainView)).toHaveLength(1);
   });
   test('it has the correct state shape', () => {
     expect(wrapper.state().eventsPlaceHolder).toBeInstanceOf(Object);
