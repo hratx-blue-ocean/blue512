@@ -1,25 +1,16 @@
-import React, { Component } from 'react';
-import CardMaker from './CardMaker.js';
+import React from 'react';
 import CardContainer from './CardContainer.js';
 // import fetch from 'node-fetch';
 
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Grid, Container, Typography } from '@material-ui/core/';
+// import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Container } from '@material-ui/core/';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }
-}));
+// const useStyles = makeStyles(theme => ({
+// }));
 
 export default function MainView({ events }) {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
     <>
