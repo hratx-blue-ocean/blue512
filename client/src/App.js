@@ -117,7 +117,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { isSignedIn, eventsAll, PORT } = this.state;
+    const { isSignedIn, eventsAll, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, PORT } = this.state;
     return (
       <Router>
         <Navbar
@@ -126,7 +126,7 @@ export default class App extends Component {
           isSignedIn={isSignedIn}
         />
         <Switch>
-          <Route path='/' exact render={() => <MainView events={eventsAll} />} />
+          <Route path='/' exact render={() => <MainView events={eventsAll} eventsToday={eventsToday} eventsTomorrow={eventsTomorrow} eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />} />
           <Route path='/detailed' exact render={() => <DetailedView events={eventsAll} />} />
           <Route path='/settings' exact render={() => <SettingsView />} />
         </Switch>
