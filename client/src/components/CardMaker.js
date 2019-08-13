@@ -88,15 +88,10 @@ export default function CardMaker({ event, animationTime }) {
   return (
     <Grow in={true} timeout={animationTime}>
       <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              {event.name.substring(0, 3)}
-            </Avatar>
-          }
-          title={event.name}
-          subheader={event.venue}
-        />
+
+        {/* <CardHeader
+          Stuff above the image would go here
+        /> */}
         <CardMedia
           className={classes.media}
           image={event.img}
@@ -104,8 +99,14 @@ export default function CardMaker({ event, animationTime }) {
         />
 
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="h6">
+            {event.name}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
             {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            {event.venue}, {event.location}
           </Typography>
         </CardContent>
 
@@ -113,7 +114,6 @@ export default function CardMaker({ event, animationTime }) {
           <Fab
             color="primary"
             aria-label="add"
-            className={classes.fab}
             onClick={() => { addToCalendar(event) }}
           >
             {/* <AddIcon /> */}
