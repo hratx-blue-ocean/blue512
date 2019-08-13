@@ -70,13 +70,12 @@ const restructureData = async (data) => {
         }
 
     });
-    console.log(events)
     return events;
 }
 
 const getData = () => {
     return callAPI().then(data => restructureData(data))
 }
-getData();
+
 
 module.exports = { getData };
