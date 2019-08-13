@@ -72,12 +72,15 @@ export default class App extends Component {
       eventsToday: [],
       eventsTomorrow: [],
       eventsTomorrowPlusPlus: [],
-      clickedMicroCard: []
+      clickedMicroCard: [],
+      today: ''
     };
     this.api = `http://localhost:8000/api/example`;
   }
 
   componentDidMount() {
+    let today = new Date();
+    this.setState({ today: Number(String(today.getDate()).padStart(2, 0)) });
     window.addEventListener("GoogleAuthInit", e => {
       const { init, isSignedIn } = e.detail;
       if (init && !isSignedIn) {
@@ -91,11 +94,27 @@ export default class App extends Component {
         this.loadEventsAnon(isSignedIn);
       }
     });
-    this.seperateEventsByDate(this.state.eventsAll);
   }
 
   seperateEventsByDate(events) {
     console.log(events || `testing and didn't get events`);
+    const todayArr = [];
+    const tomorrowArr = [];
+    const tomorrowPlusPlusArr = [];
+
+    events.forEach(event => {
+      if (event.time_start.split("T")[0].split('-')[2] === this.state.today) {
+        todayArr.push(event);
+      }
+      if (event.time_start.split("T")[0].split('-')[2] === this.state.today + 1) {
+        tomorrowArr.push(event);
+      }
+      if (event.time_start.split("T")[0].split('-')[2] === this.state.today + 2) {
+        tomorrowPlusPlusArr.push(event);
+      }
+    })
+    console.log(todayArr, 'todayArr');
+    // console.log(storage)
   }
 
   handleLoadEvents(data) {
@@ -119,12 +138,14 @@ export default class App extends Component {
           isSignedIn: isSignedIn
         })
       )
+      .then(() => {
+        this.seperateEventsByDate(this.state.eventsAll)
+      })
       .catch();
   }
 
   render() {
     const { isSignedIn, eventsAll, PORT } = this.state;
-    console.log(eventsAll);
     return (
       <Router>
         <Navbar
