@@ -76,7 +76,7 @@ export default function CardMaker({ event, animationTime }) {
       resource: gCalEvent
     });
     request.execute(function (event) {
-      // console.log('event successfully added')
+      console.log('event successfully added')
       //Add notification or toast
       // console.log(event.htmlLink);
     });
@@ -110,14 +110,12 @@ export default function CardMaker({ event, animationTime }) {
         </CardContent>
 
         <CardActions disableSpacing>
-          <IconButton
-            aria-label="add to calendar"
+          <Fab
+            color="primary"
+            aria-label="add"
+            className={classes.fab}
             onClick={() => { addToCalendar(event) }}
           >
-            <AddCircle />
-          </IconButton>
-
-          <Fab color="primary" aria-label="add" className={classes.fab}>
             {/* <AddIcon /> */}
             <CalendarIcon />
           </Fab>
