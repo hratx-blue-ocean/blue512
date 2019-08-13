@@ -84,7 +84,7 @@ export default function PrimarySearchAppBar() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography className={classes.title} >
             GoDo
           </Typography>
           <div className={classes.search}>
@@ -113,7 +113,7 @@ export default function PrimarySearchAppBar() {
                 <SettingsIcon />
               </IconButton>
             </MenuItem>
-            <Button className={classes.Signupbutton} variant="h6" noWrap>
+            <Button className={classes.Signupbutton} >
               Sign up
             </Button>
           </div>
