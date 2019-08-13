@@ -14,7 +14,7 @@ export default function Details({ event }) {
   const classes = useStyles()
 
   return (
-    <Grid item xs={9}>
+    <Grid item xs={8}>
       <div>
         <Paper className={classes.root}>
           <Typography variant="h5" component="h3">
