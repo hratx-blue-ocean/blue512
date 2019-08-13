@@ -4,6 +4,9 @@ import DetailedView from "./components/DetailedView.js";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import axios from "axios";
+import fetch from 'node-fetch';
+import SettingsView from './components/SettingsView'
+// import './App.css';
 
 export default class App extends Component {
   constructor(props) {
@@ -96,7 +99,7 @@ export default class App extends Component {
     axios
       .get(
         `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${
-          this.state.PORT
+        this.state.PORT
         }/api/events`
       )
       .then(data =>
@@ -118,16 +121,9 @@ export default class App extends Component {
           isSignedIn={isSignedIn}
         />
         <Switch>
-          <Route
-            path="/"
-            exact
-            render={() => <MainView events={eventsPlaceHolder} />}
-          />
-          <Route
-            path="/detailed"
-            exact
-            render={() => <DetailedView events={eventsPlaceHolder} />}
-          />
+          <Route path='/' exact render={() => <MainView events={this.state.eventsPlaceHolder} />} />
+          <Route path='/detailed' exact render={() => <DetailedView events={this.state.eventsPlaceHolder} />} />
+          <Route path='/settings' exact render={() => <SettingsView />} />
         </Switch>
       </Router>
     );

@@ -1,15 +1,10 @@
 import React from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  InputBase,
-  Button
-} from "@material-ui/core/";
 import SearchIcon from "@material-ui/icons/Search";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
+import { MenuItem, AppBar, Toolbar, Typography, InputBase, Button, IconButton } from '@material-ui/core/';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -86,11 +81,11 @@ const useStyles = makeStyles(theme => ({
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
 
-  const getData = function(id_token, calendar_items) {
+  const getData = function (id_token, calendar_items) {
     axios
       .post(
         `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${
-          props.port
+        props.port
         }/api/events`,
         {
           token: id_token,
@@ -103,9 +98,9 @@ export default function PrimarySearchAppBar(props) {
       .catch(console.log);
   };
 
-  const signOut = function() {
+  const signOut = function () {
     var auth2 = window.gapi.auth2.getAuthInstance();
-    auth2.signOut().then(() => {});
+    auth2.signOut().then(() => { });
   };
 
   window.getCalData = id_token => {
@@ -165,8 +160,15 @@ export default function PrimarySearchAppBar(props) {
                 Sign Out
               </Button>
             ) : (
-              <></>
-            )}
+                <></>
+              )}
+          </div>
+          <MenuItem>
+            <IconButton component={RouterLink} to="/settings" color="inherit">
+              <SettingsIcon />
+            </IconButton>
+          </MenuItem>
+          <div className={classes.sectionMobile}>
           </div>
           <div className={classes.sectionMobile} />
         </Toolbar>
