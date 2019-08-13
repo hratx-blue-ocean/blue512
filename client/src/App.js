@@ -158,7 +158,7 @@ export default class App extends Component {
         />
         <Switch>
           <Route path='/' exact render={() => <MainView events={eventsAll} />} />
-          <Route path='/detailed' exact render={() => <DetailedView eventsToday={eventsToday} eventsTomorrow={eventsTomorrow} eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />} />
+          <Route path='/detailed' exact render={() => <DetailedView events={eventsAll} eventsToday={eventsToday} eventsTomorrow={eventsTomorrow} eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />} />
           <Route path='/settings' exact render={() => <SettingsView />} />
         </Switch>
       </Router>
