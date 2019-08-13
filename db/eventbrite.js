@@ -14,7 +14,7 @@ const _getDate = () => {
     let futureDay = futureDate.getDate()
     let futureMonth = futureDate.getMonth() + 1
     let futureYear = futureDate.getFullYear()
-    
+
     let dates = {
         currentDateStr: currentYear + '-' + currentMonth + '-' + currentDay + 'T00:00:00Z',
         futureDateStr: futureYear + '-' + futureMonth + '-' + futureDay + 'T00:00:00Z'
@@ -29,15 +29,15 @@ const callAPI = () => {
     let longitude = '-97.7430608'
     let futureDate = _getDate().futureDateStr
 
-    return axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${API_KEY_EVENTBRITE}&location.latitude=${latitude}&location.longitude=${longitude}&start_date.range_end=${futureDate}&expand=ticket_classes,venue,category`)
-    .then(response => {
-        return response.data.events
-    })
-    .catch(console.log)
+    return axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${process.env.API_KEY_EVENTBRITE}&location.latitude=${latitude}&location.longitude=${longitude}&start_date.range_end=${futureDate}&expand=ticket_classes,venue,category`)
+        .then(response => {
+            return response.data.events
+        })
+        .catch(console.log)
 }
 
 const _getPrices = (tickets) => {
-    let prices ={
+    let prices = {
         min: null,
         max: null
     }
@@ -45,8 +45,8 @@ const _getPrices = (tickets) => {
         let min = parseFloat(tickets[0].cost.major_value)
         let max = parseFloat(tickets[0].cost.major_value)
 
-        for (let i=1; i<tickets.length; i++) {
-            if(tickets[i].cost) {
+        for (let i = 1; i < tickets.length; i++) {
+            if (tickets[i].cost) {
                 if (parseFloat(tickets[i].cost.major_value) < min) {
                     min = parseFloat(tickets[i].cost.major_value)
                 } else if (parseFloat(tickets[i].cost.major_value) > max) {
@@ -63,7 +63,7 @@ const _getPrices = (tickets) => {
     return prices
 }
 
-const restructureData= (data) => {
+const restructureData = (data) => {
     let events = [];
     data.forEach(event => {
         // console.log(event)
@@ -89,7 +89,7 @@ const restructureData= (data) => {
         restructured.price_min = prices.min;
         restructured.price_max = prices.max;
         restructured.description = null;
-        if(event.description) {
+        if (event.description) {
             restructured.description = event.description.text;
         }
         events.push(restructured);
@@ -99,9 +99,7 @@ const restructureData= (data) => {
 }
 
 const getData = () => {
-    return callAPI().then(data => {
-        restructureData(data)
-    })
+    return callAPI().then(data => restructureData(data))
 }
 
 module.exports = { getData }

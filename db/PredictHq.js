@@ -1,6 +1,7 @@
 const axios = require('axios');
 const getZipCode = require('latlng-to-zip'); //here for scaling 
 const zipToCity = require('zipcodes');
+const config = { "Authorization": "key" }; //use for testing
 
 
 const _getDate = () => {
@@ -25,13 +26,20 @@ const _getDate = () => {
 }
 let dates = _getDate();
 
-
 const callAPI = () => {
-    return axios.get(`https://api.predicthq.com/v1/events?active.gte=${dates.currentDateStr}&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`, { headers: { "Authorization": proccess.env.API_KEY_PREDICTHQ } })
+    return axios.get(`https://api.predicthq.com/v1/events?active.gte=${dates.currentDateStr}&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`, { headers: process.env.API_KEY_PREDICTHQ })
         .then(res => {
             return res.data.results;
         })
 }
+
+//testing
+// const callAPI = () => {
+//     return axios.get(`https://api.predicthq.com/v1/events?active.gte=${dates.currentDateStr}&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`, { headers: config })
+//         .then(res => {
+//             return res.data.results;
+//         })
+// }
 
 const restructureData = async (data) => {
     let events = [];
