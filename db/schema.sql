@@ -36,10 +36,7 @@ CREATE TABLE experiences
   price_min varchar,
   price_max varchar,
   category_id int,
-<<<<<<< HEAD
-=======
   img varchar,
->>>>>>> e87c61977034b14a8a33fb2ca276592e1a03b535
   CONSTRAINT unique_source_id UNIQUE (source_api_id),
   CONSTRAINT pk_experiences PRIMARY KEY ( 
     id
@@ -87,12 +84,9 @@ CREATE TABLE users_categories
    )
 );
 
-<<<<<<< HEAD
-=======
 ALTER TABLE sessions ADD CONSTRAINT fk_sessions_user_id FOREIGN KEY(user_id)
 REFERENCES users (id);
 
->>>>>>> e87c61977034b14a8a33fb2ca276592e1a03b535
 ALTER TABLE unavailable ADD CONSTRAINT fk_unavailable_user_id FOREIGN KEY(user_id)
 REFERENCES users (id);
 
