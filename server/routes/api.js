@@ -1,6 +1,6 @@
-const router = require("express").Router();
-const query = require("../../db/query.js");
-const { OAuth2Client } = require("google-auth-library");
+const router = require('express').Router();
+const query = require('../../db/query.js');
+const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 /**
@@ -8,7 +8,7 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
  * @param {String} req.params.day Returns only events for a specific day. Accepted values (today, tomorrow, tomorrow++)
  * @param {Number} req.params.limit Returns only a specific number of events. Accepted values (1-100)
  */
-router.get("/events", (req, res) => {
+router.get('/events', (req, res) => {
   query
     .getAllEvents()
     .then(response => {
@@ -17,7 +17,7 @@ router.get("/events", (req, res) => {
     .catch(console.log);
 });
 
-router.post("/events", (req, res) => {
+router.post('/events', (req, res) => {
   verify(req.body.token)
     .then(data => {
       query
@@ -38,7 +38,7 @@ router.post("/events", (req, res) => {
         });
     })
     .catch(err => {
-      console.log("CAUTION: ", err);
+      console.log('CAUTION: ', err);
       query
         .getAllEvents()
         .then(response => {
@@ -48,11 +48,12 @@ router.post("/events", (req, res) => {
     });
 });
 
-router.get("/categories", async (req, res) => {
+router.get('/categories', async (req, res) => {
   const categories = await query
     .getAllCategories()
     .then(({ rows }) => rows.map(category => category.name));
-  const { token } = req.body;
+  const { token } = req.query;
+  console.log(`token looks like: ${token}`);
   if (!token) {
     res.send({ categories });
   } else {
@@ -62,7 +63,8 @@ router.get("/categories", async (req, res) => {
           .getUserCategoryPreferences(user.id)
           .then(({ rows }) => res.send({ categories, userPreferences: rows }));
       })
-      .catch(_ => {
+      .catch(err => {
+        console.log('there was an error', err);
         res.send({ categories });
       });
   }
@@ -75,11 +77,11 @@ async function verify(token) {
     audience: process.env.GOOGLE_CLIENT_ID
   });
   const payload = ticket.getPayload();
-  const id = payload["sub"];
-  const email = payload["email"];
-  const first_name = payload["given_name"];
-  const last_name = payload["family_name"];
-  const avatar_url = payload["picture"];
+  const id = payload['sub'];
+  const email = payload['email'];
+  const first_name = payload['given_name'];
+  const last_name = payload['family_name'];
+  const avatar_url = payload['picture'];
   return { id, email, first_name, last_name, avatar_url };
 }
 
