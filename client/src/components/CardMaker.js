@@ -81,7 +81,6 @@ export default function CardMaker({ event, animationTime }) {
   let eventStart = Date(event.time_start).split("GMT")[0]
 
   return (
-<<<<<<< HEAD
     <Grow in={true} timeout={animationTime}>
       <Card className={classes.card}>
         <CardHeader
@@ -98,47 +97,6 @@ export default function CardMaker({ event, animationTime }) {
           image={event.img}
           title="Paella dish"
         />
-=======
-    <Card className={classes.card}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            {event.name.substring(0, 3)}
-          </Avatar>
-        }
-        title={event.name}
-        subheader={event.venue}
-      />
-      <CardMedia
-        className={classes.media}
-        image={event.img}
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {eventStart}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton
-          aria-label="add to calendar"
-          onClick={() => { addToCalendar(event) }}
-        >
-          <AddCircle />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
->>>>>>> development
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {eventStart}
@@ -147,7 +105,7 @@ export default function CardMaker({ event, animationTime }) {
         <CardActions disableSpacing>
           <IconButton
             aria-label="add to calendar"
-            onClick={addToCalendar}
+            onClick={() => { addToCalendar(event) }}
           >
             <AddCircle />
           </IconButton>
@@ -164,17 +122,42 @@ export default function CardMaker({ event, animationTime }) {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>Description:</Typography>
-            <Typography paragraph>
-              This should link to boilerplate message based on catagory
+            <Typography variant="body2" color="textSecondary" component="p">
+              {eventStart}
             </Typography>
-            <Typography paragraph>
-              This should link to event.description if it exists
-            </Typography>
-            <Button>Next Suggestion</Button>
-            <Button>Add to Calendar</Button>
-            <Button>Buy Tickets</Button>
           </CardContent>
+          <CardActions disableSpacing>
+            <IconButton
+              aria-label="add to calendar"
+              onClick={addToCalendar}
+            >
+              <AddCircle />
+            </IconButton>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography paragraph>Description:</Typography>
+              <Typography paragraph>
+                This should link to boilerplate message based on catagory
+              </Typography>
+              <Typography paragraph>
+                This should link to event.description if it exists
+              </Typography>
+              <Button>Next Suggestion</Button>
+              <Button>Add to Calendar</Button>
+              <Button>Buy Tickets</Button>
+            </CardContent>
+          </Collapse>
         </Collapse>
       </Card>
     </Grow>
