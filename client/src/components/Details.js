@@ -10,7 +10,7 @@ export default function Details( {event} ) {
   return (
     <Grid item xs={9}>
       <div>
-        Details of clicked MicroCard
+        Details of clicked MicroCard with a nice prop {event.name}
       </div>
     </Grid>
   )
