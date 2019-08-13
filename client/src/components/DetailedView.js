@@ -10,17 +10,10 @@ export default function DetailedView({ events }) {
   return (
     <>
       <Container maxWidth="lg">
-
         <Grid container>
-
           <MicroCardContainer events={events}/>
-
-          <Grid item xs={9}>
-              <Details />
-          </Grid>
-
+          <Details />
         </Grid>
-
       </Container>
     </>
   );

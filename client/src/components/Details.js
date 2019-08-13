@@ -1,6 +1,6 @@
 import React               from 'react';
 // import { makeStyles }      from '@material-ui/core/styles';
-// import { Grid, Container } from '@material-ui/core/';
+import { Grid } from '@material-ui/core/';
 
 // const useStyles = makeStyles({
 // });
@@ -8,9 +8,11 @@ import React               from 'react';
 export default function Details( {event} ) {
 
   return (
-    <div>
-      Details of clicked MicroCard
-    </div>
+    <Grid item xs={9}>
+      <div>
+        Details of clicked MicroCard
+      </div>
+    </Grid>
   )
 
 }
