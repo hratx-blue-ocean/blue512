@@ -27,7 +27,7 @@ export default function MicroCardMaker( {event} ) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={event.image || 'Event Image'}
+          image={event.img || 'Event Image'}
           title={event.event_id || 'Event Title'}
         />
         <CardContent className={classes.content}>
