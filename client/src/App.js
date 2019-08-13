@@ -97,7 +97,7 @@ export default class App extends Component {
   }
 
   seperateEventsByDate(events) {
-    console.log(events || `testing and didn't get events`);
+    // console.log(events || `testing and didn't get events`); 
     const todayArr = [];
     const tomorrowArr = [];
     const tomorrowPlusPlusArr = [];
@@ -148,7 +148,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { isSignedIn, eventsAll, PORT } = this.state;
+    const { isSignedIn, eventsAll, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, PORT } = this.state;
     return (
       <Router>
         <Navbar
