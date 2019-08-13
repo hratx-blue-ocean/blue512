@@ -10,7 +10,8 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      eventsPlaceHolder: [
+      eventsFirstThree: [],
+      eventsAll: [
         {
           source_API: 'TicketMaster',
           name: 'Hayes Carll',
@@ -56,7 +57,11 @@ export default class App extends Component {
           price_max: null,
           description: null
         }
-      ]
+      ],
+      eventsYesterday: [],
+      eventsToday: [],
+      eventsTomorrow: [],
+      clickedMicroCard: []
     };
     this.api = `http://localhost:8000/api/example`;
   }
@@ -66,7 +71,7 @@ export default class App extends Component {
     // fetch(this.api)
     //   .then(res => res.json())
     //   .then(events => {
-    //     this.setState({ eventsPlaceHolder: events.data });
+    //     this.setState({ eventsAll: events.data });
     //   });
 
   }
@@ -76,8 +81,8 @@ export default class App extends Component {
       <Router>
         <Navbar />
         <Switch>
-          <Route path='/' exact render={() => <MainView events={this.state.eventsPlaceHolder} />} />
-          <Route path='/detailed' exact render={() => <DetailedView events={this.state.eventsPlaceHolder} />} />
+          <Route path='/' exact render={() => <MainView events={this.state.eventsAll} />} />
+          <Route path='/detailed' exact render={() => <DetailedView events={this.state.eventsAll} />} />
         </Switch>
       </Router>
     );
