@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "debug": "^4.1.1",
+    "dot": "^1.1.2",
+    "env": "0.0.2",
     "express": "^4.16.4",
     "nyc": "^14.1.0",
     "zipcodes": "^8.0.0"
