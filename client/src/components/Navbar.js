@@ -1,7 +1,8 @@
 import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, InputBase, Button } from '@material-ui/core/';
+import { MenuItem, AppBar, Toolbar, Typography, InputBase, Button, IconButton } from '@material-ui/core/';
 import SearchIcon from '@material-ui/icons/Search';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -107,9 +108,14 @@ export default function PrimarySearchAppBar() {
           </Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <MenuItem>
+              <IconButton component={RouterLink} to="/settings" color="inherit">
+                <SettingsIcon />
+              </IconButton>
+            </MenuItem>
             <Button className={classes.Signupbutton} variant="h6" noWrap>
               Sign up
-          </Button>
+            </Button>
           </div>
           <div className={classes.sectionMobile}>
           </div>
