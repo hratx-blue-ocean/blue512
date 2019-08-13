@@ -82,8 +82,8 @@ export default class App extends Component {
       <Router>
         <Navbar />
         <Switch>
-          <Route path='/' exact render={() => <MainView events={this.state.eventsPlaceHolder} />} />
-          <Route path='/detailed' exact render={() => <DetailedView events={this.state.eventsPlaceHolder} />} />
+          <Route path='/' exact render={() => <MainView events={this.state.eventsAll} />} />
+          <Route path='/detailed' exact render={() => <DetailedView events={this.state.eventsAll} />} />
           <Route path='/settings' exact render={() => <SettingsView />} />
         </Switch>
       </Router>
