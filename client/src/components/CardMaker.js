@@ -49,11 +49,11 @@ export default function CardMaker({ event, animationTime }) {
   }
 
   function addToCalendar(event) {
-    console.log('Clicked on:', event)
+    // console.log('Clicked on:', event)
     let eventStart = new Date(event.time_start);
     let eventEnd;
     if (event.time_end) {
-      eventEnd = new Date(event_time.start);
+      eventEnd = new Date(event.time_end);
     } else {
       eventEnd = new Date(eventStart)
       eventEnd.setHours(eventEnd.getHours() + 2);
@@ -67,13 +67,13 @@ export default function CardMaker({ event, animationTime }) {
         dateTime: eventEnd
       }
     };
-    console.log(gCalEvent)
+    // console.log(gCalEvent)
     let request = window.gapi.client.calendar.events.insert({
       calendarId: 'primary',
       resource: gCalEvent
     });
     request.execute(function (event) {
-      console.log(event.htmlLink);
+      // console.log(event.htmlLink);
     });
 
   }
