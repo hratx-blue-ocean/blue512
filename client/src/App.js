@@ -103,18 +103,21 @@ export default class App extends Component {
     const tomorrowPlusPlusArr = [];
 
     events.forEach(event => {
-      if (event.time_start.split("T")[0].split('-')[2] === this.state.today) {
+      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today - 2) { // make sure to remove the minus 2 for development
         todayArr.push(event);
       }
-      if (event.time_start.split("T")[0].split('-')[2] === this.state.today + 1) {
+      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today + 1) {
         tomorrowArr.push(event);
       }
-      if (event.time_start.split("T")[0].split('-')[2] === this.state.today + 2) {
+      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today + 2) {
         tomorrowPlusPlusArr.push(event);
       }
     })
-    console.log(todayArr, 'todayArr');
-    // console.log(storage)
+    this.setState({
+      eventsToday: todayArr,
+      eventsTomorrow: tomorrowArr,
+      eventsTomorrowPlusPlus: tomorrowPlusPlusArr
+    })
   }
 
   handleLoadEvents(data) {
@@ -155,7 +158,7 @@ export default class App extends Component {
         />
         <Switch>
           <Route path='/' exact render={() => <MainView events={eventsAll} />} />
-          <Route path='/detailed' exact render={() => <DetailedView events={eventsAll} />} />
+          <Route path='/detailed' exact render={() => <DetailedView eventsToday={eventsToday} eventsTomorrow={eventsTomorrow} eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />} />
           <Route path='/settings' exact render={() => <SettingsView />} />
         </Switch>
       </Router>
