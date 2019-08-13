@@ -1,11 +1,8 @@
 import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
+import { AppBar, Toolbar, Typography, InputBase, Button } from '@material-ui/core/';
 import SearchIcon from '@material-ui/icons/Search';
-import Button from '@material-ui/core/Button';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -102,16 +99,16 @@ export default function PrimarySearchAppBar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
-          <Button className={classes.button}>
-        Page 1
-      </Button>
-      <Button  className={classes.button}>
-        Page 2
-      </Button>
+          <Button component={RouterLink} to="/" className={classes.button}>
+            Some Events
+          </Button>
+          <Button component={RouterLink} to="/detailed" className={classes.button}>
+            More Events
+          </Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-          <Button className={classes.Signupbutton} variant="h6" noWrap>
-            Sign up
+            <Button className={classes.Signupbutton} variant="h6" noWrap>
+              Sign up
           </Button>
           </div>
           <div className={classes.sectionMobile}>
