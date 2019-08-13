@@ -14,6 +14,7 @@ import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddCircle from '@material-ui/icons/AddCircle';
 import AddIcon from '@material-ui/icons/Add';
+import CalendarIcon from '@material-ui/icons/CalendarToday';
 import Button from '@material-ui/core/Button';
 import { Grow, Fab } from '@material-ui/core/';
 
@@ -117,7 +118,8 @@ export default function CardMaker({ event, animationTime }) {
           </IconButton>
 
           <Fab color="primary" aria-label="add" className={classes.fab}>
-            <AddIcon />
+            {/* <AddIcon /> */}
+            <CalendarIcon />
           </Fab>
 
           <IconButton
@@ -142,9 +144,6 @@ export default function CardMaker({ event, animationTime }) {
             <Typography paragraph>
               This should link to event.description if it exists
             </Typography>
-            <Button>Next Suggestion</Button>
-            <Button>Add to Calendar</Button>
-            <Button>Buy Tickets</Button>
           </CardContent>
         </Collapse>
 
