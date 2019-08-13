@@ -1,7 +1,7 @@
 import React               from 'react';
 import MicroCardMaker      from './MicroCardMaker.js'
 import { makeStyles }      from '@material-ui/core/styles';
-import { Grid, Tabs, Tab } from '@material-ui/core/';
+import { Grid } from '@material-ui/core/';
 
 const useStyles = makeStyles(theme => ({
   root: {

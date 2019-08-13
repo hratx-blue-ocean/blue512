@@ -25,6 +25,6 @@ describe('Top level App component', () => {
     expect(mountedWrapper.find(MainView)).toHaveLength(1);
   });
   test('it has the correct state shape', () => {
-    expect(wrapper.state().eventsPlaceHolder).toBeInstanceOf(Object);
+    expect(wrapper.state().eventsAll).toBeInstanceOf(Object);
   });
 });
