@@ -18,7 +18,7 @@ import CalendarIcon from '@material-ui/icons/CalendarToday';
 import Button from '@material-ui/core/Button';
 import { Grow, Fab } from '@material-ui/core/';
 import moment from 'moment';
-
+import Link from '@material-ui/core/Link';
 
 
 const useStyles = makeStyles(theme => ({
@@ -99,8 +99,10 @@ export default function CardMaker({ event, animationTime }) {
         />
 
         <CardContent>
-          <Typography variant="h6">
-            {event.name}
+          <Typography variant="h6"  >
+            <Link href={event.url} color="textPrimary">
+              {event.name}
+            </Link>
           </Typography>
           <Typography variant="body2" color="textSecondary">
             {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
