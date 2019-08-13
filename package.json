@@ -7,6 +7,9 @@
     "setup": "npm install && cd ./client && npm install ; cd ../server && npm install",
     "test": "cd ./client && npm test",
     "launch": "cd ./client && npm run-script build && cd ../server && node bin/www && cd ../client webpack-dev-server &",
+    "build": "cd ./client && npm run-script buildOnce",
+    "dev-server": "cd ./server/bin && node www",
+    "dev-server-travis": "cd ./server/bin && node www &",
     "lint:client": "cd ./client && ./node_modules/.bin/eslint \"src/**/*.{js,jsx}\" && echo 'Your code has passed the linting guidelines' || echo 'Please fix the errors listed above'",
     "lint:server": "cd ./server && ../node_modules/.bin/eslint \"routes/**/*.js\" 2>/dev/null && echo 'Your code has passed the linting guidelines' || echo 'Please fix the errors listed above'"
   },
@@ -22,6 +25,7 @@
   "homepage": "https://github.com/selder18/blue-ocean-rewrite#readme",
   "dependencies": {
     "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
     "cron": "^1.7.1",
     "dotenv": "^8.0.0",
     "pg": "^7.12.1"
