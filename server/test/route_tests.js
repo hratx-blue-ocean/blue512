@@ -22,3 +22,18 @@ describe('GET', () => {
         .catch(err => {throw err});
   });
 });
+
+
+describe('GET', () => {
+  it('should return all events for route "/api/getEvents" with no params', () => {
+    return chai
+      .request(host)
+      .get('/api/getEvents')
+      .then(res => {
+          should.exist(res);
+          expect(res.status).to.equal(200);
+          res.body.should.be.a('object');
+        })
+        .catch(err => {throw err});
+  });
+});

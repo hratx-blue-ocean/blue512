@@ -21,20 +21,20 @@ router.post("/events", (req, res) => {
   verify(req.body.token)
     .then(data => {
       query.addNewUser(data)
-      .then(_ => {
-        let queries = req.body.calendar_items.map(item => {
-          return query.addNewUnavailable({user_id: data.id, ...item});
+        .then(_ => {
+          let queries = req.body.calendar_items.map(item => {
+            return query.addNewUnavailable({ user_id: data.id, ...item });
+          })
+          return Promise.all(queries);
         })
-        return Promise.all(queries);
-      })
-      .then(_ => query.getUserPreferences(data.id))
-      .then(data => {
-        const categories = data.rows.map(row => row.name);
-        return query.getAllEventsExcludingCategories(categories)
-      })
-      .then(response => {
-        res.json({ userInfo: data, events: response.rows })
-      })
+        .then(_ => query.getUserPreferences(data.id))
+        .then(data => {
+          const categories = data.rows.map(row => row.name);
+          return query.getAllEventsExcludingCategories(categories)
+        })
+        .then(response => {
+          res.json({ userInfo: data, events: response.rows })
+        })
     })
     .catch(err => {
       console.log("CAUTION: ", err);
@@ -59,7 +59,7 @@ async function verify(token) {
   const first_name = payload["given_name"];
   const last_name = payload["family_name"];
   const avatar_url = payload["picture"];
-  return {id, email, first_name, last_name, avatar_url};
+  return { id, email, first_name, last_name, avatar_url };
 }
 
 module.exports = router;

@@ -28,7 +28,10 @@
     "body-parser": "^1.19.0",
     "cron": "^1.7.1",
     "dotenv": "^8.0.0",
-    "pg": "^7.12.1"
+    "latlng-to-zip": "0.0.2",
+    "pg": "^7.12.1",
+    "setup": "0.0.3",
+    "zipcodes": "^8.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
