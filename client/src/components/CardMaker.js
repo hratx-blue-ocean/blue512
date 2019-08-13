@@ -92,7 +92,7 @@ export default function CardMaker({ event }) {
       />
       <CardMedia
         className={classes.media}
-        image={event.image}
+        image={event.img}
         title="Paella dish"
       />
       <CardContent>
