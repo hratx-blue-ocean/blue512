@@ -1,8 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import DetailedView from '../components/DetailedView';
-import MicroCardMaker from '../components/MicroCardMaker';
-import Details from '../components/Details';
+import MicroCardContainer from '../components/MicroCardContainer';
 import { Grid, Container } from '@material-ui/core/';
 
 describe('Detailed View component', () => {
@@ -69,7 +68,6 @@ describe('Detailed View component', () => {
   test('it renders the corect child components', () => {
     expect(wrapper.find(Grid).length).toBeGreaterThan(0);
     expect(wrapper.find(Container).length).toBeGreaterThan(0);
-    expect(wrapper.find(MicroCardMaker).length).toBeGreaterThan(0);
-    expect(wrapper.find(Details).length).toBeGreaterThan(0);
+    expect(wrapper.find(MicroCardContainer).length).toBeGreaterThan(0);
   });
 });
