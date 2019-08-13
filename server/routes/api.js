@@ -62,7 +62,9 @@ router.get("/categories", async (req, res) => {
           .getUserCategoryPreferences(user.id)
           .then(({ rows }) => res.send({ categories, userPreferences: rows }));
       })
-      .catch(console.log);
+      .catch(_ => {
+        res.send({ categories });
+      });
   }
 });
 
