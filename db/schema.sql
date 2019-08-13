@@ -1,17 +1,10 @@
 CREATE TABLE users (
-  id serial NOT NULL,
-  name varchar,
+  id VARCHAR UNIQUE NOT NULL,
+  first_name varchar,
+  last_name varchar,
+  email varchar,
+  avatar_url varchar,
   CONSTRAINT pk_users PRIMARY KEY (
-    id
-   )
-);
-
-CREATE TABLE sessions (
-  id serial NOT NULL,
-  user_id int,
-  token varchar,
-  CONSTRAINT unique_token UNIQUE (token),
-  CONSTRAINT pk_sessions PRIMARY KEY (
     id
    )
 );
@@ -20,7 +13,7 @@ CREATE TABLE unavailable (
   id serial NOT NULL,
   time_Start varchar,
   time_End varchar,
-  user_id int,
+  user_id VARCHAR,
   CONSTRAINT pk_unavailable PRIMARY KEY (
     id
    )
@@ -67,7 +60,7 @@ CREATE TABLE categories (
 
 CREATE TABLE users_experiences (
   id serial NOT NULL,
-  user_id int,
+  user_id VARCHAR UNIQUE,
   experience_id int,
   CONSTRAINT pk_users_experiences PRIMARY KEY (
     id
@@ -76,17 +69,15 @@ CREATE TABLE users_experiences (
 
 CREATE TABLE users_categories (
   id serial NOT NULL,
-  user_id int,
+  user_id VARCHAR UNIQUE,
   category_id int,
+  preferred boolean,
   CONSTRAINT pk_users_categories PRIMARY KEY (
     id
    )
 );
 
-ALTER TABLE sessions ADD CONSTRAINT fk_sessions_user_id FOREIGN KEY(user_id)
-REFERENCES users (id);
-
-ALTER TABLE unavailable ADD CONSTRAINT fk_unvailable_user_id FOREIGN KEY(user_id)
+ALTER TABLE unavailable ADD CONSTRAINT fk_unavailable_user_id FOREIGN KEY(user_id)
 REFERENCES users (id);
 
 ALTER TABLE experiences ADD CONSTRAINT fk_experiences_source_api_id FOREIGN KEY(source_api_id)

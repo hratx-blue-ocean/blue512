@@ -118,11 +118,57 @@ const addEvent = event => {
   return db.query(query);
 };
 
+const addNewUser = data => {
+  const { id, first_name, last_name, email, avatar_url } = data;
+  const query = {
+    text:
+      "INSERT INTO users (id, first_name, last_name, email, avatar_url) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO NOTHING",
+    values: [id, first_name, last_name, email, avatar_url]
+  };
+
+  return db.query(query);
+};
+
+const getUserData = id => {
+  const query = {
+    text : 'SELECT * FROM users WHERE id = $1',
+    values : [id]
+  }
+
+  return db.query(query);
+}
+
+const getUserPreferences = id => {
+  const query = {
+    text: 'SELECT c.name FROM users_categories uc INNER JOIN categories c ON uc.category_id=c.id WHERE uc.user_id = $1',
+    values : [id]
+  }
+
+  return db.query(query);
+}
+const addNewUnavailable = data => {
+  const time_start = data.start.dateTime;
+  const time_end = data.end.dateTime;
+  const { user_id } = data;
+  const item_id = data.id;
+
+  const query =  {
+    text: 'INSERT INTO unavailable (time_start, time_end, user_id, item_id) VALUES ($1, $2, $3, $4) ON CONFLICT (item_id) DO NOTHING',
+    values : [time_start, time_end, user_id, item_id]
+  }
+
+  return db.query(query)
+}
+
 module.exports = {
   getAllEvents,
   getAllEventsExcludingCategories,
   getAllCategories,
   addEvent,
   addNewCategory,
-  addNewAPISource
+  addNewAPISource,
+  addNewUser,
+  getUserData,
+  getUserPreferences,
+  addNewUnavailable
 };
