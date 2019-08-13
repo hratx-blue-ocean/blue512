@@ -4,7 +4,7 @@ import DetailedView from "./components/DetailedView.js";
 import Navbar from "./components/Navbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import axios from "axios";
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 import SettingsView from './components/SettingsView'
 // import './App.css';
 
@@ -15,7 +15,8 @@ export default class App extends Component {
     this.state = {
       isSignedIn: null,
       PORT: 9000,
-      eventsPlaceHolder: [
+      userToken: '',
+      eventsAll: [
         {
           source_API: "TicketMaster",
           name: "Hayes Carll",
@@ -25,7 +26,7 @@ export default class App extends Component {
           time_start: "2019-08-11T02:00:00Z",
           time_end: null,
           category: "Music",
-          image:
+          img:
             "https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg",
           venue: "Gruene Hall",
           location: "New Braunfels",
@@ -42,7 +43,7 @@ export default class App extends Component {
           time_start: "2019-08-11T02:00:00Z",
           time_end: null,
           category: "Music",
-          image:
+          img:
             "https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg",
           venue: "Gruene Hall",
           location: "New Braunfels",
@@ -59,7 +60,7 @@ export default class App extends Component {
           time_start: "2019-08-11T02:00:00Z",
           time_end: null,
           category: "Music",
-          image:
+          img:
             "https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg",
           venue: "Gruene Hall",
           location: "New Braunfels",
@@ -67,7 +68,11 @@ export default class App extends Component {
           price_max: null,
           description: null
         }
-      ]
+      ],
+      eventsToday: [],
+      eventsTomorrow: [],
+      eventsTomorrowPlusPlus: [],
+      clickedMicroCard: []
     };
     this.api = `http://localhost:8000/api/example`;
   }
@@ -89,7 +94,7 @@ export default class App extends Component {
 
   handleLoadEvents(data) {
     this.setState({
-      eventsPlaceHolder: data.events,
+      eventsAll: data.events,
       user: data.userInfo,
       isSignedIn: true
     });
@@ -104,15 +109,15 @@ export default class App extends Component {
       )
       .then(data =>
         this.setState({
-          eventsPlaceHolder: data.data.events,
+          eventsAll: data.data.events,
           isSignedIn: isSignedIn
         })
       )
-      .catch(console.log);
+      .catch();
   }
 
   render() {
-    const { isSignedIn, eventsPlaceHolder, PORT } = this.state;
+    const { isSignedIn, eventsAll, PORT } = this.state;
     return (
       <Router>
         <Navbar
@@ -121,8 +126,8 @@ export default class App extends Component {
           isSignedIn={isSignedIn}
         />
         <Switch>
-          <Route path='/' exact render={() => <MainView events={this.state.eventsPlaceHolder} />} />
-          <Route path='/detailed' exact render={() => <DetailedView events={this.state.eventsPlaceHolder} />} />
+          <Route path='/' exact render={() => <MainView events={eventsAll} />} />
+          <Route path='/detailed' exact render={() => <DetailedView events={eventsAll} />} />
           <Route path='/settings' exact render={() => <SettingsView />} />
         </Switch>
       </Router>

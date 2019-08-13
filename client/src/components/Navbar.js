@@ -104,7 +104,7 @@ export default function PrimarySearchAppBar(props) {
         }
       )
       .then(res => props.loadEvents(res.data))
-      .catch(console.log);
+      .catch();
   };
 
   const signOut = function() {
@@ -131,7 +131,7 @@ export default function PrimarySearchAppBar(props) {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography className={classes.title} >
             GoDo
           </Typography>
           <div className={classes.search}>
