@@ -22,11 +22,10 @@ CREATE TABLE unavailable (
 CREATE TABLE experiences (
   id serial NOT NULL,
   name varchar,
-  source_api_id int,
+  source_api_id varchar,
   experience_api_id varchar,
   description varchar,
   url varchar,
-  img varchar,
   venue varchar,
   location varchar,
   time_start varchar,
@@ -34,6 +33,7 @@ CREATE TABLE experiences (
   price_min varchar,
   price_max varchar,
   category_id int,
+  img varchar,
   CONSTRAINT unique_source_id UNIQUE (source_api_id),
   CONSTRAINT pk_experiences PRIMARY KEY (
     id
@@ -76,6 +76,9 @@ CREATE TABLE users_categories (
     id
    )
 );
+
+ALTER TABLE sessions ADD CONSTRAINT fk_sessions_user_id FOREIGN KEY(user_id)
+REFERENCES users (id);
 
 ALTER TABLE unavailable ADD CONSTRAINT fk_unavailable_user_id FOREIGN KEY(user_id)
 REFERENCES users (id);
