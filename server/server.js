@@ -5,6 +5,12 @@ const express = require('express');
 const app = express();
 const query = require('../db/query.js');
 const cronOperations = require('../db/cron.js');
+const path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 
 /*
@@ -28,6 +34,8 @@ xapp.get('/someOtherRoute', async(req, res) => {
 }
 */
 
+//test route for testing OAuth configuration
+
 // open up CORS 
 app.use((_, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -36,7 +44,7 @@ app.use((_, res, next) => {
 });
 
 app.use(logger('dev'));
-
+app.use('/', express.static(path.join(__dirname, '../client/oauth/')));
 // You can place your routes here, feel free to refactor:
 const { api } = require('./routes');
 app.use('/api/', api)

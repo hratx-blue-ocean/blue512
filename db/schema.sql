@@ -1,32 +1,28 @@
-CREATE TABLE users (
-  id serial NOT NULL,
-  name varchar,
+CREATE TABLE users
+(
+  id VARCHAR UNIQUE NOT NULL,
+  first_name varchar,
+  last_name varchar,
+  email varchar,
+  avatar_url varchar,
   CONSTRAINT pk_users PRIMARY KEY (
     id
    )
 );
 
-CREATE TABLE sessions (
-  id serial NOT NULL,
-  user_id int,
-  token varchar,
-  CONSTRAINT unique_token UNIQUE (token),
-  CONSTRAINT pk_sessions PRIMARY KEY (
-    id
-   )
-);
-
-CREATE TABLE unavailable (
+CREATE TABLE unavailable
+(
   id serial NOT NULL,
   time_Start varchar,
   time_End varchar,
-  user_id int,
+  user_id VARCHAR,
   CONSTRAINT pk_unavailable PRIMARY KEY (
     id
    )
 );
 
-CREATE TABLE experiences (
+CREATE TABLE experiences
+(
   id serial NOT NULL,
   name varchar,
   source_api_id varchar,
@@ -40,17 +36,14 @@ CREATE TABLE experiences (
   price_min varchar,
   price_max varchar,
   category_id int,
-<<<<<<< HEAD
-  img varchar,
-=======
   CONSTRAINT unique_source_id UNIQUE (source_api_id),
->>>>>>> ac80d14f229fdc1385125ca81cdc6335c2ce9d33
   CONSTRAINT pk_experiences PRIMARY KEY (
     id
    )
 );
 
-CREATE TABLE api (
+CREATE TABLE api
+(
   id serial NOT NULL,
   name varchar,
   CONSTRAINT unique_api_name UNIQUE(name),
@@ -59,7 +52,8 @@ CREATE TABLE api (
    )
 );
 
-CREATE TABLE categories (
+CREATE TABLE categories
+(
   id serial NOT NULL,
   name varchar,
   CONSTRAINT unique_categories_name UNIQUE(name),
@@ -68,26 +62,26 @@ CREATE TABLE categories (
    )
 );
 
-CREATE TABLE users_experiences (
+CREATE TABLE users_experiences
+(
   id serial NOT NULL,
-  user_id int,
+  user_id VARCHAR UNIQUE,
   experience_id int,
   CONSTRAINT pk_users_experiences PRIMARY KEY (
     id
    )
 );
 
-CREATE TABLE users_categories (
+CREATE TABLE users_categories
+(
   id serial NOT NULL,
-  user_id int,
+  user_id VARCHAR UNIQUE,
   category_id int,
+  preferred boolean,
   CONSTRAINT pk_users_categories PRIMARY KEY (
     id
    )
 );
-
-ALTER TABLE sessions ADD CONSTRAINT fk_sessions_user_id FOREIGN KEY(user_id)
-REFERENCES users (id);
 
 ALTER TABLE unavailable ADD CONSTRAINT fk_unavailable_user_id FOREIGN KEY(user_id)
 REFERENCES users (id);
