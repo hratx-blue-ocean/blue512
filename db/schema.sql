@@ -13,8 +13,8 @@ CREATE TABLE users
 CREATE TABLE unavailable
 (
   id serial NOT NULL,
-  time_Start varchar,
-  time_End varchar,
+  time_start varchar,
+  time_end varchar,
   user_id VARCHAR,
   CONSTRAINT pk_unavailable PRIMARY KEY (
     id
@@ -36,12 +36,9 @@ CREATE TABLE experiences
   price_min varchar,
   price_max varchar,
   category_id int,
-<<<<<<< HEAD
-=======
   img varchar,
->>>>>>> e87c61977034b14a8a33fb2ca276592e1a03b535
   CONSTRAINT unique_source_id UNIQUE (source_api_id),
-  CONSTRAINT pk_experiences PRIMARY KEY (
+  CONSTRAINT pk_experiences PRIMARY KEY ( 
     id
    )
 );
@@ -79,7 +76,7 @@ CREATE TABLE users_experiences
 CREATE TABLE users_categories
 (
   id serial NOT NULL,
-  user_id VARCHAR UNIQUE,
+  user_id VARCHAR,
   category_id int,
   preferred boolean,
   CONSTRAINT pk_users_categories PRIMARY KEY (
@@ -87,12 +84,9 @@ CREATE TABLE users_categories
    )
 );
 
-<<<<<<< HEAD
-=======
 ALTER TABLE sessions ADD CONSTRAINT fk_sessions_user_id FOREIGN KEY(user_id)
 REFERENCES users (id);
 
->>>>>>> e87c61977034b14a8a33fb2ca276592e1a03b535
 ALTER TABLE unavailable ADD CONSTRAINT fk_unavailable_user_id FOREIGN KEY(user_id)
 REFERENCES users (id);
 
