@@ -97,11 +97,13 @@ export default function CardMaker({ event, animationTime }) {
           image={event.img}
           title="Paella dish"
         />
+
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {eventStart}
           </Typography>
         </CardContent>
+
         <CardActions disableSpacing>
           <IconButton
             aria-label="add to calendar"
@@ -120,45 +122,23 @@ export default function CardMaker({ event, animationTime }) {
             <ExpandMoreIcon />
           </IconButton>
         </CardActions>
+
+        {/* Collapse Section */}
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {eventStart}
+            <Typography paragraph>Description:</Typography>
+            <Typography paragraph>
+              This should link to boilerplate message based on catagory
             </Typography>
+            <Typography paragraph>
+              This should link to event.description if it exists
+            </Typography>
+            <Button>Next Suggestion</Button>
+            <Button>Add to Calendar</Button>
+            <Button>Buy Tickets</Button>
           </CardContent>
-          <CardActions disableSpacing>
-            <IconButton
-              aria-label="add to calendar"
-              onClick={addToCalendar}
-            >
-              <AddCircle />
-            </IconButton>
-            <IconButton
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
-              })}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>Description:</Typography>
-              <Typography paragraph>
-                This should link to boilerplate message based on catagory
-              </Typography>
-              <Typography paragraph>
-                This should link to event.description if it exists
-              </Typography>
-              <Button>Next Suggestion</Button>
-              <Button>Add to Calendar</Button>
-              <Button>Buy Tickets</Button>
-            </CardContent>
-          </Collapse>
         </Collapse>
+
       </Card>
     </Grow>
   );
