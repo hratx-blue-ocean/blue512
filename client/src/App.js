@@ -75,8 +75,8 @@ export default class App extends Component {
       <>
         <h1>Welcome to Blue Ocean!</h1>
         <Navbar />
-        <MainView events={this.state.eventsPlaceHolder}/>
-        {/* <DetailedView events={this.state.eventsPlaceHolder} /> */}
+        {/* <MainView events={this.state.eventsPlaceHolder}/> */}
+        <DetailedView events={this.state.eventsPlaceHolder} />
       </>
     );
   }
