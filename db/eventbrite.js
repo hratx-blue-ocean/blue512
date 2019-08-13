@@ -9,8 +9,6 @@ const callAPI = () => {
   let longitude = "-97.7430608";
   let futureDate = Helpers._getDate().futureDateStr;
 
-  console.log("dates are ", futureDate);
-
   return axios
     .get(
       `https://www.eventbriteapi.com/v3/events/search/?token=${API_KEY_EVENTBRITE}&location.latitude=${latitude}&location.longitude=${longitude}&start_date.range_end=${futureDate}&expand=ticket_classes,venue,category`
