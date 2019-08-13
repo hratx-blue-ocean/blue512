@@ -1,14 +1,8 @@
-<<<<<<< HEAD
-import React               from 'react';
-// import { makeStyles }      from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core/';
-=======
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core/';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Grid from "@material-ui/core/Grid";
->>>>>>> boilerplate for details in detailView
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,18 +16,14 @@ export default function Details({ event }) {
   return (
     <Grid item xs={9}>
       <div>
-<<<<<<< HEAD
-        Details of clicked MicroCard with a nice prop {event.name}
-=======
         <Paper className={classes.root}>
           <Typography variant="h5" component="h3">
-            {event.name}
+            This is a sheet of paper.
         </Typography>
           <Typography component="p">
             Paper can be used to build surface or other elements for your application.
         </Typography>
         </Paper>
->>>>>>> boilerplate for details in detailView
       </div>
     </Grid>
   )
