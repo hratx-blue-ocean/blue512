@@ -136,12 +136,8 @@ export default function CardMaker({ event, animationTime }) {
 
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>Description:</Typography>
             <Typography paragraph>
-              This should link to boilerplate message based on catagory
-            </Typography>
-            <Typography paragraph>
-              This should link to event.description if it exists
+              Description? {event.description}
             </Typography>
           </CardContent>
         </Collapse>
