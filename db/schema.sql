@@ -1,4 +1,5 @@
-CREATE TABLE users (
+CREATE TABLE users
+(
   id VARCHAR UNIQUE NOT NULL,
   first_name varchar,
   last_name varchar,
@@ -9,7 +10,8 @@ CREATE TABLE users (
    )
 );
 
-CREATE TABLE unavailable (
+CREATE TABLE unavailable
+(
   id serial NOT NULL,
   time_Start varchar,
   time_End varchar,
@@ -19,7 +21,8 @@ CREATE TABLE unavailable (
    )
 );
 
-CREATE TABLE experiences (
+CREATE TABLE experiences
+(
   id serial NOT NULL,
   name varchar,
   source_api_id varchar,
@@ -40,7 +43,8 @@ CREATE TABLE experiences (
    )
 );
 
-CREATE TABLE api (
+CREATE TABLE api
+(
   id serial NOT NULL,
   name varchar,
   CONSTRAINT unique_api_name UNIQUE(name),
@@ -49,7 +53,8 @@ CREATE TABLE api (
    )
 );
 
-CREATE TABLE categories (
+CREATE TABLE categories
+(
   id serial NOT NULL,
   name varchar,
   CONSTRAINT unique_categories_name UNIQUE(name),
@@ -58,7 +63,8 @@ CREATE TABLE categories (
    )
 );
 
-CREATE TABLE users_experiences (
+CREATE TABLE users_experiences
+(
   id serial NOT NULL,
   user_id VARCHAR UNIQUE,
   experience_id int,
@@ -67,7 +73,8 @@ CREATE TABLE users_experiences (
    )
 );
 
-CREATE TABLE users_categories (
+CREATE TABLE users_categories
+(
   id serial NOT NULL,
   user_id VARCHAR UNIQUE,
   category_id int,
@@ -100,3 +107,21 @@ REFERENCES users (id);
 
 ALTER TABLE users_categories ADD CONSTRAINT fk_users_categories_category_id FOREIGN KEY(category_id)
 REFERENCES categories (id);
+
+CREATE FUNCTION delete_old_unavailable()
+  RETURNS trigger
+  LANGUAGE plpgsql
+  AS $OLDUNAVAILABLE$
+BEGIN
+  DELETE FROM limiter WHERE timestamp < NOW();
+  RETURN NULL;
+END;
+$OLDUNAVAILABLE$
+
+
+CREATE TRIGGER trigger_delete_old_rows
+    AFTER
+INSERT ON
+limiter
+EXECUTE PROCEDURE delete_old_rows
+();

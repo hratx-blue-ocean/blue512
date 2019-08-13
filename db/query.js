@@ -23,14 +23,14 @@ const getAllEventsExcludingCategories = arrayOfCategories => {
     while (i <= length) {
       str += `c.name != $${i}`;
       if (i < length) {
-				str += ` AND `;
+        str += ` AND `;
       }
-			i++;
-		}
+      i++;
+    }
     return str;
-	};
-	
-	const conditionalString = buildConditional(arrayOfCategories.length);
+  };
+
+  const conditionalString = buildConditional(arrayOfCategories.length);
 
   const query = {
     text: `SELECT e.name, e.description, e.url, e.img, e.venue, e.location, e.time_start, 
@@ -45,7 +45,7 @@ const getAllEventsExcludingCategories = arrayOfCategories => {
 const getAllCategories = () => {
   const query = {
     name: "Categories",
-    text: "SELECT * FROM Categories",
+    text: "SELECT name FROM Categories",
     values: []
   };
 
@@ -58,6 +58,29 @@ const addNewCategory = category => {
     text:
       "INSERT INTO categories (name) VALUES ($1) ON CONFLICT (name) DO NOTHING",
     values: [category]
+  };
+
+  return db.query(query);
+};
+
+const getUserCategoryPreferences = user_id => {
+  const query = {
+    name: "getUserCategoryPreferences",
+    text:
+      "SELECT c.name, uc.preferred FROM users_categories uc LEFT OUTER JOIN categories c ON uc.category_id=c.id WHERE user_id=$1",
+    values: [user_id]
+  };
+
+  return db.query(query);
+};
+
+const changeUserCategoryPreference = data => {
+  const { user_id, category, preferred } = data;
+  const query = {
+    name: "changeUserCategoryPreference",
+    text:
+      "INSERT INTO users_categories (user_id, category_id, preferred) VALUES ($1, (SELECT id FROM categories WHERE name=$2), $3)",
+    values: [user_id, category, preferred]
   };
 
   return db.query(query);
@@ -131,34 +154,36 @@ const addNewUser = data => {
 
 const getUserData = id => {
   const query = {
-    text : 'SELECT * FROM users WHERE id = $1',
-    values : [id]
-  }
+    text: "SELECT * FROM users WHERE id = $1",
+    values: [id]
+  };
 
   return db.query(query);
-}
+};
 
-const getUserPreferences = id => {
-  const query = {
-    text: 'SELECT c.name FROM users_categories uc INNER JOIN categories c ON uc.category_id=c.id WHERE uc.user_id = $1',
-    values : [id]
-  }
+// const getUserPreferences = id => {
+//   const query = {
+//     text:
+//       "SELECT c.name FROM users_categories uc INNER JOIN categories c ON uc.category_id=c.id WHERE uc.user_id = $1",
+//     values: [id]
+//   };
 
-  return db.query(query);
-}
+//   return db.query(query);
+// };
 const addNewUnavailable = data => {
   const time_start = data.start.dateTime;
   const time_end = data.end.dateTime;
   const { user_id } = data;
   const item_id = data.id;
 
-  const query =  {
-    text: 'INSERT INTO unavailable (time_start, time_end, user_id, item_id) VALUES ($1, $2, $3, $4) ON CONFLICT (item_id) DO NOTHING',
-    values : [time_start, time_end, user_id, item_id]
-  }
+  const query = {
+    text:
+      "INSERT INTO unavailable (time_start, time_end, user_id, item_id) VALUES ($1, $2, $3, $4) ON CONFLICT (item_id) DO NOTHING",
+    values: [time_start, time_end, user_id, item_id]
+  };
 
-  return db.query(query)
-}
+  return db.query(query);
+};
 
 module.exports = {
   getAllEvents,
@@ -169,6 +194,6 @@ module.exports = {
   addNewAPISource,
   addNewUser,
   getUserData,
-  getUserPreferences,
-  addNewUnavailable
+  addNewUnavailable,
+  getUserCategoryPreferences
 };
