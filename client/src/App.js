@@ -76,6 +76,7 @@ export default class App extends Component {
     };
     this.api = `http://localhost:8000/api/example`;
   }
+
   componentDidMount() {
     window.addEventListener("GoogleAuthInit", e => {
       const { init, isSignedIn } = e.detail;
@@ -90,6 +91,11 @@ export default class App extends Component {
         this.loadEventsAnon(isSignedIn);
       }
     });
+    this.seperateEventsByDate(this.state.eventsAll);
+  }
+
+  seperateEventsByDate(events) {
+    console.log(events || `testing and didn't get events`);
   }
 
   handleLoadEvents(data) {
@@ -118,6 +124,7 @@ export default class App extends Component {
 
   render() {
     const { isSignedIn, eventsAll, PORT } = this.state;
+    console.log(eventsAll);
     return (
       <Router>
         <Navbar
