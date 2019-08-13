@@ -19,9 +19,9 @@ export default function PreferencesContainer({ categories, userPreferences }) {
           .map(cat => (
             <Preference
               cat={cat}
-              userPreference={userPreferences
-                .filter(pref => pref['name'] === cat)
-                .map(pref => pref['preferred'])}
+              userPreference={userPreferences.filter(
+                pref => pref['name'] === cat
+              )}
             />
           ))}
       </List>
