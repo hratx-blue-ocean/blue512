@@ -47,7 +47,34 @@ export default function CardMaker({ event }) {
     setExpanded(!expanded);
   }
 
-  function addToCalendar() {
+  function addToCalendar(event) {
+    console.log('Clicked on:', event)
+    let eventStart = new Date(event.time_start);
+    let eventEnd;
+    if (event.time_end) {
+      eventEnd = new Date(event_time.start);
+    } else {
+      eventEnd = new Date(eventStart)
+      eventEnd.setHours(eventEnd.getHours() + 2);
+    }
+    const gCalEvent = {
+      summary: event.name,
+      start: {
+        dateTime: eventStart
+      },
+      end: {
+        dateTime: eventEnd
+      }
+    };
+    console.log(gCalEvent)
+    let request = window.gapi.client.calendar.events.insert({
+      calendarId: 'primary',
+      resource: gCalEvent
+    });
+    request.execute(function (event) {
+      console.log(event.htmlLink);
+    });
+
   }
 
   let eventStart = Date(event.time_start).split("GMT")[0]
@@ -76,7 +103,7 @@ export default function CardMaker({ event }) {
       <CardActions disableSpacing>
         <IconButton
           aria-label="add to calendar"
-          onClick={addToCalendar}
+          onClick={() => { addToCalendar(event) }}
         >
           <AddCircle />
         </IconButton>
