@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 import MainView from './components/MainView.js'
 import DetailedView from './components/DetailedView.js'
 import Navbar from './components/Navbar.js'
@@ -11,6 +11,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userToken: '',
       eventsFirstThree: [],
       eventsAll: [
         {
@@ -59,9 +60,9 @@ export default class App extends Component {
           description: null
         }
       ],
-      eventsYesterday: [],
       eventsToday: [],
       eventsTomorrow: [],
+      eventsTomorrowPlusPlus: [],
       clickedMicroCard: []
     };
     this.api = `http://localhost:8000/api/example`;
