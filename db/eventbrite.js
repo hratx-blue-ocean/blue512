@@ -1,8 +1,8 @@
 const axios = require('axios');
 
-//https://www.eventbriteapi.com/v3/events/search/?token=${process.env.API_KEY_EVENTBRITE}B&location.latitude=30.2671530&location.longitude=-97.7430608&start_date.range_end=2019-08-15T00:00:00Z&expand=ticket_classes,category,venue
+//example query string: https://www.eventbriteapi.com/v3/events/search/?token=${process.env.API_KEY_EVENTBRITE}B&location.latitude=30.2671530&location.longitude=-97.7430608&start_date.range_end=2019-08-15T00:00:00Z&expand=ticket_classes,category,venue
 
-const getDate = () => {
+const _getDate = () => {
     let currentDate = new Date
     let futureDate = new Date()
 
@@ -27,31 +27,37 @@ const callAPI = () => {
     //Austin lat/long
     let latitude = '30.2671530'
     let longitude = '-97.7430608'
-    let futureDate = getDate().futureDateStr
+    let futureDate = _getDate().futureDateStr
 
-    return axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${process.env.API_KEY_EVENTBRITE}&location.latitude=${latitude}&location.longitude=${longitude}&start_date.range_end=${date}&expand=ticket_classes,venue,category`)
+    return axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${API_KEY_EVENTBRITE}&location.latitude=${latitude}&location.longitude=${longitude}&start_date.range_end=${futureDate}&expand=ticket_classes,venue,category`)
     .then(response => {
         return response.data.events
     })
     .catch(console.log)
 }
 
-
-const getPrices = (tickets) => {
-    let min = parseFloat(tickets[0].cost.major_value)
-    let max = parseFloat(tickets[0].cost.major_value)
-
-    for (let i=1; i<tickets.length; i++) {
-        if (parseFloat(tickets[i].cost.major_value) < min) {
-            min = parseFloat(tickets[i].cost.major_value)
-        } else if (parseFloat(tickets[i].cost.major_value) > max) {
-            max = parseFloat(tickets[i].cost.major_value)
-        }
+const _getPrices = (tickets) => {
+    let prices ={
+        min: null,
+        max: null
     }
+    if (tickets[0].cost) {
+        let min = parseFloat(tickets[0].cost.major_value)
+        let max = parseFloat(tickets[0].cost.major_value)
 
-    let prices = {
-        min: min,
-        max: max
+        for (let i=1; i<tickets.length; i++) {
+            if(tickets[i].cost) {
+                if (parseFloat(tickets[i].cost.major_value) < min) {
+                    min = parseFloat(tickets[i].cost.major_value)
+                } else if (parseFloat(tickets[i].cost.major_value) > max) {
+                    max = parseFloat(tickets[i].cost.major_value)
+                }
+            }
+        }
+        prices = {
+            min: min,
+            max: max
+        }
     }
 
     return prices
@@ -60,6 +66,7 @@ const getPrices = (tickets) => {
 const restructureData= (data) => {
     let events = [];
     data.forEach(event => {
+        // console.log(event)
         let restructured = {};
         restructured.source_API = 'Eventbrite';
         const { url, id } = event;
@@ -68,17 +75,19 @@ const restructureData= (data) => {
         restructured.event_id = id;
         restructured.time_start = event.start.local;
         restructured.time_end = event.end.local;
-        restructured.category = event.category.short_name || 'undefined';
-        restructured.image = event.logo.original.url;
-        restructured.venue = event.venue.name;
-        restructured.location = event._embedded.venues[0].city.name;
-        restructured.price_min = null;
-        restructured.price_max = null;
-        if(event.ticket_classes) {
-            prices = getPrices(event.ticket_classes)
-            restructured.price_min = prices.min;
-            restructured.price_max = prices.max;
+        restructured.category = 'undefined';
+        if (event.category_id) {
+            restructured.category = event.category.short_name
         }
+        restructured.image = null;
+        if (event.logo) {
+            restructured.image = event.logo.original.url;
+        }
+        restructured.venue = event.venue.name;
+        restructured.location = event.venue.address.city;
+        prices = _getPrices(event.ticket_classes)
+        restructured.price_min = prices.min;
+        restructured.price_max = prices.max;
         restructured.description = null;
         if(event.description) {
             restructured.description = event.description.text;
@@ -90,7 +99,9 @@ const restructureData= (data) => {
 }
 
 const getData = () => {
-    return callAPI().then(data => restructureData(data))
+    return callAPI().then(data => {
+        restructureData(data)
+    })
 }
 
 module.exports = { getData }
