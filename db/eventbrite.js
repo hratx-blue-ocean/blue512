@@ -11,7 +11,9 @@ const callAPI = () => {
 
   return axios
     .get(
-      `https://www.eventbriteapi.com/v3/events/search/?token=${API_KEY_EVENTBRITE}&location.latitude=${latitude}&location.longitude=${longitude}&start_date.range_end=${futureDate}&expand=ticket_classes,venue,category`
+      `https://www.eventbriteapi.com/v3/events/search/?token=${
+        process.env.API_KEY_EVENTBRITE
+      }&location.latitude=${latitude}&location.longitude=${longitude}&start_date.range_end=${futureDate}&expand=ticket_classes,venue,category`
     )
     .then(response => {
       return response.data.events;
@@ -82,9 +84,7 @@ const restructureData = data => {
 };
 
 const getData = () => {
-  return callAPI().then(data => {
-    restructureData(data);
-  });
+  return callAPI().then(data => restructureData(data));
 };
 
 module.exports = { getData };
