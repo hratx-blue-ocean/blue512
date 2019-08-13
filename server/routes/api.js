@@ -53,7 +53,6 @@ router.get('/categories', async (req, res) => {
     .getAllCategories()
     .then(({ rows }) => rows.map(category => category.name));
   const { token } = req.query;
-  console.log(`token looks like: ${token}`);
   if (!token) {
     res.send({ categories });
   } else {
