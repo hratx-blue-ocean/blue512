@@ -6,12 +6,10 @@ import { Grid, Container } from '@material-ui/core/';
 export default function DetailedView({ events }) {
   return (
     <>
-      <Container maxWidth="lg">
-        <Grid container>
-          <MicroCardContainer events={events} />
-          <Details event={events[0]} />
-        </Grid>
-      </Container>
+      <Grid container>
+        <MicroCardContainer events={events} />
+        <Details event={events[0]} />
+      </Grid>
     </>
   );
 
