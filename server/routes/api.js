@@ -20,21 +20,22 @@ router.get("/events", (req, res) => {
 router.post("/events", (req, res) => {
   verify(req.body.token)
     .then(data => {
-      query.addNewUser(data)
-      .then(_ => {
-        let queries = req.body.calendar_items.map(item => {
-          return query.addNewUnavailable({user_id: data.id, ...item});
+      query
+        .addNewUser(data)
+        .then(_ => {
+          let queries = req.body.calendar_items.map(item => {
+            return query.addNewUnavailable({ user_id: data.id, ...item });
+          });
+          return Promise.all(queries);
         })
-        return Promise.all(queries);
-      })
-      .then(_ => query.getUserPreferences(data.id))
-      .then(data => {
-        const categories = data.rows.map(row => row.name);
-        return query.getAllEventsExcludingCategories(categories)
-      })
-      .then(response => {
-        res.json({ userInfo: data, events: response.rows })
-      })
+        .then(_ => query.getUserPreferences(data.id))
+        .then(data => {
+          const categories = data.rows.map(row => row.name);
+          return query.getAllEventsExcludingCategories(categories);
+        })
+        .then(response => {
+          res.json({ userInfo: data, events: response.rows });
+        });
     })
     .catch(err => {
       console.log("CAUTION: ", err);
@@ -47,6 +48,24 @@ router.post("/events", (req, res) => {
     });
 });
 
+router.get("/categories", async (req, res) => {
+  const categories = await query
+    .getAllCategories()
+    .then(({ rows }) => rows.map(category => category.name));
+  const { token } = req.body;
+  if (!token) {
+    res.send({ categories });
+  } else {
+    verify(token)
+      .then(user => {
+        query
+          .getUserCategoryPreferences(user.id)
+          .then(({ rows }) => res.send({ categories, userPreferences: rows }));
+      })
+      .catch(console.log);
+  }
+});
+
 //Google Auth helper function
 async function verify(token) {
   const ticket = await client.verifyIdToken({
@@ -55,11 +74,11 @@ async function verify(token) {
   });
   const payload = ticket.getPayload();
   const id = payload["sub"];
-  const email = payload['email'];
+  const email = payload["email"];
   const first_name = payload["given_name"];
   const last_name = payload["family_name"];
   const avatar_url = payload["picture"];
-  return {id, email, first_name, last_name, avatar_url};
+  return { id, email, first_name, last_name, avatar_url };
 }
 
 module.exports = router;
