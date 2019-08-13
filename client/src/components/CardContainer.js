@@ -9,17 +9,17 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CardContainer({ event, day }) {
+export default function CardContainer({ event, day, animationTime }) {
   const classes = useStyles();
 
   return (
-  <>
-    <Grid item xs={12} md={4} className={classes.cardColumn}>
-      <Typography align="center">
-        {day}
-      </Typography>
-      <CardMaker event={event}/>
-    </Grid>
-  </>
+    <>
+      <Grid align="center" item xs={12} md={4} className={classes.cardColumn}>
+        <Typography align="center">
+          {day}
+        </Typography>
+        <CardMaker event={event} animationTime={animationTime} />
+      </Grid>
+    </>
   );
 }
