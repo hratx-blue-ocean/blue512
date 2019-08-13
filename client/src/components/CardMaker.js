@@ -15,6 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddCircle from '@material-ui/icons/AddCircle';
 import Button from '@material-ui/core/Button';
 import Grow from '@material-ui/core/Grow';
+import moment from 'moment';
 
 
 const useStyles = makeStyles(theme => ({
@@ -73,12 +74,12 @@ export default function CardMaker({ event, animationTime }) {
       resource: gCalEvent
     });
     request.execute(function (event) {
-      // console.log(event.htmlLink);
+      console.log(event.htmlLink);
     });
 
   }
+  let eventStart = moment(event.time_start).format('MMMM Do YYYY, h:mm:ss a');
 
-  let eventStart = Date(event.time_start).split("GMT")[0]
 
   return (
     <Grow in={true} timeout={animationTime}>
