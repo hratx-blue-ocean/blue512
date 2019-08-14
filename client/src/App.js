@@ -313,9 +313,7 @@ export default class App extends Component {
 
   loadEventsAnon(isSignedIn) {
     axios
-      .get(
-        `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${this.state.PORT}/api/events`
-      )
+      .get(`/api/events`)
       .then(data => {
         this.seperateEventsByDate(data.data.events);
         this.setState({
