@@ -11,9 +11,10 @@ const callAPI = () => {
             `https://api.predicthq.com/v1/events?active.gte=${
             dates.currentDateStr
             }&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`,
-            { headers: { Authorization: proccess.env.API_KEY_PREDICTHQ } }
+            { headers: { Authorization: process.env.API_KEY_PREDICTHQ } }
         )
         .then(res => {
+            console.log(res.data.results)
             return res.data.results;
         });
 };
@@ -28,9 +29,9 @@ const restructureData = async data => {
             const { title } = event;
 
             restructured.name = title || null;
-            restructured.url = null;
+            restructured.url =
 
-            restructured.event_id = event.id;
+                restructured.event_id = event.id;
             restructured.time_start = event.start;
             restructured.time_end = null;
             if (event.end) {
@@ -40,7 +41,9 @@ const restructureData = async data => {
             if (event.category) {
                 restructured.category = event.category;
             }
+
             restructured.image = null;
+
             restructured.venue = null;
             if (event.entities[0]) {
                 restructured.venue = event.entities[0].name;
@@ -52,6 +55,7 @@ const restructureData = async data => {
             if (event.description !== "") {
                 restructured.description = event.description;
             }
+            console.log(restructured.images)
             events.push(restructured);
         }
     });
@@ -62,4 +66,5 @@ const getData = () => {
     return callAPI().then(data => restructureData(data));
 };
 
+getData();
 module.exports = { getData };
