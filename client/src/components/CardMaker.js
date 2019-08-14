@@ -13,8 +13,12 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddCircle from '@material-ui/icons/AddCircle';
+import AddIcon from '@material-ui/icons/Add';
+import CalendarIcon from '@material-ui/icons/CalendarToday';
 import Button from '@material-ui/core/Button';
-import Grow from '@material-ui/core/Grow';
+import { Grow, Fab } from '@material-ui/core/';
+import moment from 'moment';
+import Link from '@material-ui/core/Link';
 
 
 const useStyles = makeStyles(theme => ({
@@ -73,42 +77,51 @@ export default function CardMaker({ event, animationTime }) {
       resource: gCalEvent
     });
     request.execute(function (event) {
+      console.log('event successfully added')
+      //Add notification or toast
       // console.log(event.htmlLink);
     });
 
   }
 
-  let eventStart = Date(event.time_start).split("GMT")[0]
 
   return (
     <Grow in={true} timeout={animationTime}>
       <Card className={classes.card}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              {event.name.substring(0, 3)}
-            </Avatar>
-          }
-          title={event.name}
-          subheader={event.venue}
-        />
+
+        {/* <CardHeader
+        // Stuff above the image would go here
+        /> */}
         <CardMedia
           className={classes.media}
           image={event.img}
           title="Paella dish"
         />
+
         <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {eventStart}
+          <Typography variant="h6"  >
+            <Link href={event.url} color="textPrimary">
+              {event.name}
+            </Link>
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            {event.venue}, {event.location}
           </Typography>
         </CardContent>
+
         <CardActions disableSpacing>
-          <IconButton
-            aria-label="add to calendar"
+          <Fab
+            color="primary"
+            aria-label="add"
             onClick={() => { addToCalendar(event) }}
           >
-            <AddCircle />
-          </IconButton>
+            {/* <AddIcon /> */}
+            <CalendarIcon />
+          </Fab>
+
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -120,45 +133,17 @@ export default function CardMaker({ event, animationTime }) {
             <ExpandMoreIcon />
           </IconButton>
         </CardActions>
+
+        {/* Collapse Section */}
+
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {eventStart}
+            <Typography paragraph>
+              Description? {event.description}
             </Typography>
           </CardContent>
-          <CardActions disableSpacing>
-            <IconButton
-              aria-label="add to calendar"
-              onClick={addToCalendar}
-            >
-              <AddCircle />
-            </IconButton>
-            <IconButton
-              className={clsx(classes.expand, {
-                [classes.expandOpen]: expanded,
-              })}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>Description:</Typography>
-              <Typography paragraph>
-                This should link to boilerplate message based on catagory
-              </Typography>
-              <Typography paragraph>
-                This should link to event.description if it exists
-              </Typography>
-              <Button>Next Suggestion</Button>
-              <Button>Add to Calendar</Button>
-              <Button>Buy Tickets</Button>
-            </CardContent>
-          </Collapse>
         </Collapse>
+
       </Card>
     </Grow>
   );
