@@ -1,34 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="./favicon.ico" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
-    />
-    <meta
-      name="google-signin-client_id"
-      content="931463011413-0bvf50njv2b3jpesej2psig60gpeb079.apps.googleusercontent.com"
-    />
-    <meta name="theme-color" content="#000000" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-    />
-    <title>Blue Ocean</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script src="./bundle.js"></script>
-    <script src="./script.js"></script>
-    <script
-      src="https://apis.google.com/js/platform.js?onload=renderButton"
-      async
-      defer
-      onload="this.onload=function(){};handleClientLoad()"
-    ></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="shortcut icon" href="./favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+  <meta name="google-signin-client_id"
+    content="931463011413-0bvf50njv2b3jpesej2psig60gpeb079.apps.googleusercontent.com" />
+  <meta name="theme-color" content="#000000" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+  <title>Blue Ocean</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script src="./bundle.js"></script>
+  <script src="./oauth.js"></script>
+  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer
+    onload="this.onload=function(){};handleClientLoad()"></script>
+</body>
+
 </html>
