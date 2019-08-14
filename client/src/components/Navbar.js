@@ -98,6 +98,7 @@ export default function PrimarySearchAppBar(props) {
       .catch();
   };
 
+
   const signOut = function () {
     var auth2 = window.gapi.auth2.getAuthInstance();
     auth2.signOut().then(() => { });
@@ -118,8 +119,19 @@ export default function PrimarySearchAppBar(props) {
       });
   };
 
+  const generateSettingsIcon = () => {
+    if (props.isSignedIn) {
+      return (
+        <MenuItem>
+          <IconButton component={RouterLink} to="/settings" color="inherit">
+            <SettingsIcon />
+          </IconButton>
+        </MenuItem>)
+    }
+  }
+
   return (
-    <div className={classes.grow}>
+    <div className={classes.grow} >
       <AppBar position="static">
         <Toolbar>
           <Typography className={classes.title} >
@@ -163,11 +175,7 @@ export default function PrimarySearchAppBar(props) {
                 <></>
               )}
           </div>
-          <MenuItem>
-            <IconButton component={RouterLink} to="/settings" color="inherit">
-              <SettingsIcon />
-            </IconButton>
-          </MenuItem>
+          {generateSettingsIcon()}
           <div className={classes.sectionMobile}>
           </div>
           <div className={classes.sectionMobile} />
