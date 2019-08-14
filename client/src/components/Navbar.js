@@ -90,10 +90,11 @@ export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
 
   const getData = function(id_token, calendar_items) {
-    console.log(id_token);
     axios
       .post(
-        `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${props.port}/api/events`,
+        `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${
+          props.port
+        }/api/events`,
         {
           token: id_token,
           calendar_items,
