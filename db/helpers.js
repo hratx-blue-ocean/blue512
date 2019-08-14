@@ -27,4 +27,24 @@ const _getDate = () => {
   return dates;
 };
 
-module.exports = { _getDate };
+const _categorize = category => {
+  if (category === "Music" || category === "concerts") {
+    category = "Music";
+  } else if (
+    category === "Arts & Theatre" ||
+    category === "Arts" ||
+    category === "performing-arts"
+  ) {
+    cateogry = "Arts & Theatre";
+  } else if (category === "Sports & Fitness" || category === "Sports") {
+    category = "Sports & Fitness";
+  } else if (category === "Other" || category === "undefined") {
+    category = "Other";
+  } else if (category === "Community" || category === "community") {
+    cateogry = "Community";
+  }
+
+  return category;
+};
+
+module.exports = { _getDate, _categorize };

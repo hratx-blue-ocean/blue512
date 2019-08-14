@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { _getDate } = require("./helpers.js");
+const { _getDate, _categorize } = require("./helpers.js");
 
 const callAPI = () => {
   let dates = _getDate();
@@ -34,9 +34,11 @@ const restructureData = data => {
     if (event.dates.end) {
       restructured.time_end = event.dates.end.dateTime;
     }
-    restructured.category = "undefined";
+    restructured.category = "Other";
     if (event.classifications) {
-      restructured.category = event.classifications[0].segment.name;
+      restructured.category = _categorize(
+        event.classifications[0].segment.name
+      );
     }
     restructured.image = event.images[0].url;
     restructured.venue = event._embedded.venues[0].name;

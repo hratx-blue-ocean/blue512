@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { _getDate } = require("./helpers.js");
+const { _getDate, _categorize } = require("./helpers.js");
 
 //example query string: https://www.eventbriteapi.com/v3/events/search/?token=${process.env.API_KEY_EVENTBRITE}&location.latitude=30.2671530&location.longitude=-97.7430608&start_date.range_end=2019-08-15T00:00:00Z&expand=ticket_classes,category,venue
 
@@ -58,9 +58,9 @@ const restructureData = data => {
     restructured.event_id = id;
     restructured.time_start = event.start.local;
     restructured.time_end = event.end.local;
-    restructured.category = "undefined";
+    restructured.category = "Other";
     if (event.category_id) {
-      restructured.category = event.category.short_name;
+      restructured.category = _categorize(event.category.short_name);
     }
     restructured.image = null;
     if (event.logo) {
