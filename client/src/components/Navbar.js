@@ -132,7 +132,7 @@ export default function PrimarySearchAppBar(props) {
 
   return (
     <div className={classes.grow} >
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <Typography className={classes.title} >
             GoDo
