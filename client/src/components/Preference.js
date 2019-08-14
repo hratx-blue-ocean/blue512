@@ -37,17 +37,25 @@ const marks = [
   }
 ];
 
-export default function PreferencesContainer({ cat, userPreference }) {
+export default function PreferencesContainer({
+  cat,
+  userPreference,
+  userToken,
+  handleChange
+}) {
   const classes = useStyles();
-  const preferred = userPreference.length ? userPreference[0] : 'No Preference';
-  const defaultPreferredSliderValue =
-    preferred === true ? 100 : preferred === false ? 0 : 50;
+  // if the user has a preference for the category, userPreference will be an object that references the category ID and their preference
+  console.log(userPreference);
+  // const userPreference = userPreference ? userPreference : null;
+  const defaultuserPreferenceSliderValue = !userPreference
+    ? 50
+    : userPreference['preferred']
+    ? 100
+    : 0;
   return (
     <>
       <ListItem>
-        <ListItemText
-          primary={`${cat} + ${preferred} + ${defaultPreferredSliderValue}`}
-        />
+        <ListItemText primary={`${cat}`} />
         <ListItemSecondaryAction>
           <div className={classes.root}>
             <Slider
@@ -56,8 +64,16 @@ export default function PreferencesContainer({ cat, userPreference }) {
               step={null}
               valueLabelDisplay="auto"
               marks={marks}
-              defaultValue={defaultPreferredSliderValue}
-              onChangeCommitted={(event, value) => console.log(value)}
+              defaultValue={defaultuserPreferenceSliderValue}
+              onChangeCommitted={(event, value) => {
+                console.log(userPreference);
+                const category = cat;
+                const id = userPreference ? userPreference['id'] : null;
+                const token = userToken;
+                const preferred =
+                  value === 100 ? true : value === 0 ? false : null;
+                handleChange({ category, id, token, preferred });
+              }}
             />
           </div>
         </ListItemSecondaryAction>

@@ -9,7 +9,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PreferencesContainer({ categories, userPreferences }) {
+export default function PreferencesContainer({
+  categories,
+  userPreferences,
+  handleChange,
+  userToken
+}) {
   const classes = useStyles();
   return (
     <>
@@ -19,7 +24,9 @@ export default function PreferencesContainer({ categories, userPreferences }) {
           .map(cat => (
             <Preference
               cat={cat}
-              userPreference={userPreferences.filter(
+              handleChange={handleChange}
+              userToken={userToken}
+              userPreference={userPreferences.find(
                 pref => pref['name'] === cat
               )}
             />
