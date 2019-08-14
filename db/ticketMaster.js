@@ -53,12 +53,13 @@ const restructureData = data => {
         }
         events.push(restructured);
     });
-
+    console.log(events)
     return events;
 };
 
 const getData = () => {
     return callAPI().then(data => restructureData(data));
 };
+getData();
 
 module.exports = { getData };
