@@ -276,9 +276,9 @@ export default class App extends Component {
     // console.log(events || `testing and didn't get events`); 
     // '2019-08-16T00:00:00.000Z'
     const todayArr = [],
-          tomorrowArr = [],
-          tomorrowPlusPlusArr = []
-          
+      tomorrowArr = [],
+      tomorrowPlusPlusArr = []
+
     alsoEvents.forEach(event => {
       let parsedTimeStart = Number(event.time_start.split('T')[0].split('-')[2]);
 
@@ -308,11 +308,11 @@ export default class App extends Component {
       userToken: data.id_token
     });
   }
-  
+
   loadEventsAnon(isSignedIn) {
     axios
       .get(
-        `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${this.state.PORT}/api/events`
+        `/api/events`
       )
       .then(data => {
         this.seperateEventsByDate(data.data.events);

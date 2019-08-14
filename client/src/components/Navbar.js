@@ -93,7 +93,7 @@ export default function PrimarySearchAppBar(props) {
   const getData = function (id_token, calendar_items) {
     axios
       .post(
-        `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${props.port}/api/events`,
+        `/api/events`,
         {
           token: id_token,
           calendar_items,
