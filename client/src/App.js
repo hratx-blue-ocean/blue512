@@ -1,11 +1,10 @@
-import React, { Component } from "react";
-import MainView from "./components/MainView.js";
-import DetailedView from "./components/DetailedView.js";
-import Navbar from "./components/Navbar";
+import React, { Component }  from "react";
+import MainView              from "./components/MainView.js";
+import DetailedView          from "./components/DetailedView.js";
+import Navbar                from "./components/Navbar";
+import axios                 from "axios";
+import SettingsView          from './components/SettingsView'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import axios from "axios";
-// import fetch from 'node-fetch';
-import SettingsView from './components/SettingsView'
 // import './App.css';
 
 export default class App extends Component {
@@ -76,11 +75,13 @@ export default class App extends Component {
       today: ''
     };
     this.api = `http://localhost:8000/api/example`;
+    this.seperateEventsByDate = this.seperateEventsByDate.bind(this);
   }
 
   componentDidMount() {
     let today = new Date();
     this.setState({ today: Number(String(today.getDate()).padStart(2, 0)) });
+
     window.addEventListener("GoogleAuthInit", e => {
       const { init, isSignedIn } = e.detail;
       if (init && !isSignedIn) {
@@ -96,20 +97,23 @@ export default class App extends Component {
     });
   }
 
-  seperateEventsByDate(events) {
+  seperateEventsByDate(alsoEvents) {
     // console.log(events || `testing and didn't get events`); 
-    const todayArr = [];
-    const tomorrowArr = [];
-    const tomorrowPlusPlusArr = [];
+    // "2019-08-16T00:00:00.000Z"
+    const todayArr = [],
+          tomorrowArr = [],
+          tomorrowPlusPlusArr = []
+          
+    alsoEvents.forEach(event => {
+      let parsedTimeStart = Number(event.time_start.split("T")[0].split('-')[2]);
 
-    events.forEach(event => {
-      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today - 2) { // make sure to remove the minus 2 for development
+      if (parsedTimeStart === this.state.today) { // make sure to remove the minus 2 for development
         todayArr.push(event);
       }
-      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today + 1) {
+      if (parsedTimeStart === this.state.today + 1) {
         tomorrowArr.push(event);
       }
-      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today + 2) {
+      if (parsedTimeStart === this.state.today + 2) {
         tomorrowPlusPlusArr.push(event);
       }
     })
@@ -121,29 +125,31 @@ export default class App extends Component {
   }
 
   handleLoadEvents(data) {
+    this.seperateEventsByDate(data.events);
     this.setState({
       eventsAll: data.events,
       user: data.userInfo,
       isSignedIn: true
     });
   }
-
+  
   loadEventsAnon(isSignedIn) {
     axios
-      .get(
-        `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${
+    .get(
+      `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${
         this.state.PORT
-        }/api/events`
+      }/api/events`
       )
-      .then(data =>
+      .then(data => {
+        this.seperateEventsByDate(data.data.events);
         this.setState({
           eventsAll: data.data.events,
           isSignedIn: isSignedIn
-        })
-      )
-      .then(() => {
-        this.seperateEventsByDate(this.state.eventsAll)
+        });
       })
+      //   .then(() => {
+      //     console.log('signed in & within loadEventsAnon:', this.state.eventsAll)
+      // })
       .catch();
   }
 
@@ -157,8 +163,16 @@ export default class App extends Component {
           isSignedIn={isSignedIn}
         />
         <Switch>
-          <Route path='/' exact render={() => <MainView events={eventsAll} />} eventsToday={eventsToday} eventsTomorrow={eventsTomorrow} eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />
-          <Route path='/detailed' exact render={() => <DetailedView events={eventsAll} eventsToday={eventsToday} eventsTomorrow={eventsTomorrow} eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />} />
+          <Route path='/' exact render={() => <MainView events={eventsAll} />} 
+            eventsToday={eventsToday} 
+            eventsTomorrow={eventsTomorrow} 
+            eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} 
+          />
+          <Route path='/detailed' exact render={() => <DetailedView events={eventsAll} 
+            eventsToday={eventsToday} 
+            eventsTomorrow={eventsTomorrow} 
+            eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />} 
+          />
           <Route path='/settings' exact render={() => <SettingsView />} />
         </Switch>
       </Router>
