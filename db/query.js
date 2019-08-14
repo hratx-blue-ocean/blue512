@@ -230,5 +230,7 @@ module.exports = {
   changeUserCategoryPreference,
   addUserCategoryPreference,
   deleteUserCategoryPreference,
-  getUserPreferences
+  getUserPreferences,
+  deleteOldExperiences,
+  deleteOldUnavailable
 };
