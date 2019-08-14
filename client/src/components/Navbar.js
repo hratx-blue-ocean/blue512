@@ -129,7 +129,7 @@ export default function PrimarySearchAppBar(props) {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Typography className={classes.title}>GoDo</Typography>
+          <Typography className={classes.title}>CityScout</Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
