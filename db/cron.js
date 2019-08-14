@@ -1,8 +1,8 @@
-const { addEvent, addNewCategory, addNewAPISource } = require("./query.js");
-const TicketMaster = require("./ticketMaster.js");
-const EventBrite = require("./eventbrite.js");
-const PredictHQ = require("./PredictHq.js");
-const CronJob = require("cron").CronJob;
+const { addEvent, addNewCategory, addNewAPISource } = require('./query.js');
+const TicketMaster = require('./ticketMaster.js');
+const EventBrite = require('./eventbrite.js');
+const PredictHQ = require('./PredictHq.js');
+const CronJob = require('cron').CronJob;
 
 const saveTicketMasterData = async () => {
   const events = await TicketMaster.getData();
@@ -34,7 +34,7 @@ const savePredictHQData = async () => {
   });
 };
 
-const atMidnightEveryDay = new CronJob("0 0 0 * * *", () => {
+const atMidnightEveryDay = new CronJob('0 0 0 * * *', () => {
   saveTicketMasterData()
     .then(console.log)
     .catch(console.log);
