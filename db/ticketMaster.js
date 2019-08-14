@@ -1,10 +1,10 @@
-const axios = require("axios");
-const { _getDate, _categorize } = require("./helpers.js");
+const axios = require('axios');
+const { _getDate, _categorize } = require('./helpers.js');
 
 const callAPI = () => {
   let dates = _getDate();
-  let latitude = "30.2671530";
-  let longitude = "-97.7430608";
+  let latitude = '30.2671530';
+  let longitude = '-97.7430608';
 
   return axios
     .get(
@@ -24,7 +24,7 @@ const restructureData = data => {
   let events = [];
   data.forEach(event => {
     let restructured = {};
-    restructured.source_API = "TicketMaster";
+    restructured.source_API = 'TicketMaster';
     const { name, url } = event;
     restructured.name = name || null;
     restructured.url = url || null;
@@ -34,7 +34,7 @@ const restructureData = data => {
     if (event.dates.end) {
       restructured.time_end = event.dates.end.dateTime;
     }
-    restructured.category = "Other";
+    restructured.category = 'Other';
     if (event.classifications) {
       restructured.category = _categorize(
         event.classifications[0].segment.name
