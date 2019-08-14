@@ -7,14 +7,12 @@ export default class SettingsView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: '',
       categories: [],
       userPreferences: ''
     };
     this.postNewPreference = this.postNewPreference.bind(this);
   }
   componentDidMount() {
-    console.log(this.props.userToken);
     axios
       .get(`/api/categories?token=${this.props.userToken}`)
       .then(results => results.data)
@@ -24,7 +22,6 @@ export default class SettingsView extends React.Component {
   }
 
   postNewPreference({ category, id, token, preferred }) {
-    console.log('token is: ', token);
     axios
       .post(`/api/categories`, {
         category,
