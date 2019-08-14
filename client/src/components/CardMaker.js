@@ -90,7 +90,7 @@ export default function CardMaker({ event, animationTime }) {
       <Card className={classes.card}>
 
         {/* <CardHeader
-          Stuff above the image would go here
+        // Stuff above the image would go here
         /> */}
         <CardMedia
           className={classes.media}
