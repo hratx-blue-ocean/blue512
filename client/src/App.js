@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import MainView from './components/MainView.js';
 import DetailedView from './components/DetailedView.js';
@@ -273,16 +272,19 @@ export default class App extends Component {
   }
 
   seperateEventsByDate(alsoEvents) {
-    // console.log(events || `testing and didn't get events`); 
+    // console.log(events || `testing and didn't get events`);
     // '2019-08-16T00:00:00.000Z'
     const todayArr = [],
-          tomorrowArr = [],
-          tomorrowPlusPlusArr = []
-          
-    alsoEvents.forEach(event => {
-      let parsedTimeStart = Number(event.time_start.split('T')[0].split('-')[2]);
+      tomorrowArr = [],
+      tomorrowPlusPlusArr = [];
 
-      if (parsedTimeStart === this.state.today) { // make sure to remove the minus 2 for development
+    alsoEvents.forEach(event => {
+      let parsedTimeStart = Number(
+        event.time_start.split('T')[0].split('-')[2]
+      );
+
+      if (parsedTimeStart === this.state.today) {
+        // make sure to remove the minus 2 for development
         todayArr.push(event);
       }
       if (parsedTimeStart === this.state.today + 1) {
@@ -308,7 +310,7 @@ export default class App extends Component {
       userToken: data.id_token
     });
   }
-  
+
   loadEventsAnon(isSignedIn) {
     axios
       .get(
@@ -371,7 +373,12 @@ export default class App extends Component {
           <Route
             path="/settings"
             exact
-            render={() => <SettingsView userToken={this.state.userToken} />}
+            render={() => (
+              <SettingsView
+                user={this.state.user}
+                userToken={this.state.userToken}
+              />
+            )}
           />
         </Switch>
       </Router>
