@@ -1,8 +1,8 @@
 const axios = require("axios");
-const Helpers = require("./helpers.js");
+const { _getDate } = require("./helpers.js");
 
 const callAPI = () => {
-  let dates = Helpers._getDate();
+  let dates = _getDate();
 
   return axios
     .get(
