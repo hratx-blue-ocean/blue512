@@ -1,4 +1,4 @@
-// function onSuccess(googleUser) {
+function onSuccess(googleUser) {}
 //   // const id_token = googleUser.getAuthResponse().id_token;
 //   // setTimeout(() => {
 //   //   window.getCalData(id_token);
