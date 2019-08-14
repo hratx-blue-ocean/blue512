@@ -10,6 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 const useStyles = makeStyles({
   card: {
     maxWidth: '100%',
+    minWidth: '100%'
   },
   media: {
     height: 120,

@@ -11,11 +11,12 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    maxWidth: 360,
+    // maxWidth: ,
     backgroundColor: theme.palette.background.paper,
   },
-  cardColumn: {
-    padding: 10
+  Tab: {
+    flexGrow: 1,
+    width: '100%'
   }
 }));
 
@@ -26,10 +27,8 @@ export default function MicroCardContainer({ eventsToday, eventsTomorrow, events
   function handleChange(event, newValue) {
     setValue(newValue);
   }
-  console.log(eventsToday);
-  return (
 
-    // Build mini navbar onto container
+  return (
 
     <Grid item xs={4}>
       <Paper className={classes.root}>
@@ -38,6 +37,7 @@ export default function MicroCardContainer({ eventsToday, eventsTomorrow, events
           onChange={handleChange}
           indicatorColor='primary'
           textColor='primary'
+          variant='fullWidth'
           centered
         >
           <Tab label='Today' />
@@ -52,18 +52,5 @@ export default function MicroCardContainer({ eventsToday, eventsTomorrow, events
         }
       </List>
     </Grid>
-
   );
-
 }
-      // {/* <Grid item xs={12} className={classes.cardColumn}>
-      // </Grid>
-      // <Grid item xs={12} className={classes.cardColumn}>
-      //   <MicroCardMaker event={events[0]} />
-      // </Grid>
-      // <Grid item xs={12} className={classes.cardColumn}>
-      //   <MicroCardMaker event={events[0]} />
-      // </Grid>
-      // <Grid item xs={12} className={classes.cardColumn}>
-      //   <MicroCardMaker event={events[0]} />
-      // </Grid> */}
