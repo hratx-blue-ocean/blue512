@@ -3,11 +3,9 @@ import {
   ListItem,
   ListItemText,
   Slider,
-  Typography,
   ListItemSecondaryAction
 } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
-import { mergeClasses } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,8 +43,6 @@ export default function PreferencesContainer({
 }) {
   const classes = useStyles();
   // if the user has a preference for the category, userPreference will be an object that references the category ID and their preference
-  console.log(userPreference);
-  // const userPreference = userPreference ? userPreference : null;
   const defaultuserPreferenceSliderValue = !userPreference
     ? 50
     : userPreference['preferred']
@@ -66,7 +62,6 @@ export default function PreferencesContainer({
               marks={marks}
               defaultValue={defaultuserPreferenceSliderValue}
               onChangeCommitted={(event, value) => {
-                console.log(userPreference);
                 const category = cat;
                 const id = userPreference ? userPreference['id'] : null;
                 const token = userToken;
