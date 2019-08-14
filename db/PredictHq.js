@@ -42,7 +42,15 @@ const restructureData = async data => {
                 restructured.category = event.category;
             }
 
-            restructured.image = null;
+            restructured.image = await
+            axios.get(
+                `https://serpapi.com/search.json?q=${restructured.name}&location=Austin%2C+Texas%2C+United+States&hl=en&gl=us&output=json&tbm=isch&source=test`
+            )
+                .then(res => {
+                    console.log(res.data.images_results[0].original)
+                    return res.data.images_results[0].original
+                })
+                .catch(err => console.log(err));
 
             restructured.venue = null;
             if (event.entities[0]) {
