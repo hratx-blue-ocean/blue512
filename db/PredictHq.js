@@ -7,16 +7,12 @@ const callAPI = () => {
     let dates = Helpers._getDate();
 
     return axios
-        .get(
-            `https://api.predicthq.com/v1/events?active.gte=${
-            dates.currentDateStr
-            }&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`,
-            { headers: { Authorization: process.env.API_KEY_PREDICTHQ } }
-        )
+        .get(`https://api.predicthq.com/v1/events?active.gte=${dates.currentDateStr}&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`, { headers: { "Authorization": process.env.API_KEY_PREDICTHQ } })
         .then(res => {
-            console.log(res.data.results)
+            console.log(res.data)
             return res.data.results;
-        });
+        })
+        .catch(err => console.log(err))
 };
 
 const restructureData = async data => {
@@ -42,15 +38,16 @@ const restructureData = async data => {
                 restructured.category = event.category;
             }
 
-            restructured.image = await
-            axios.get(
-                `https://serpapi.com/search.json?q=${restructured.name}&location=Austin%2C+Texas%2C+United+States&hl=en&gl=us&output=json&tbm=isch&source=test`
-            )
-                .then(res => {
-                    console.log(res.data.images_results[0].original)
-                    return res.data.images_results[0].original
-                })
-                .catch(err => console.log(err));
+            restructured.image = null;
+            // restructured.image = await
+            // axios.get(
+            //     `https://serpapi.com/search.json?q=${restructured.name}&location=Austin%2C+Texas%2C+United+States&hl=en&gl=us&output=json&tbm=isch&source=test`
+            // )
+            //     .then(res => {
+            //         console.log(res.data.images_results[0].original)
+            //         return res.data.images_results[0].original
+            //     })
+            //     .catch(err => console.log(err));
 
             restructured.venue = null;
             if (event.entities[0]) {
