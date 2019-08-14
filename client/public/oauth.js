@@ -9,7 +9,7 @@ function onFailure(error) {
 
 function renderButton() {
   window.gapi.signin2.render("my-signin2", {
-    scope: "profile email https://www.googleapis.com/auth/calendar",
+    scope: "profile email https://www.googleapis.com/auth/calendar.events",
     width: 100,
     height: 30,
     longtitle: false,
@@ -31,7 +31,7 @@ function initClient() {
     discoveryDocs: [
       "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"
     ],
-    scope: "https://www.googleapis.com/auth/calendar"
+    scope: "https://www.googleapis.com/auth/calendar.events"
   });
   window.gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => {
     window.dispatchEvent(

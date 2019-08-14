@@ -1,10 +1,12 @@
-import React, { Component }  from 'react';
-import MainView              from './components/MainView.js';
-import DetailedView          from './components/DetailedView.js';
-import Navbar                from './components/Navbar';
-import axios                 from 'axios';
-import SettingsView          from './components/SettingsView'
+
+import React, { Component } from 'react';
+import MainView from './components/MainView.js';
+import DetailedView from './components/DetailedView.js';
+import Navbar from './components/Navbar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import axios from 'axios';
+// import fetch from 'node-fetch';
+import SettingsView from './components/SettingsView';
 // import './App.css';
 
 export default class App extends Component {
@@ -81,7 +83,6 @@ export default class App extends Component {
   componentDidMount() {
     let today = new Date();
     this.setState({ today: Number(String(today.getDate()).padStart(2, 0)) });
-
     window.addEventListener('GoogleAuthInit', e => {
       const { init, isSignedIn } = e.detail;
       if (init && !isSignedIn) {
@@ -116,12 +117,12 @@ export default class App extends Component {
       if (parsedTimeStart === this.state.today + 2) {
         tomorrowPlusPlusArr.push(event);
       }
-    })
+    });
     this.setState({
       eventsToday: todayArr,
       eventsTomorrow: tomorrowArr,
       eventsTomorrowPlusPlus: tomorrowPlusPlusArr
-    })
+    });
   }
 
   handleLoadEvents(data) {
@@ -129,16 +130,15 @@ export default class App extends Component {
     this.setState({
       eventsAll: data.events,
       user: data.userInfo,
-      isSignedIn: true
+      isSignedIn: true,
+      userToken: data.id_token
     });
   }
   
   loadEventsAnon(isSignedIn) {
     axios
-    .get(
-      `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${
-        this.state.PORT
-      }/api/events`
+      .get(
+        `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${this.state.PORT}/api/events`
       )
       .then(data => {
         this.seperateEventsByDate(data.data.events);
@@ -154,7 +154,14 @@ export default class App extends Component {
   }
 
   render() {
-    const { isSignedIn, eventsAll, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, PORT } = this.state;
+    const {
+      isSignedIn,
+      eventsAll,
+      eventsToday,
+      eventsTomorrow,
+      eventsTomorrowPlusPlus,
+      PORT
+    } = this.state;
     return (
       <Router>
         <Navbar
@@ -163,17 +170,35 @@ export default class App extends Component {
           isSignedIn={isSignedIn}
         />
         <Switch>
-          <Route path='/' exact render={() => <MainView events={eventsAll} />} 
-            eventsToday={eventsToday} 
-            eventsTomorrow={eventsTomorrow} 
-            eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} 
+          <Route
+            path="/"
+            exact
+            render={() => (
+              <MainView
+                events={eventsAll}
+                eventsToday={eventsToday}
+                eventsTomorrow={eventsTomorrow}
+                eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+              />
+            )}
           />
-          <Route path='/detailed' exact render={() => <DetailedView events={eventsAll} 
-            eventsToday={eventsToday} 
-            eventsTomorrow={eventsTomorrow} 
-            eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />} 
+          <Route
+            path="/detailed"
+            exact
+            render={() => (
+              <DetailedView
+                events={eventsAll}
+                eventsToday={eventsToday}
+                eventsTomorrow={eventsTomorrow}
+                eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+              />
+            )}
           />
-          <Route path='/settings' exact render={() => <SettingsView />} />
+          <Route
+            path="/settings"
+            exact
+            render={() => <SettingsView userToken={this.state.userToken} />}
+          />
         </Switch>
       </Router>
     );
