@@ -15,7 +15,7 @@ export default function CardContainer({ event, day, animationTime }) {
   return (
     <>
       <Grid align="center" item xs={12} md={4} className={classes.cardColumn}>
-        <Typography align="center">
+        <Typography variant="h5" align="center" gutterBottom={true}>
           {day}
         </Typography>
         <CardMaker event={event} animationTime={animationTime} />

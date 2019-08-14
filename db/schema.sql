@@ -13,8 +13,8 @@ CREATE TABLE users
 CREATE TABLE unavailable
 (
   id serial NOT NULL,
-  time_Start varchar,
-  time_End varchar,
+  time_start varchar,
+  time_end varchar,
   user_id VARCHAR,
   CONSTRAINT pk_unavailable PRIMARY KEY (
     id
@@ -37,8 +37,8 @@ CREATE TABLE experiences
   price_max varchar,
   category_id int,
   img varchar,
-  CONSTRAINT unique_source_id UNIQUE (source_api_id),
-  CONSTRAINT pk_experiences PRIMARY KEY (
+  CONSTRAINT unique_source_id UNIQUE (experience_api_id),
+  CONSTRAINT pk_experiences PRIMARY KEY ( 
     id
    )
 );
@@ -76,7 +76,7 @@ CREATE TABLE users_experiences
 CREATE TABLE users_categories
 (
   id serial NOT NULL,
-  user_id VARCHAR UNIQUE,
+  user_id VARCHAR,
   category_id int,
   preferred boolean,
   CONSTRAINT pk_users_categories PRIMARY KEY (

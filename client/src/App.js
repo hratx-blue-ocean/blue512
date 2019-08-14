@@ -72,11 +72,15 @@ export default class App extends Component {
       eventsToday: [],
       eventsTomorrow: [],
       eventsTomorrowPlusPlus: [],
-      clickedMicroCard: []
+      clickedMicroCard: [],
+      today: ''
     };
     this.api = `http://localhost:8000/api/example`;
   }
+
   componentDidMount() {
+    let today = new Date();
+    this.setState({ today: Number(String(today.getDate()).padStart(2, 0)) });
     window.addEventListener('GoogleAuthInit', e => {
       const { init, isSignedIn } = e.detail;
       if (init && !isSignedIn) {
@@ -89,6 +93,40 @@ export default class App extends Component {
       if (!isSignedIn) {
         this.loadEventsAnon(isSignedIn);
       }
+    });
+  }
+
+  seperateEventsByDate(events) {
+    // console.log(events || `testing and didn't get events`);
+    const todayArr = [];
+    const tomorrowArr = [];
+    const tomorrowPlusPlusArr = [];
+
+    events.forEach(event => {
+      if (
+        Number(event.time_start.split('T')[0].split('-')[2]) ===
+        this.state.today - 2
+      ) {
+        // make sure to remove the minus 2 for development
+        todayArr.push(event);
+      }
+      if (
+        Number(event.time_start.split('T')[0].split('-')[2]) ===
+        this.state.today + 1
+      ) {
+        tomorrowArr.push(event);
+      }
+      if (
+        Number(event.time_start.split('T')[0].split('-')[2]) ===
+        this.state.today + 2
+      ) {
+        tomorrowPlusPlusArr.push(event);
+      }
+    });
+    this.setState({
+      eventsToday: todayArr,
+      eventsTomorrow: tomorrowArr,
+      eventsTomorrowPlusPlus: tomorrowPlusPlusArr
     });
   }
 
@@ -112,11 +150,21 @@ export default class App extends Component {
           isSignedIn: isSignedIn
         })
       )
+      .then(() => {
+        this.seperateEventsByDate(this.state.eventsAll);
+      })
       .catch();
   }
 
   render() {
-    const { isSignedIn, eventsAll, PORT } = this.state;
+    const {
+      isSignedIn,
+      eventsAll,
+      eventsToday,
+      eventsTomorrow,
+      eventsTomorrowPlusPlus,
+      PORT
+    } = this.state;
     return (
       <Router>
         <Navbar
@@ -128,12 +176,26 @@ export default class App extends Component {
           <Route
             path="/"
             exact
-            render={() => <MainView events={eventsAll} />}
+            render={() => (
+              <MainView
+                events={eventsAll}
+                eventsToday={eventsToday}
+                eventsTomorrow={eventsTomorrow}
+                eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+              />
+            )}
           />
           <Route
             path="/detailed"
             exact
-            render={() => <DetailedView events={eventsAll} />}
+            render={() => (
+              <DetailedView
+                events={eventsAll}
+                eventsToday={eventsToday}
+                eventsTomorrow={eventsTomorrow}
+                eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+              />
+            )}
           />
           <Route
             path="/settings"

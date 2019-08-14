@@ -15,7 +15,7 @@ const tomorrow = moment().add(1, 'days').format('dddd')
 const tomorrowPlusPlus = moment().add(2, 'days').format('dddd')
 
 
-export default function MainView({ events }) {
+export default function MainView({ events, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus }) {
   // const classes = useStyles();
 
   return (

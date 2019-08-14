@@ -33,7 +33,8 @@ describe('CardMaker component', () => {
 
   test('it renders the correct child components', () => {
     expect(wrapper.find(Card).length).toBe(1); // exactly 1 card
-    expect(wrapper.find(CardHeader).length).toBe(1);
+    //CardHeader was removed
+    // expect(wrapper.find(CardHeader).length).toBe(1);
     expect(wrapper.find(CardContent).length).toBeGreaterThan(0);
     expect(wrapper.find(Typography).length).toBeGreaterThan(0);
   });
