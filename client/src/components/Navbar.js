@@ -137,7 +137,9 @@ export default function PrimarySearchAppBar(props) {
   }
 
   return (
-    <div className={classes.grow} >
+    <div className={classes.grow} style={{
+      marginBottom: 64
+    }}>
       <AppBar position="fixed">
         <Toolbar>
           <Typography className={classes.title}>CityScout</Typography>
@@ -185,6 +187,6 @@ export default function PrimarySearchAppBar(props) {
           <div className={classes.sectionMobile} />
         </Toolbar>
       </AppBar>
-    </div>
+    </div >
   );
 }
