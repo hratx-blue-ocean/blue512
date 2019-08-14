@@ -4,17 +4,17 @@ import App from './App.js';
 
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { yellow, red, blue } from '@material-ui/core/colors';
+import { yellow, red, blue, purple, deepPurple } from '@material-ui/core/colors';
 
-//Set global theme here
+//Set global theme here (WIP)
 const theme = createMuiTheme({
   palette: {
-    // primary: yellow
+    primary: blue,
 
-    primary: {
-      // light: "#7986cb",
+    secondary: {
+      // light:,
       main: "#ff1744",
-      // dark: "#303f9f",
+      // dark: 
     },
     background: {
       paper: "#fff",

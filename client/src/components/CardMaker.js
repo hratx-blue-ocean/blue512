@@ -95,7 +95,7 @@ export default function CardMaker({ event, animationTime }) {
         <CardMedia
           className={classes.media}
           image={event.img}
-          title="Paella dish"
+        // title="Paella dish"
         />
 
         <CardContent>
@@ -114,7 +114,7 @@ export default function CardMaker({ event, animationTime }) {
 
         <CardActions disableSpacing>
           <Fab
-            color="primary"
+            color="secondary"
             aria-label="add"
             onClick={() => { addToCalendar(event) }}
           >
