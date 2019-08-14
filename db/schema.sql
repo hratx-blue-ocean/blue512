@@ -37,7 +37,7 @@ CREATE TABLE experiences
   price_max varchar,
   category_id int,
   img varchar,
-  CONSTRAINT unique_source_id UNIQUE (source_api_id),
+  CONSTRAINT unique_source_id UNIQUE (experience_api_id),
   CONSTRAINT pk_experiences PRIMARY KEY ( 
     id
    )
