@@ -53,7 +53,6 @@ const restructureData = data => {
         }
         events.push(restructured);
     });
-    console.log(events)
     return events;
 };
 

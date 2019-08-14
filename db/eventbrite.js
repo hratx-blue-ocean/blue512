@@ -16,7 +16,6 @@ const callAPI = () => {
             }&location.latitude=${latitude}&location.longitude=${longitude}&start_date.range_end=${futureDate}&expand=ticket_classes,venue,category`
         )
         .then(response => {
-            console.log(response.data.events)
             return response.data.events;
         })
         .catch(console.log);
@@ -78,7 +77,6 @@ const restructureData = data => {
         }
         events.push(restructured);
     });
-    console.log(events)
     return events;
 };
 

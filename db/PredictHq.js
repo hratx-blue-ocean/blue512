@@ -14,7 +14,6 @@ const callAPI = () => {
             { headers: { Authorization: process.env.API_KEY_PREDICTHQ } }
         )
         .then(res => {
-            console.log(res.data.results)
             return res.data.results;
         });
 };
@@ -63,7 +62,6 @@ const restructureData = async data => {
             if (event.description !== "") {
                 restructured.description = event.description;
             }
-            console.log(restructured.images)
             events.push(restructured);
         }
     });
