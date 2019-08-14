@@ -3,7 +3,8 @@ import {
   ListItem,
   ListItemText,
   Slider,
-  ListItemSecondaryAction
+  ListItemSecondaryAction,
+  Divider
 } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -50,7 +51,7 @@ export default function PreferencesContainer({
     : 0;
   return (
     <>
-      <ListItem>
+      <ListItem style={{ margin: 10 }}>
         <ListItemText primary={`${cat}`} />
         <ListItemSecondaryAction>
           <div className={classes.root}>
@@ -73,6 +74,7 @@ export default function PreferencesContainer({
           </div>
         </ListItemSecondaryAction>
       </ListItem>
+      <Divider />
     </>
   );
 }
