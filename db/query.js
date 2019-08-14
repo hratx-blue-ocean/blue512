@@ -23,14 +23,14 @@ const getAllEventsExcludingCategories = arrayOfCategories => {
     while (i <= length) {
       str += `c.name != $${i}`;
       if (i < length) {
-				str += ` AND `;
+        str += ` AND `;
       }
-			i++;
-		}
+      i++;
+    }
     return str;
-	};
-	
-	const conditionalString = buildConditional(arrayOfCategories.length);
+  };
+
+  const conditionalString = buildConditional(arrayOfCategories.length);
 
   const query = {
     text: `SELECT e.name, e.description, e.url, e.img, e.venue, e.location, e.time_start, 
@@ -91,13 +91,7 @@ const addEvent = event => {
   } = event;
   const query = {
     name: "addEvent",
-    text: `INSERT INTO experiences (name, source_api_id, 
-       experience_api_id, description, url, img, venue, 
-       location, time_start, time_end, price_min, price_max, category_id) 
-       VALUES ($1, (SELECT id FROM api WHERE name=$2), 
-       $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, 
-      (SELECT id FROM categories WHERE name=$13))
-      ON CONFLICT (experience_api_id) DO NOTHING`,
+    text: `INSERT INTO experiences (name, source_api_id, experience_api_id, description, url, img, venue, location, time_start, time_end, price_min, price_max, category_id) VALUES ($1, (SELECT id FROM api WHERE name=$2), $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, (SELECT id FROM categories WHERE name=$13)) ON CONFLICT (experience_api_id) DO NOTHING`,
     values: [
       name,
       source_API,
@@ -131,34 +125,36 @@ const addNewUser = data => {
 
 const getUserData = id => {
   const query = {
-    text : 'SELECT * FROM users WHERE id = $1',
-    values : [id]
-  }
+    text: "SELECT * FROM users WHERE id = $1",
+    values: [id]
+  };
 
   return db.query(query);
-}
+};
 
 const getUserPreferences = id => {
   const query = {
-    text: 'SELECT c.name FROM users_categories uc INNER JOIN categories c ON uc.category_id=c.id WHERE uc.user_id = $1',
-    values : [id]
-  }
+    text:
+      "SELECT c.name FROM users_categories uc INNER JOIN categories c ON uc.category_id=c.id WHERE uc.user_id = $1",
+    values: [id]
+  };
 
   return db.query(query);
-}
+};
 const addNewUnavailable = data => {
   const time_start = data.start.dateTime;
   const time_end = data.end.dateTime;
   const { user_id } = data;
   const item_id = data.id;
 
-  const query =  {
-    text: 'INSERT INTO unavailable (time_start, time_end, user_id, item_id) VALUES ($1, $2, $3, $4) ON CONFLICT (item_id) DO NOTHING',
-    values : [time_start, time_end, user_id, item_id]
-  }
+  const query = {
+    text:
+      "INSERT INTO unavailable (time_start, time_end, user_id, item_id) VALUES ($1, $2, $3, $4) ON CONFLICT (item_id) DO NOTHING",
+    values: [time_start, time_end, user_id, item_id]
+  };
 
-  return db.query(query)
-}
+  return db.query(query);
+};
 
 module.exports = {
   getAllEvents,

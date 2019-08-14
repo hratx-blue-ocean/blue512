@@ -12,11 +12,6 @@ const callAPI = () => {
       { headers: { Authorization: process.env.API_KEY_PREDICTHQ } }
     )
     .then(res => {
-      console.log(
-        `https://api.predicthq.com/v1/events?active.gte=${
-          dates.currentDateStr
-        }&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`
-      );
       return res.data.results;
     });
 };

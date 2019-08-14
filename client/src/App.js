@@ -103,7 +103,7 @@ export default class App extends Component {
     const tomorrowPlusPlusArr = [];
 
     events.forEach(event => {
-      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today) { // make sure to remove the minus 2 for development
+      if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today - 2) { // make sure to remove the minus 2 for development
         todayArr.push(event);
       }
       if (Number(event.time_start.split("T")[0].split('-')[2]) === this.state.today + 1) {
@@ -157,7 +157,7 @@ export default class App extends Component {
           isSignedIn={isSignedIn}
         />
         <Switch>
-          <Route path='/' exact render={() => <MainView events={eventsAll} />} />
+          <Route path='/' exact render={() => <MainView events={eventsAll} />} eventsToday={eventsToday} eventsTomorrow={eventsTomorrow} eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />
           <Route path='/detailed' exact render={() => <DetailedView events={eventsAll} eventsToday={eventsToday} eventsTomorrow={eventsTomorrow} eventsTomorrowPlusPlus={eventsTomorrowPlusPlus} />} />
           <Route path='/settings' exact render={() => <SettingsView />} />
         </Switch>

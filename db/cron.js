@@ -48,6 +48,18 @@ const atMidnightEveryDay = new CronJob("0 0 0 * * *", () => {
     .catch(console.log);
 });
 
+saveTicketMasterData()
+  .then(console.log)
+  .catch(console.log);
+
+saveEventBriteData()
+  .then(console.log)
+  .catch(console.log);
+
+savePredictHQData()
+  .then(console.log)
+  .catch(console.log);
+
 module.export = {
   atMidnightEveryDay
 };
