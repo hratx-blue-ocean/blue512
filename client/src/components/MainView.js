@@ -1,6 +1,7 @@
 import React from 'react';
 import CardContainer from './CardContainer.js';
-import moment from 'moment'
+import moment from 'moment';
+import spinner from '../../public/spinner.gif';
 // import fetch from 'node-fetch';
 
 
@@ -15,11 +16,13 @@ const tomorrow = moment().add(1, 'days').format('dddd')
 const tomorrowPlusPlus = moment().add(2, 'days').format('dddd')
 
 
-export default function MainView({ events, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus }) {
+export default function MainView({ loaded, events, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus }) {
   // const classes = useStyles();
 
   return (
     <>
+
+    {loaded ? 
       <Container maxWidth="lg">
         <Grid container>
           <CardContainer event={events[0]} day={today} animationTime={400} />
@@ -27,6 +30,12 @@ export default function MainView({ events, eventsToday, eventsTomorrow, eventsTo
           <CardContainer event={events[2]} day={tomorrowPlusPlus} animationTime={800} />
         </Grid>
       </Container>
+
+      :
+      <div style={{paddingTop: '20vh', display: 'flex', justifyContent: 'center'}}>
+       <img src={spinner} alt="loading events..." />
+      </div>
+      }
     </>
   );
 }
