@@ -1,7 +1,5 @@
 const axios = require("axios");
 const Helpers = require("./helpers.js");
-const getZipCode = require("latlng-to-zip"); //here for scaling
-const zipToCity = require("zipcodes");
 
 const callAPI = () => {
   let dates = Helpers._getDate();
@@ -11,9 +9,14 @@ const callAPI = () => {
       `https://api.predicthq.com/v1/events?active.gte=${
         dates.currentDateStr
       }&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`,
-      { headers: { Authorization: proccess.env.API_KEY_PREDICTHQ } }
+      { headers: { Authorization: process.env.API_KEY_PREDICTHQ } }
     )
     .then(res => {
+      console.log(
+        `https://api.predicthq.com/v1/events?active.gte=${
+          dates.currentDateStr
+        }&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`
+      );
       return res.data.results;
     });
 };
