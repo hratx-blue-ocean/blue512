@@ -39,10 +39,8 @@ const _getPrices = tickets => {
         }
       }
     }
-    prices = {
-      min: min,
-      max: max
-    };
+    prices.min = min;
+    prices.max = max;
   }
 
   return prices;
