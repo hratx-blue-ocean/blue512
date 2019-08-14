@@ -19,13 +19,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function MicroCardContainer({ events, eventsToday }) {
+export default function MicroCardContainer({ eventsToday, eventsTomorrow, eventsTomorrowPlusPlus }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   function handleChange(event, newValue) {
     setValue(newValue);
   }
+  console.log(eventsToday);
   return (
 
     // Build mini navbar onto container
