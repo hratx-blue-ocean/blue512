@@ -320,7 +320,8 @@ export default class App extends Component {
         this.seperateEventsByDate(data.data.events);
         this.setState({
           eventsAll: data.data.events,
-          isSignedIn: isSignedIn
+          isSignedIn: isSignedIn,
+          loaded: true
         });
       })
       //   .then(() => {
