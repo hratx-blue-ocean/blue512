@@ -88,13 +88,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
+  console.log(props.isSignedIn)
 
-  const getData = function(id_token, calendar_items) {
+  const getData = function (id_token, calendar_items) {
     axios
       .post(
-        `http://ec2-52-15-83-226.us-east-2.compute.amazonaws.com:${
-          props.port
-        }/api/events`,
+        `/api/events`,
         {
           token: id_token,
           calendar_items,
@@ -106,9 +105,9 @@ export default function PrimarySearchAppBar(props) {
       .catch();
   };
 
-  const signOut = function() {
+  const signOut = function () {
     var auth2 = window.gapi.auth2.getAuthInstance();
-    auth2.signOut().then(() => {});
+    auth2.signOut().then(() => { });
   };
 
   window.getCalData = id_token => {
@@ -126,9 +125,22 @@ export default function PrimarySearchAppBar(props) {
       });
   };
 
+  const generateSettingsIcon = () => {
+    if (props.isSignedIn) {
+      return (
+        <MenuItem>
+          <IconButton component={RouterLink} to="/settings" color="inherit">
+            <SettingsIcon />
+          </IconButton>
+        </MenuItem>)
+    }
+  }
+
   return (
-    <div className={classes.grow}>
-      <AppBar position="static">
+    <div className={classes.grow} style={{
+      marginBottom: 64
+    }}>
+      <AppBar position="fixed">
         <Toolbar>
           <Typography className={classes.title}>CityScout</Typography>
           <div className={classes.search}>
@@ -166,18 +178,15 @@ export default function PrimarySearchAppBar(props) {
                 Sign Out
               </Button>
             ) : (
-              <></>
-            )}
+                <></>
+              )}
           </div>
-          <MenuItem>
-            <IconButton component={RouterLink} to="/settings" color="inherit">
-              <SettingsIcon />
-            </IconButton>
-          </MenuItem>
-          <div className={classes.sectionMobile} />
+          {generateSettingsIcon()}
+          <div className={classes.sectionMobile}>
+          </div>
           <div className={classes.sectionMobile} />
         </Toolbar>
       </AppBar>
-    </div>
+    </div >
   );
 }

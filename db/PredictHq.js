@@ -1,8 +1,8 @@
 const axios = require("axios");
-const Helpers = require("./helpers.js");
+const { _getDate, _categorize } = require("./helpers.js");
 
 const callAPI = () => {
-  let dates = Helpers._getDate();
+  let dates = _getDate();
 
   return axios
     .get(
@@ -34,9 +34,9 @@ const restructureData = async data => {
       if (event.end) {
         restructured.time_end = event.end;
       }
-      restructured.category = "undefined";
+      restructured.category = "Other";
       if (event.category) {
-        restructured.category = event.category;
+        restructured.category = _categorize(event.category);
       }
       restructured.image = null;
       restructured.venue = null;

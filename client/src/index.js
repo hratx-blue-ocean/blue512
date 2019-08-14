@@ -1,6 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App.js';
-// import './index.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { yellow, red, blue, purple, deepPurple } from '@material-ui/core/colors';
+
+//Set global theme here (WIP)
+const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+
+    secondary: {
+      // light:,
+      main: "#ff1744",
+      // dark: 
+    },
+    background: {
+      paper: "#fff",
+      default: "#fafafa"
+      // default: "#ffde03"
+    }
+  },
+});
+
+
+ReactDOM.render(
+  <MuiThemeProvider theme={theme}>
+    <CssBaseline />
+    <App />
+  </MuiThemeProvider>
+  , document.getElementById('root'));
