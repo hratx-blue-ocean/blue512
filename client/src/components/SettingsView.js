@@ -55,7 +55,7 @@ export default class SettingsView extends React.Component {
               Help us custom tailor your CityScout experience!
             </Typography>
           </Grid>
-          <Grid item xs={10} justify="center" align="center">
+          <Grid item xs={10}>
             <PreferencesContainer
               categories={this.state.categories}
               userPreferences={this.state.userPreferences}
