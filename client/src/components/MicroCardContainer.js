@@ -26,7 +26,6 @@ export default function MicroCardContainer({ events, eventsToday }) {
   function handleChange(event, newValue) {
     setValue(newValue);
   }
-  console.log('from MCC:', eventsToday);
   return (
 
     // Build mini navbar onto container
