@@ -1,7 +1,7 @@
 import React from 'react';
 import CardContainer from './CardContainer.js';
-import moment from 'moment'
-import spinner from '../../public/spinner.gif'
+import moment from 'moment';
+import spinner from '../../public/spinner.gif';
 // import fetch from 'node-fetch';
 
 
