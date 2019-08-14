@@ -36,13 +36,13 @@ export default function MicroCardContainer({ events, eventsToday }) {
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
+          indicatorColor='primary'
+          textColor='primary'
           centered
         >
-          <Tab label="Today" />
-          <Tab label="Tomorrow" />
-          <Tab label="Overmorrow" />
+          <Tab label='Today' />
+          <Tab label='Tomorrow' />
+          <Tab label='Overmorrow' />
         </Tabs>
       </Paper>
 

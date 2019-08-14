@@ -9,7 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 
 const useStyles = makeStyles({
   card: {
-    maxWidth: "100%",
+    maxWidth: '100%',
   },
   media: {
     height: 120,
@@ -24,7 +24,7 @@ export default function MicroCardMaker({ event }) {
   const eventStart = Date(event.time_start)
 
   return (
-    <ListItem alignItems="flex-start">
+    <ListItem alignItems='flex-start'>
       <Card className={classes.card}>
         <CardActionArea>
           <CardMedia
@@ -33,11 +33,11 @@ export default function MicroCardMaker({ event }) {
             title={event.event_id || 'Event Title'}
           />
           <CardContent className={classes.content}>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography gutterBottom variant='h5' component='h2'>
               {event.name}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Starting at {eventStart.split("GMT")[0].split(" ")[4].split(":").slice(0, 2).join(":") || 'starting time'}
+            <Typography variant='body2' color='textSecondary' component='p'>
+              Starting at {eventStart.split('GMT')[0].split(' ')[4].split(':').slice(0, 2).join(':') || 'starting time'}
             </Typography>
           </CardContent>
         </CardActionArea>

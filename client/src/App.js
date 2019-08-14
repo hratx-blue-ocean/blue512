@@ -1,10 +1,10 @@
-import React, { Component }  from "react";
-import MainView              from "./components/MainView.js";
-import DetailedView          from "./components/DetailedView.js";
-import Navbar                from "./components/Navbar";
-import axios                 from "axios";
+import React, { Component }  from 'react';
+import MainView              from './components/MainView.js';
+import DetailedView          from './components/DetailedView.js';
+import Navbar                from './components/Navbar';
+import axios                 from 'axios';
 import SettingsView          from './components/SettingsView'
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import './App.css';
 
 export default class App extends Component {
@@ -17,52 +17,52 @@ export default class App extends Component {
       userToken: '',
       eventsAll: [
         {
-          source_API: "TicketMaster",
-          name: "Hayes Carll",
+          source_API: 'TicketMaster',
+          name: 'Hayes Carll',
           url:
-            "http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472",
-          event_id: "Z7r9jZ1Aejbow",
-          time_start: "2019-08-11T02:00:00Z",
+            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
+          event_id: 'Z7r9jZ1Aejbow',
+          time_start: '2019-08-11T02:00:00Z',
           time_end: null,
-          category: "Music",
+          category: 'Music',
           img:
-            "https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg",
-          venue: "Gruene Hall",
-          location: "New Braunfels",
+            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
+          venue: 'Gruene Hall',
+          location: 'New Braunfels',
           price_min: null,
           price_max: null,
           description: null
         },
         {
-          source_API: "TicketMaster",
-          name: "Trevor Cannon",
+          source_API: 'TicketMaster',
+          name: 'Trevor Cannon',
           url:
-            "http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472",
-          event_id: "Z7r9jZ1Aejboz",
-          time_start: "2019-08-11T02:00:00Z",
+            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
+          event_id: 'Z7r9jZ1Aejboz',
+          time_start: '2019-08-11T02:00:00Z',
           time_end: null,
-          category: "Music",
+          category: 'Music',
           img:
-            "https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg",
-          venue: "Gruene Hall",
-          location: "New Braunfels",
+            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
+          venue: 'Gruene Hall',
+          location: 'New Braunfels',
           price_min: null,
           price_max: null,
           description: null
         },
         {
-          source_API: "TicketMaster",
-          name: "Hadley Crowl",
+          source_API: 'TicketMaster',
+          name: 'Hadley Crowl',
           url:
-            "http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472",
-          event_id: "Z7r9jZ1Aejbot",
-          time_start: "2019-08-11T02:00:00Z",
+            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
+          event_id: 'Z7r9jZ1Aejbot',
+          time_start: '2019-08-11T02:00:00Z',
           time_end: null,
-          category: "Music",
+          category: 'Music',
           img:
-            "https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg",
-          venue: "Gruene Hall",
-          location: "New Braunfels",
+            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
+          venue: 'Gruene Hall',
+          location: 'New Braunfels',
           price_min: null,
           price_max: null,
           description: null
@@ -82,14 +82,14 @@ export default class App extends Component {
     let today = new Date();
     this.setState({ today: Number(String(today.getDate()).padStart(2, 0)) });
 
-    window.addEventListener("GoogleAuthInit", e => {
+    window.addEventListener('GoogleAuthInit', e => {
       const { init, isSignedIn } = e.detail;
       if (init && !isSignedIn) {
         this.loadEventsAnon(isSignedIn);
       }
     });
 
-    window.addEventListener("GoogleAuthChange", e => {
+    window.addEventListener('GoogleAuthChange', e => {
       const { isSignedIn } = e.detail;
       if (!isSignedIn) {
         this.loadEventsAnon(isSignedIn);
@@ -99,13 +99,13 @@ export default class App extends Component {
 
   seperateEventsByDate(alsoEvents) {
     // console.log(events || `testing and didn't get events`); 
-    // "2019-08-16T00:00:00.000Z"
+    // '2019-08-16T00:00:00.000Z'
     const todayArr = [],
           tomorrowArr = [],
           tomorrowPlusPlusArr = []
           
     alsoEvents.forEach(event => {
-      let parsedTimeStart = Number(event.time_start.split("T")[0].split('-')[2]);
+      let parsedTimeStart = Number(event.time_start.split('T')[0].split('-')[2]);
 
       if (parsedTimeStart === this.state.today) { // make sure to remove the minus 2 for development
         todayArr.push(event);
