@@ -65,6 +65,3 @@ typings/
 
 # Webpack
 bundle.js
-
-# Prettier
-.prettierrc
