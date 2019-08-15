@@ -94,6 +94,34 @@ router.post('/categories', async (req, res) => {
   }
 });
 
+router.get('/unavailable', (req, res) => {
+  const { token } = req.query;
+  verify(token).then(({ id }) => {
+    query
+      .getUserUnavailable(id)
+      .then(({ rows }) => res.json(rows))
+      .catch(_ => res.sendStatus(500));
+  });
+});
+
+router.post('/unavailable', (req, res) => {
+  const { token, name, time_start, time_end } = req.body;
+  verify(token)
+    .then(({ id }) =>
+      query.addRecurringUnavailable(id, name, time_start, time_end)
+    )
+    .then(_ => res.sendStatus(202))
+    .catch(_ => res.sendStatus(500));
+});
+
+router.delete('/unavailable', (req, res) => {
+  const { item_id, token } = req.query;
+  verify(token)
+    .then(_ => query.deleteRecurringUnavailable(item_id))
+    .then(_ => res.sendStatus(201))
+    .catch(_ => res.sendStatus(500));
+});
+
 //Google Auth helper function
 async function verify(token) {
   const ticket = await client.verifyIdToken({

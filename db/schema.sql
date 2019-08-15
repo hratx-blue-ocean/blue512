@@ -16,6 +16,8 @@ CREATE TABLE unavailable
   time_start varchar,
   time_end varchar,
   user_id VARCHAR,
+  name VARCHAR,
+  recurring boolean,
   CONSTRAINT pk_unavailable PRIMARY KEY (
     id
    )

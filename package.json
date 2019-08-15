@@ -31,6 +31,7 @@
     "latlng-to-zip": "0.0.2",
     "pg": "^7.12.1",
     "setup": "0.0.3",
+    "uuid": "^3.3.2",
     "zipcodes": "^8.0.0"
   },
   "devDependencies": {

@@ -1,9 +1,4 @@
 function onSuccess(googleUser) {}
-//   // const id_token = googleUser.getAuthResponse().id_token;
-//   // setTimeout(() => {
-//   //   window.getCalData(id_token);
-//   // }, 1000);
-// }
 
 function onFailure(error) {
   console.log(error);
