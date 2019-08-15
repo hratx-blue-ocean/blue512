@@ -66,7 +66,7 @@ export default class SettingsView extends React.Component {
           </Grid>
           <Grid item xs={8}>
             <div style={{ border: 'black solid 1px' }}>
-              <UnavailableTime />
+              <UnavailableTime userToken={this.props.userToken} />
             </div>
           </Grid>
         </Grid>

@@ -1,12 +1,28 @@
-const path = require("path");
-const SRC_DIR = path.join(__dirname, "/src");
-const DIST_DIR = path.join(__dirname, "/public");
+const path = require('path');
+const SRC_DIR = path.join(__dirname, '/src');
+const DIST_DIR = path.join(__dirname, '/public');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+//   .BundleAnalyzerPlugin;
+var CompressionPlugin = require('compression-webpack-plugin');
+const webpack = require('webpack');
+
 module.exports = {
   entry: `${SRC_DIR}/index.js`,
   output: {
-    filename: "bundle.js",
+    filename: 'bundle.js',
     path: DIST_DIR
   },
+  plugins: [
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    // new BundleAnalyzerPlugin(),
+    new CompressionPlugin({
+      // asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8
+    })
+  ],
   module: {
     rules: [
       // {
@@ -17,16 +33,16 @@ module.exports = {
       {
         test: /\.js?/,
         include: SRC_DIR,
-        loader: "babel-loader"
+        loader: 'babel-loader'
       },
       {
         test: /\.css$/,
         include: SRC_DIR,
-        loader: "css-loader"
+        loader: 'css-loader'
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        loader: "file-loader"
+        loader: 'file-loader'
       }
     ]
   },
