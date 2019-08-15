@@ -247,7 +247,8 @@ export default class App extends Component {
           description: null
         }
       ],
-      today: ''
+      today: '',
+      loaded: false
     };
     this.api = `http://localhost:8000/api/example`;
     this.seperateEventsByDate = this.seperateEventsByDate.bind(this);
@@ -307,7 +308,8 @@ export default class App extends Component {
       eventsAll: data.events,
       user: data.userInfo,
       isSignedIn: true,
-      userToken: data.id_token
+      userToken: data.id_token,
+      loaded: true
     });
   }
 
@@ -318,7 +320,8 @@ export default class App extends Component {
         this.seperateEventsByDate(data.data.events);
         this.setState({
           eventsAll: data.data.events,
-          isSignedIn: isSignedIn
+          isSignedIn: isSignedIn,
+          loaded: true
         });
       })
       //   .then(() => {
@@ -329,6 +332,7 @@ export default class App extends Component {
 
   render() {
     const {
+      loaded,
       isSignedIn,
       eventsAll,
       eventsToday,
@@ -349,6 +353,7 @@ export default class App extends Component {
             exact
             render={() => (
               <MainView
+                loaded={loaded}
                 events={eventsAll}
                 eventsToday={eventsToday}
                 eventsTomorrow={eventsTomorrow}
