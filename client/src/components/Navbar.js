@@ -25,7 +25,8 @@ const useStyles = makeStyles(theme => ({
     },
     marginLeft: 'auto',
     marginRight: 'auto',
-    fontSize: 18
+    fontSize: 18,
+    // maxHeight: '200px'
   },
   button: {
     margin: theme.spacing(1),
@@ -168,7 +169,9 @@ export default function PrimarySearchAppBar(props) {
           >
             More Events
           </Button>
-          <Typography className={classes.title}>CityScout</Typography>
+          <Typography className={classes.title}>
+            <img src="./logo.png" style={{ "max-height": "100px" }}></img>
+          </Typography>
           {/* <div className={classes.grow} /> */}
           <div className={classes.sectionDesktop}>
             <div
