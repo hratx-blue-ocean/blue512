@@ -5,58 +5,53 @@ import { Grid } from '@material-ui/core/';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import List from '@material-ui/core/List';
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
+    width: '100%',
+    // maxWidth: ,
+    backgroundColor: theme.palette.background.paper,
   },
-  cardColumn: {
-    padding: 10
+  Tab: {
+    flexGrow: 1,
+    width: '100%'
   }
 }));
 
-
-
-
-export default function MicroCardContainer({ events }) {
+export default function MicroCardContainer({ eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, selectedDaysEvents, handleMicroCardClick, changeDetailsDay }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   function handleChange(event, newValue) {
     setValue(newValue);
   }
-  console.log(events[0])
-  return (
 
-    // Build mini navbar onto container
+  return (
 
     <Grid item xs={4}>
       <Paper className={classes.root}>
         <Tabs
           value={value}
           onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
+          onClick={() => (changeDetailsDay(event))}
+          indicatorColor='primary'
+          textColor='primary'
+          variant='fullWidth'
           centered
         >
-          <Tab label="Item One" />
-          <Tab label="Item Two" />
-          <Tab label="Item Three" />
+          <Tab label='Today' />
+          <Tab label='Tomorrow' />
+          <Tab label='Overmorrow' />
         </Tabs>
       </Paper>
-      <Grid item xs={12} className={classes.cardColumn}>
-        <MicroCardMaker event={events[0]} />
-      </Grid>
-      <Grid item xs={12} className={classes.cardColumn}>
-        <MicroCardMaker event={events[0]} />
-      </Grid>
-      <Grid item xs={12} className={classes.cardColumn}>
-        <MicroCardMaker event={events[0]} />
-      </Grid>
-      <Grid item xs={12} className={classes.cardColumn}>
-        <MicroCardMaker event={events[0]} />
-      </Grid>
+
+      <Paper style={{maxHeight: '100vh', overflow: 'auto'}}>
+        <List className={classes.root}>
+          {selectedDaysEvents.map(event => <MicroCardMaker key={event.name} event={event} handleMicroCardClick={handleMicroCardClick} />)}
+        </List>
+      </Paper>
     </Grid>
   );
-
 }

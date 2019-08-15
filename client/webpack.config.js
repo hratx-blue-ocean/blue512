@@ -23,6 +23,10 @@ module.exports = {
         test: /\.css$/,
         include: SRC_DIR,
         loader: "css-loader"
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        loader: "file-loader"
       }
     ]
   },

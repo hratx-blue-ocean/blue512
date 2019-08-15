@@ -23,7 +23,7 @@ import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: 300
+    maxWidth: 360
   },
   media: {
     height: 0,
@@ -95,7 +95,6 @@ export default function CardMaker({ event, animationTime }) {
         <CardMedia
           className={classes.media}
           image={event.img}
-          title="Paella dish"
         />
 
         <CardContent>
@@ -114,7 +113,7 @@ export default function CardMaker({ event, animationTime }) {
 
         <CardActions disableSpacing>
           <Fab
-            color="primary"
+            color="secondary"
             aria-label="add"
             onClick={() => { addToCalendar(event) }}
           >

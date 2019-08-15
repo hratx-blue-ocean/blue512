@@ -1,10 +1,8 @@
 const axios = require("axios");
-const Helpers = require("./helpers.js");
-const getZipCode = require("latlng-to-zip"); //here for scaling
-const zipToCity = require("zipcodes");
+const { _getDate, _categorize } = require("./helpers.js");
 
 const callAPI = () => {
-    let dates = Helpers._getDate();
+    let dates = _getDate();
 
     return axios
         .get(
@@ -28,29 +26,19 @@ const restructureData = async data => {
             const { title } = event;
 
             restructured.name = title || null;
-            restructured.url =
+            restructured.url = null;
 
-                restructured.event_id = event.id;
+            restructured.event_id = event.id;
             restructured.time_start = event.start;
             restructured.time_end = null;
             if (event.end) {
                 restructured.time_end = event.end;
             }
-            restructured.category = "undefined";
+            restructured.category = "Other";
             if (event.category) {
-                restructured.category = event.category;
+                restructured.category = _categorize(event.category);
             }
-
-            restructured.image = await
-            axios.get(
-                `https://serpapi.com/search.json?q=${restructured.name}&location=Austin%2C+Texas%2C+United+States&hl=en&gl=us&output=json&tbm=isch&source=test`
-            )
-                .then(res => {
-                    console.log(res.data.images_results[0].original)
-                    return res.data.images_results[0].original
-                })
-                .catch(err => console.log(err));
-
+            restructured.image = null;
             restructured.venue = null;
             if (event.entities[0]) {
                 restructured.venue = event.entities[0].name;

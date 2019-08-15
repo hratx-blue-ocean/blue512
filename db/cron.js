@@ -1,8 +1,14 @@
-const { addEvent, addNewCategory, addNewAPISource } = require("./query.js");
-const TicketMaster = require("./ticketMaster.js");
-const EventBrite = require("./eventbrite.js");
-const PredictHQ = require("./PredictHq.js");
-const CronJob = require("cron").CronJob;
+const {
+  addEvent,
+  addNewCategory,
+  addNewAPISource,
+  deleteOldExperiences,
+  deleteOldUnavailable
+} = require('./query.js');
+const TicketMaster = require('./ticketMaster.js');
+const EventBrite = require('./eventbrite.js');
+const PredictHQ = require('./PredictHq.js');
+const CronJob = require('cron').CronJob;
 
 const saveTicketMasterData = async () => {
   const events = await TicketMaster.getData();
@@ -34,7 +40,7 @@ const savePredictHQData = async () => {
   });
 };
 
-const atMidnightEveryDay = new CronJob("0 0 0 * * *", () => {
+const atMidnightEveryDay = new CronJob('0 0 0 * * *', () => {
   saveTicketMasterData()
     .then(console.log)
     .catch(console.log);
@@ -48,6 +54,17 @@ const atMidnightEveryDay = new CronJob("0 0 0 * * *", () => {
     .catch(console.log);
 });
 
+const everyTenMinutes = new CronJob('*/10 * * * * *', () => {
+  deleteOldExperiences()
+    .then(console.log)
+    .catch(console.log);
+
+  deleteOldUnavailable()
+    .then(console.log)
+    .catch(console.log);
+});
+
 module.export = {
-  atMidnightEveryDay
+  atMidnightEveryDay,
+  everyTenMinutes
 };
