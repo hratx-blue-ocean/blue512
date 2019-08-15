@@ -279,20 +279,19 @@ export default class App extends Component {
   }
 
   changeDetailsDay(event) {
-    if (event.target.textContent === "Today") {
-      this.setState({ selectedDaysEvents: this.state.eventsToday })
+    if (event.target.textContent === 'Today') {
+      this.setState({ selectedDaysEvents: this.state.eventsToday });
     }
-    if (event.target.textContent === "Tomorrow") {
-      this.setState({ selectedDaysEvents: this.state.eventsTomorrow })
+    if (event.target.textContent === 'Tomorrow') {
+      this.setState({ selectedDaysEvents: this.state.eventsTomorrow });
     }
-    if (event.target.textContent === "Overmorrow") {
-      this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus })
+    if (event.target.textContent === 'Overmorrow') {
+      this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus });
     }
   }
 
-
   handleMicroCardClick(event) {
-    this.setState({ clickedMicroCard: [event] })
+    this.setState({ clickedMicroCard: [event] });
   }
   seperateEventsByDate(alsoEvents) {
     // console.log(events || `testing and didn't get events`);
@@ -325,15 +324,25 @@ export default class App extends Component {
     });
   }
 
-  handleLoadEvents(data) {
-    this.seperateEventsByDate(data.events);
-    this.setState({
-      eventsAll: data.events,
-      user: data.userInfo,
-      isSignedIn: true,
-      userToken: data.id_token,
-      loaded: true
-    });
+  handleLoadEvents(token, calendar_items) {
+    axios
+      .post('/api/events', {
+        token,
+        calendar_items,
+        limit: null,
+        day: null
+      })
+      .then(({ data }) => {
+        this.seperateEventsByDate(data.events);
+        this.setState({
+          eventsAll: data.events,
+          user: data.userInfo,
+          isSignedIn: true,
+          userToken: token,
+          loaded: true
+        });
+      })
+      .catch(console.log);
   }
 
   loadEventsAnon(isSignedIn) {
@@ -351,7 +360,7 @@ export default class App extends Component {
   }
 
   handlePageClick(path) {
-    this.setState({ path: path })
+    this.setState({ path: path });
   }
 
   handleAddToCalClick(item) {
@@ -448,6 +457,7 @@ export default class App extends Component {
               <SettingsView
                 user={this.state.user}
                 userToken={this.state.userToken}
+                loadEvents={this.handleLoadEvents}
               />
             )}
           />
