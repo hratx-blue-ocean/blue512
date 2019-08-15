@@ -62,7 +62,7 @@ export default function Details({ event }) {
 
            </Typography>
 
-              <Button href={event[0].url}className={classes.pad}>Get more info</Button>
+              <Button href={event[0].url}className={classes.pad} target="_blank">Get more info</Button>
 
         </Paper>
       </div>
