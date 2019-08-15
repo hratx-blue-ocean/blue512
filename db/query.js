@@ -170,16 +170,6 @@ const getUserData = id => {
   return db.query(query);
 };
 
-// const getUserCategoryPreferences = (id, preferred) => {
-//   const query = {
-//     text:
-//       'SELECT c.name FROM users_categories uc INNER JOIN categories c ON uc.category_id=c.id WHERE uc.user_id = $1 AND uc.preferred=$2',
-//     values: [id, preferred]
-//   };
-
-//   return db.query(query);
-// };
-
 const addNewUnavailable = data => {
   const time_start = data.start.dateTime;
   const time_end = data.end.dateTime;
@@ -250,7 +240,6 @@ const deleteOldUnavailable = () => {
 
 module.exports = {
   getAllEvents,
-  // getAllEventsExcludingCategories,
   getAllCategories,
   addEvent,
   addNewCategory,
@@ -262,7 +251,6 @@ module.exports = {
   changeUserCategoryPreference,
   addUserCategoryPreference,
   deleteUserCategoryPreference,
-  // getUserCategoryPreferences,
   deleteOldExperiences,
   deleteOldUnavailable,
   getUserUnavailable,
