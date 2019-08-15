@@ -100,7 +100,6 @@ const useStyles = makeStyles(theme => ({
 
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
-  console.log('Navbar props:', props)
 
   const getData = function (id_token, calendar_items) {
     axios
