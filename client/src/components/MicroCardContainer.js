@@ -23,9 +23,13 @@ const useStyles = makeStyles(theme => ({
 export default function MicroCardContainer({ eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, handleMicroCardClick }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  let days = [eventsToday, eventsTomorrow, eventsTomorrowPlusPlus];
+  let currentDay = null;
 
   function handleChange(event, newValue) {
     setValue(newValue);
+    currentDay = days[newValue]
+    console.log(newValue, currentDay)
   }
 
   return (
@@ -48,6 +52,9 @@ export default function MicroCardContainer({ eventsToday, eventsTomorrow, events
 
       <List className={classes.root}>
         {
+          currentDay !== null ?
+          currentDay.map( event => <MicroCardMaker key={event.name} event={event} handleMicroCardClick={handleMicroCardClick}/>)
+          :
           eventsToday.map( event => <MicroCardMaker key={event.name} event={event} handleMicroCardClick={handleMicroCardClick}/>)
         }
       </List>

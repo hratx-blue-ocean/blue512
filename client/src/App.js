@@ -249,7 +249,8 @@ export default class App extends Component {
         }
       ],
       today: '',
-      loaded: false
+      loaded: false,
+      currentDay
     };
     this.api = `http://localhost:8000/api/example`;
     this.seperateEventsByDate = this.seperateEventsByDate.bind(this);
