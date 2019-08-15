@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function MicroCardContainer({ eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, handleMicroCardClick }) {
+export default function MicroCardContainer({ eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, selectedDaysEvents, handleMicroCardClick, changeDetailsDay }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -35,6 +35,7 @@ export default function MicroCardContainer({ eventsToday, eventsTomorrow, events
         <Tabs
           value={value}
           onChange={handleChange}
+          onClick={() => (changeDetailsDay(event))}
           indicatorColor='primary'
           textColor='primary'
           variant='fullWidth'
@@ -47,9 +48,7 @@ export default function MicroCardContainer({ eventsToday, eventsTomorrow, events
       </Paper>
 
       <List className={classes.root}>
-        {
-          eventsToday.map( event => <MicroCardMaker key={event.name} event={event} handleMicroCardClick={handleMicroCardClick}/>)
-        }
+        {selectedDaysEvents.map(event => <MicroCardMaker key={event.name} event={event} handleMicroCardClick={handleMicroCardClick} />)}
       </List>
     </Grid>
   );

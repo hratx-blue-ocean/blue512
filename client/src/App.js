@@ -248,11 +248,13 @@ export default class App extends Component {
         }
       ],
       today: '',
-      loaded: false
+      loaded: false,
+      selectedDaysEvents: []
     };
     this.api = `http://localhost:8000/api/example`;
     this.seperateEventsByDate = this.seperateEventsByDate.bind(this);
     this.handleMicroCardClick = this.handleMicroCardClick.bind(this);
+    this.changeDetailsDay = this.changeDetailsDay.bind(this);
   }
 
   componentDidMount() {
@@ -272,8 +274,22 @@ export default class App extends Component {
       }
     });
   }
+
+  changeDetailsDay(event) {
+    if (event.target.textContent === "Today") {
+      this.setState({ selectedDaysEvents: this.state.eventsToday })
+    }
+    if (event.target.textContent === "Tomorrow") {
+      this.setState({ selectedDaysEvents: this.state.eventsTomorrow })
+    }
+    if (event.target.textContent === "Overmorrow") {
+      this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus })
+    }
+  }
+
+
   handleMicroCardClick(event) {
-    this.setState({clickedMicroCard: [event]})
+    this.setState({ clickedMicroCard: [event] })
   }
   seperateEventsByDate(alsoEvents) {
     // console.log(events || `testing and didn't get events`);
@@ -301,7 +317,8 @@ export default class App extends Component {
     this.setState({
       eventsToday: todayArr,
       eventsTomorrow: tomorrowArr,
-      eventsTomorrowPlusPlus: tomorrowPlusPlusArr
+      eventsTomorrowPlusPlus: tomorrowPlusPlusArr,
+      selectedDaysEvents: todayArr
     });
   }
 
@@ -338,6 +355,7 @@ export default class App extends Component {
       eventsToday,
       eventsTomorrow,
       eventsTomorrowPlusPlus,
+      selectedDaysEvents,
       clickedMicroCard,
       PORT
     } = this.state;
@@ -371,6 +389,8 @@ export default class App extends Component {
                 events={eventsAll}
                 eventsToday={eventsToday}
                 eventsTomorrow={eventsTomorrow}
+                selectedDaysEvents={selectedDaysEvents}
+                changeDetailsDay={this.changeDetailsDay}
                 handleMicroCardClick={this.handleMicroCardClick}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
               />
