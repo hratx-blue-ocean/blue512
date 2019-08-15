@@ -22,12 +22,24 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block'
-    }
+    },
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    fontSize: 18,
+    // maxHeight: '200px'
   },
   button: {
     margin: theme.spacing(1),
     color: 'white',
     fontSize: 13
+  },
+  selectedButton: {
+    margin: theme.spacing(1),
+    color: 'white',
+    fontSize: 13,
+    'border-bottom': '1px solid white',
+    'border-radius': '0px',
+    'margin-bottom': '7px'
   },
   Signupbutton: {
     margin: theme.spacing(1),
@@ -128,7 +140,7 @@ export default function PrimarySearchAppBar(props) {
     if (props.isSignedIn) {
       return (
         <MenuItem>
-          <IconButton component={RouterLink} to="/settings" color="inherit">
+          <IconButton component={RouterLink} to="/settings" color="inherit" onClick={() => { props.handlePageClick('/settings') }}>
             <SettingsIcon />
           </IconButton>
         </MenuItem>)
@@ -141,31 +153,38 @@ export default function PrimarySearchAppBar(props) {
     }}>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography className={classes.title}>CityScout</Typography>
-          <div className={classes.search}>
+          {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <SearchIcon />
+            <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ 'aria-label': 'search' }}
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput
+            }}
+            inputProps={{ 'aria-label': 'search' }}
             />
-          </div>
-          <Button component={RouterLink} to="/" className={classes.button}>
+          </div> */}
+          <Button component={RouterLink}
+            to="/"
+            onClick={() => { props.handlePageClick('/') }}
+            className={props.path === '/' ? classes.selectedButton : classes.button}>
             Some Events
           </Button>
           <Button
             component={RouterLink}
             to="/detailed"
-            className={classes.button}
-          >
+            onClick={() => { props.handlePageClick('/detailed') }}
+            className={props.path === '/detailed' ? classes.selectedButton : classes.button}>
             More Events
           </Button>
-          <div className={classes.grow} />
+          <Typography className={classes.title}>
+            <a href="http://cityscout.io">
+              <img src="./logo.png" style={{ "maxHeight": "75px", "marginTop": "-10px", "marginBottom": "-20px" }}></img>
+            </a>
+          </Typography>
+          {/* <div className={classes.grow} /> */}
           <div className={classes.sectionDesktop}>
             <div
               className={classes.button}
