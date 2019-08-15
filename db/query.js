@@ -1,4 +1,5 @@
 const db = require('./db.js');
+const uuid = require('uuid/v4');
 
 const getAllEvents = () => {
   const query = {
@@ -207,6 +208,27 @@ const getUserUnavailable = id => {
   return db.query(query);
 };
 
+const addRecurringUnavailable = (user_id, name, time_start, time_end) => {
+  const query = {
+    name: 'addRecurringUnavailable',
+    text:
+      'INSERT INTO unavailable (user_id, name, time_start, time_end, item_id, recurring) VALUES ($1, $2, $3, $4, $5, $6)',
+    values: [user_id, name, time_start, time_end, uuid(), true]
+  };
+
+  return db.query(query);
+};
+
+const deleteRecurringUnavailable = item_id => {
+  const query = {
+    name: 'deleteRecurringUnavailable',
+    text: 'DELETE FROM unavailable WHERE item_id=$1',
+    values: [item_id]
+  };
+
+  db.query(query);
+};
+
 const deleteOldExperiences = () => {
   const query = {
     name: 'deleteOldExperiences',
@@ -244,5 +266,7 @@ module.exports = {
   getUserPreferences,
   deleteOldExperiences,
   deleteOldUnavailable,
-  getUserUnavailable
+  getUserUnavailable,
+  addRecurringUnavailable,
+  deleteRecurringUnavailable
 };
