@@ -33,6 +33,14 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     fontSize: 13
   },
+  selectedButton: {
+    margin: theme.spacing(1),
+    color: 'white',
+    fontSize: 13,
+    'border-bottom': '1px solid white',
+    'border-radius': '0px',
+    'margin-bottom': '7px'
+  },
   Signupbutton: {
     margin: theme.spacing(1),
     color: 'white',
@@ -133,7 +141,7 @@ export default function PrimarySearchAppBar(props) {
     if (props.isSignedIn) {
       return (
         <MenuItem>
-          <IconButton component={RouterLink} to="/settings" color="inherit">
+          <IconButton component={RouterLink} to="/settings" color="inherit" onClick={() => { props.handlePageClick('/settings') }}>
             <SettingsIcon />
           </IconButton>
         </MenuItem>)
@@ -159,19 +167,22 @@ export default function PrimarySearchAppBar(props) {
             inputProps={{ 'aria-label': 'search' }}
             />
           </div> */}
-          <Button component={RouterLink} to="/" className={classes.button}>
+          <Button component={RouterLink}
+            to="/"
+            onClick={() => { props.handlePageClick('/') }}
+            className={props.path === '/' ? classes.selectedButton : classes.button}>
             Some Events
           </Button>
           <Button
             component={RouterLink}
             to="/detailed"
-            className={classes.button}
-          >
+            onClick={() => { props.handlePageClick('/detailed') }}
+            className={props.path === '/detailed' ? classes.selectedButton : classes.button}>
             More Events
           </Button>
           <Typography className={classes.title}>
             <a href="http://cityscout.io">
-              <img src="./logo.png" style={{ "max-height": "75px", "marginTop": "-10px", "marginBottom": "-20px" }}></img>
+              <img src="./logo.png" style={{ "maxHeight": "75px", "marginTop": "-10px", "marginBottom": "-20px" }}></img>
             </a>
           </Typography>
           {/* <div className={classes.grow} /> */}
