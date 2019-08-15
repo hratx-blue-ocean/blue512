@@ -4,7 +4,11 @@ const logger = require('morgan');
 const express = require('express');
 const app = express();
 const query = require('../db/query.js');
+
 // const cronOperations = require('../db/cron.js');
+
+const cronOperations = require('../db/cron.js');
+
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -17,28 +21,12 @@ everyTenMinutes.start();
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-/*
-// here is an example of how to query the database
-
-app.get('/someRoute', (req, res) => {
-    query.getAllEvents()
-    .then(data => {
-        // server logic
-        res.send(data);
-    })
-    .catch(console.log);
+app.get('*bundle.js', function(req, res, next) {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/javascript');
+  next();
 });
-
-// or
-
-xapp.get('/someOtherRoute', async(req, res) => {
-    const events = await query.getAllEvents();
-    // server logic
-    res.send(events);
-}
-*/
-
-//test route for testing OAuth configuration
 
 // open up CORS
 app.use((_, res, next) => {
@@ -56,6 +44,12 @@ app.use('/', express.static(path.join(__dirname, '../client/public')));
 const { api } = require('./routes');
 app.use('/api/', api);
 
+//DEV ONLY - catch all for browser routing, comment out for production
+app.use(
+  '/*',
+  express.static(path.join(__dirname, '../client/public/index.html'))
+);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -67,7 +61,8 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page 
+
+  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });

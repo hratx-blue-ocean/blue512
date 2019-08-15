@@ -25,13 +25,21 @@ const useStyles = makeStyles(theme => ({
     },
     marginLeft: 'auto',
     marginRight: 'auto',
-    fontSize: 18,
+    fontSize: 18
     // maxHeight: '200px'
   },
   button: {
     margin: theme.spacing(1),
     color: 'white',
     fontSize: 13
+  },
+  selectedButton: {
+    margin: theme.spacing(1),
+    color: 'white',
+    fontSize: 13,
+    'border-bottom': '1px solid white',
+    'border-radius': '0px',
+    'margin-bottom': '7px'
   },
   Signupbutton: {
     margin: theme.spacing(1),
@@ -92,26 +100,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
-  console.log('Navbar props:', props)
 
-  const getData = function (id_token, calendar_items) {
-    axios
-      .post(
-        `/api/events`,
-        {
-          token: id_token,
-          calendar_items,
-          limit: null,
-          day: null
-        }
-      )
-      .then(res => props.loadEvents({ id_token, ...res.data }))
-      .catch();
-  };
-
-  const signOut = function () {
+  const signOut = function() {
     var auth2 = window.gapi.auth2.getAuthInstance();
-    auth2.signOut().then(() => { });
+    auth2.signOut().then(() => {});
   };
 
   window.getCalData = id_token => {
@@ -125,7 +117,7 @@ export default function PrimarySearchAppBar(props) {
         orderBy: 'startTime'
       })
       .then(data => {
-        getData(id_token, data.result.items);
+        props.loadEvents(id_token, data.result.items);
       });
   };
 
@@ -133,17 +125,28 @@ export default function PrimarySearchAppBar(props) {
     if (props.isSignedIn) {
       return (
         <MenuItem>
-          <IconButton component={RouterLink} to="/settings" color="inherit">
+          <IconButton
+            component={RouterLink}
+            to="/settings"
+            color="inherit"
+            onClick={() => {
+              props.handlePageClick('/settings');
+            }}
+          >
             <SettingsIcon />
           </IconButton>
-        </MenuItem>)
+        </MenuItem>
+      );
     }
-  }
+  };
 
   return (
-    <div className={classes.grow} style={{
-      marginBottom: 64
-    }}>
+    <div
+      className={classes.grow}
+      style={{
+        marginBottom: 64
+      }}
+    >
       <AppBar position="fixed">
         <Toolbar>
           {/* <div className={classes.search}>
@@ -159,13 +162,29 @@ export default function PrimarySearchAppBar(props) {
             inputProps={{ 'aria-label': 'search' }}
             />
           </div> */}
-          <Button component={RouterLink} to="/" className={classes.button}>
+          <Button
+            component={RouterLink}
+            to="/"
+            onClick={() => {
+              props.handlePageClick('/');
+            }}
+            className={
+              props.path === '/' ? classes.selectedButton : classes.button
+            }
+          >
             Some Events
           </Button>
           <Button
             component={RouterLink}
             to="/detailed"
-            className={classes.button}
+            onClick={() => {
+              props.handlePageClick('/detailed');
+            }}
+            className={
+              props.path === '/detailed'
+                ? classes.selectedButton
+                : classes.button
+            }
           >
             More Events
           </Button>
@@ -179,7 +198,14 @@ export default function PrimarySearchAppBar(props) {
 
           <Typography className={classes.title}>
             <a href="http://cityscout.io">
-              <img src="./logo.png" style={{ "max-height": "75px", "marginTop": "-10px", "marginBottom": "-20px" }}></img>
+              <img
+                src="./logo.png"
+                style={{
+                  maxHeight: '75px',
+                  marginTop: '-10px',
+                  marginBottom: '-20px'
+                }}
+              />
             </a>
           </Typography>
           {/* <div className={classes.grow} /> */}
@@ -194,15 +220,14 @@ export default function PrimarySearchAppBar(props) {
                 Sign Out
               </Button>
             ) : (
-                <></>
-              )}
+              <></>
+            )}
           </div>
           {generateSettingsIcon()}
-          <div className={classes.sectionMobile}>
-          </div>
+          <div className={classes.sectionMobile} />
           <div className={classes.sectionMobile} />
         </Toolbar>
       </AppBar>
-    </div >
+    </div>
   );
 }

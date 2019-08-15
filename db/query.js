@@ -1,4 +1,5 @@
 const db = require('./db.js');
+const uuid = require('uuid/v4');
 
 const getAllEvents = () => {
   const query = {
@@ -12,31 +13,28 @@ const getAllEvents = () => {
   return db.query(query);
 };
 
-const getAllEventsExcludingCategories = arrayOfCategories => {
-  const buildConditional = length => {
-    let str = '';
-    if (!length) {
-      return str;
-    }
-    str += 'WHERE ';
-    let i = 1;
-    while (i <= length) {
-      str += `c.name != $${i}`;
-      if (i < length) {
-        str += ` AND `;
-      }
-      i++;
-    }
-    return str;
-  };
-
-  const conditionalString = buildConditional(arrayOfCategories.length);
-
+const getAllEventsULTRAMODE = id => {
   const query = {
-    text: `SELECT e.name, e.description, e.url, e.img, e.venue, e.location, e.time_start, 
-              e.time_end, e.price_min, e.price_max, c.name AS category FROM experiences e 
-              LEFT OUTER JOIN categories c ON e.category_id=c.id ${conditionalString}`,
-    values: [...arrayOfCategories]
+    text: `SELECT e.name, e.description, e.url, e.img, e.venue, e.location, e.time_start,
+    e.time_end, e.price_min, e.price_max, c.name AS category
+    FROM experiences e
+    LEFT OUTER JOIN categories c ON e.category_id=c.id
+    WHERE e.category_id!= ALL(SELECT id
+    FROM categories
+    WHERE id= 
+    ANY(SELECT category_id
+    FROM users_categories
+    WHERE user_id=$1 AND preferred=false))
+    ORDER BY e.category_id
+    = ANY
+    (SELECT id
+    FROM categories
+    WHERE id= 
+    ANY(SELECT category_id
+    FROM users_categories
+    WHERE user_id=$1 AND preferred=true))
+    DESC`,
+    values: [id]
   };
 
   return db.query(query);
@@ -172,16 +170,6 @@ const getUserData = id => {
   return db.query(query);
 };
 
-const getUserCategoryPreferences = (id, preferred) => {
-  const query = {
-    text:
-      'SELECT c.name FROM users_categories uc INNER JOIN categories c ON uc.category_id=c.id WHERE uc.user_id = $1 AND uc.preferred=$2',
-    values: [id, preferred]
-  };
-
-  return db.query(query);
-};
-
 const addNewUnavailable = data => {
   const time_start = data.start.dateTime;
   const time_end = data.end.dateTime;
@@ -208,6 +196,27 @@ const getUserUnavailable = id => {
   return db.query(query);
 };
 
+const addRecurringUnavailable = (user_id, name, time_start, time_end) => {
+  const query = {
+    name: 'addRecurringUnavailable',
+    text:
+      'INSERT INTO unavailable (user_id, name, time_start, time_end, item_id, recurring) VALUES ($1, $2, $3, $4, $5, $6)',
+    values: [user_id, name, time_start, time_end, uuid(), true]
+  };
+
+  return db.query(query);
+};
+
+const deleteRecurringUnavailable = item_id => {
+  const query = {
+    name: 'deleteRecurringUnavailable',
+    text: 'DELETE FROM unavailable WHERE item_id=$1',
+    values: [item_id]
+  };
+
+  db.query(query);
+};
+
 const deleteOldExperiences = () => {
   const query = {
     name: 'deleteOldExperiences',
@@ -221,7 +230,8 @@ const deleteOldExperiences = () => {
 const deleteOldUnavailable = () => {
   const query = {
     name: 'deleteOldUnavailable',
-    text: 'DELETE FROM unavilable WHERE time_start < NOW()',
+    text:
+      'DELETE FROM unavailable WHERE time_start < NOW() AND recurring IS NULL',
     values: []
   };
 
@@ -230,7 +240,6 @@ const deleteOldUnavailable = () => {
 
 module.exports = {
   getAllEvents,
-  getAllEventsExcludingCategories,
   getAllCategories,
   addEvent,
   addNewCategory,
@@ -242,8 +251,10 @@ module.exports = {
   changeUserCategoryPreference,
   addUserCategoryPreference,
   deleteUserCategoryPreference,
-  getUserCategoryPreferences,
   deleteOldExperiences,
   deleteOldUnavailable,
-  getUserUnavailable
+  getUserUnavailable,
+  getAllEventsULTRAMODE,
+  addRecurringUnavailable,
+  deleteRecurringUnavailable
 };

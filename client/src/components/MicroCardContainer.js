@@ -17,6 +17,12 @@ const useStyles = makeStyles(theme => ({
   Tab: {
     flexGrow: 1,
     width: '100%'
+  },
+  ListPaper: {
+    maxHeight: '100vh', 
+    overflow: 'auto', 
+    background: 'blue !important',
+    color: 'primary !important'
   }
 }));
 
@@ -45,12 +51,12 @@ export default function MicroCardContainer({ eventsToday, eventsTomorrow, events
           <Tab label='Tomorrow' />
           <Tab label='Overmorrow' />
         </Tabs>
-      </Paper>
 
-      <Paper style={{maxHeight: '100vh', overflow: 'auto'}}>
+      <Paper className={classes.ListPaper}>
         <List className={classes.root}>
           {selectedDaysEvents.map(event => <MicroCardMaker key={event.name} event={event} handleMicroCardClick={handleMicroCardClick} />)}
         </List>
+      </Paper>
       </Paper>
     </Grid>
   );
