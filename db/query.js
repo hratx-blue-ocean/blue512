@@ -12,31 +12,28 @@ const getAllEvents = () => {
   return db.query(query);
 };
 
-const getAllEventsExcludingCategories = arrayOfCategories => {
-  const buildConditional = length => {
-    let str = '';
-    if (!length) {
-      return str;
-    }
-    str += 'WHERE ';
-    let i = 1;
-    while (i <= length) {
-      str += `c.name != $${i}`;
-      if (i < length) {
-        str += ` AND `;
-      }
-      i++;
-    }
-    return str;
-  };
-
-  const conditionalString = buildConditional(arrayOfCategories.length);
-
+const getAllEventsULTRAMODE = id => {
   const query = {
-    text: `SELECT e.name, e.description, e.url, e.img, e.venue, e.location, e.time_start, 
-              e.time_end, e.price_min, e.price_max, c.name AS category FROM experiences e 
-              LEFT OUTER JOIN categories c ON e.category_id=c.id ${conditionalString}`,
-    values: [...arrayOfCategories]
+    text: `SELECT e.name, e.description, e.url, e.img, e.venue, e.location, e.time_start,
+    e.time_end, e.price_min, e.price_max, c.name AS category
+    FROM experiences e
+    LEFT OUTER JOIN categories c ON e.category_id=c.id
+    WHERE e.category_id!= ALL(SELECT id
+    FROM categories
+    WHERE id= 
+    ANY(SELECT category_id
+    FROM users_categories
+    WHERE user_id=$1 AND preferred=false))
+    ORDER BY e.category_id
+    = ANY
+    (SELECT id
+    FROM categories
+    WHERE id= 
+    ANY(SELECT category_id
+    FROM users_categories
+    WHERE user_id=$1 AND preferred=true))
+    DESC`,
+    values: [id]
   };
 
   return db.query(query);
@@ -230,7 +227,7 @@ const deleteOldUnavailable = () => {
 
 module.exports = {
   getAllEvents,
-  getAllEventsExcludingCategories,
+  // getAllEventsExcludingCategories,
   getAllCategories,
   addEvent,
   addNewCategory,
@@ -245,5 +242,6 @@ module.exports = {
   getUserCategoryPreferences,
   deleteOldExperiences,
   deleteOldUnavailable,
-  getUserUnavailable
+  getUserUnavailable,
+  getAllEventsULTRAMODE
 };

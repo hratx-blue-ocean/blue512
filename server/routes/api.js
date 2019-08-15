@@ -23,19 +23,22 @@ router.post('/events', (req, res) => {
   verify(req.body.token)
     .then(userData => {
       addNewCategoriesAndAvailabilityToDatabase(userData, calendar_items)
-        .then(_ => getEventsBasedOnUserExcludedCategories(userData.id))
-        .then(({ rows }) =>
-          filterEventsBasedOnUserAvailability(userData.id, rows)
-        )
-        .then(filteredEvents =>
-          sortEventsBasedOnUserPreferences(userData.id, filteredEvents)
-        )
-        .then(sortedEvents => {
-          res.json({
-            userInfo: userData,
-            events: sortedEvents
-          });
-        });
+        .then(_ => getAllEventsULTRAMODE(userData.id))
+        .then(
+          ({ rows }) => res.json({ userInfo: userData, events: rows })
+          //   filterEventsBasedOnUserAvailability(userData.id, rows)
+          // )
+          // .then(filteredEvents =>
+          //   sortEventsBasedOnUserPreferences(userData.id, filteredEvents)
+          // )
+          // .then(sortedEvents => {
+          //   res.json({
+          //     userInfo: userData,
+          //     events: sortedEvents
+          //   });
+          // });
+          // }
+        );
     })
     .catch(err => {
       console.log('CAUTION: ', err);
