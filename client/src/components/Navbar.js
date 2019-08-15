@@ -170,7 +170,7 @@ export default function PrimarySearchAppBar(props) {
             More Events
           </Button>
           <Typography className={classes.title}>
-            <img src="./logo.png" style={{ "max-height": "100px" }}></img>
+            <img src="./logo.png" style={{ "max-height": "75px", "margin-top": "-10px", "margin-bottom": "-20px" }}></img>
           </Typography>
           {/* <div className={classes.grow} /> */}
           <div className={classes.sectionDesktop}>
