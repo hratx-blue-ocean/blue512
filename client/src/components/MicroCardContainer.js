@@ -47,9 +47,11 @@ export default function MicroCardContainer({ eventsToday, eventsTomorrow, events
         </Tabs>
       </Paper>
 
-      <List className={classes.root}>
-        {selectedDaysEvents.map(event => <MicroCardMaker key={event.name} event={event} handleMicroCardClick={handleMicroCardClick} />)}
-      </List>
+      <Paper style={{maxHeight: '100vh', overflow: 'auto'}}>
+        <List className={classes.root}>
+          {selectedDaysEvents.map(event => <MicroCardMaker key={event.name} event={event} handleMicroCardClick={handleMicroCardClick} />)}
+        </List>
+      </Paper>
     </Grid>
   );
 }

@@ -26,5 +26,4 @@ export default function DetailedView({ clickedMicroCard, events, eventsToday, ev
       </Grid>
     </>
   );
-
 }
