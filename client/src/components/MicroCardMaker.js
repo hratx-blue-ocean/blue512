@@ -32,7 +32,7 @@ export default function MicroCardMaker({ event, handleMicroCardClick }) {
           <CardMedia
             className={classes.media}
             image={event.img || 'Event Image'}
-            title={event.event_id || 'Event Title'}
+            title={event.name || 'Hello, there!'}
           />
           <CardContent className={classes.content}>
             <Typography gutterBottom variant='h5' component='h2'>

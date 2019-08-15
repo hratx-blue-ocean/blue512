@@ -97,7 +97,6 @@ router.get('/unavailable', (req, res) => {
     query
       .getUserUnavailable(id)
       .then(({ rows }) => res.json(rows))
-      .then(_ => res.sendStatus(201))
       .catch(_ => res.sendStatus(500));
   });
 });

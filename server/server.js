@@ -8,6 +8,11 @@ const cronOperations = require('../db/cron.js');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const { atMidnightEveryDay, everyTenMinutes } = require('../db/cron.js');
+
+//start cronjobs
+atMidnightEveryDay.start();
+everyTenMinutes.start();
 
 app.use(bodyParser.json());
 app.use(cookieParser());
