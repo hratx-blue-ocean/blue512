@@ -9,6 +9,7 @@ import {
 } from '@material-ui/pickers';
 import moment from 'moment';
 import axios from 'axios';
+import UnavailableTimeContainer from './UnavailableTimeContainer';
 
 export default class UnavailableTime extends React.Component {
   constructor(props) {
@@ -21,13 +22,15 @@ export default class UnavailableTime extends React.Component {
       datepickerDate: new Date(),
       datepickerStart: new Date(),
       datepickerEnd: new Date(),
-      unavailableTimes: {}
+      unavailableTimes: []
     };
     this.handleTimeStartChange = this.handleTimeStartChange.bind(this);
     this.handleTimeEndChange = this.handleTimeEndChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.getUnavailableTimes = this.getUnavailableTimes.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   handleDateChange(_, value) {
@@ -46,24 +49,40 @@ export default class UnavailableTime extends React.Component {
   }
 
   handleSubmit() {
-    axios.post(`/api/unavailable`, {
-      token: this.props.userToken,
-      name: this.state.eventName,
-      time_start: `${this.state.date} ${this.state.timeStart}`,
-      time_end: `${this.state.date} ${this.state.timeEnd}`
-    });
+    axios
+      .post(`/api/unavailable`, {
+        token: this.props.userToken,
+        name: this.state.eventName,
+        time_start: `${this.state.date} ${this.state.timeStart}`,
+        time_end: `${this.state.date} ${this.state.timeEnd}`
+      })
+      .then(_ => this.getUnavailableTimes())
+      .catch();
+  }
+
+  handleDelete(item_id) {
+    axios
+      .delete(
+        `/api/unavailable?token=${this.props.userToken}&item_id=${item_id}`
+      )
+      .then(_ => this.getUnavailableTimes())
+      .catch();
   }
 
   handleNameChange(eventName) {
     this.setState({ eventName });
   }
 
-  componentDidMount() {
+  getUnavailableTimes() {
     axios
       .get(`/api/unavailable?token=${this.props.userToken}`)
       .then(({ data }) => data.filter(time => time.recurring))
       .then(unavailableTimes => this.setState({ unavailableTimes }))
       .catch();
+  }
+
+  componentDidMount() {
+    this.getUnavailableTimes();
   }
 
   render() {
@@ -119,7 +138,10 @@ export default class UnavailableTime extends React.Component {
         <Fab color="primary" aria-label="add">
           <AddIcon onClick={() => this.handleSubmit()} />
         </Fab>
-        <UnavailableTimeWrapper times={this.state.unavailableTimes} />
+        <UnavailableTimeContainer
+          times={this.state.unavailableTimes}
+          handleDelete={this.handleDelete}
+        />
       </>
     );
   }
