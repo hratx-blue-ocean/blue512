@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 // import fetch from 'node-fetch';
 import SettingsView from './components/SettingsView';
+import SearchView from './components/SearchView';
 // import './App.css';
 
 export default class App extends Component {
@@ -403,6 +404,15 @@ export default class App extends Component {
               <SettingsView
                 user={this.state.user}
                 userToken={this.state.userToken}
+              />
+            )}
+          />
+            <Route
+            path="/search"
+            exact
+            render={() => (
+              <SearchView
+               events={eventsAll}
               />
             )}
           />
