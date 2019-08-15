@@ -23,7 +23,7 @@ router.post('/events', (req, res) => {
   verify(req.body.token)
     .then(userData => {
       addNewCategoriesAndAvailabilityToDatabase(userData, calendar_items)
-        .then(_ => getAllEventsULTRAMODE(userData.id))
+        .then(_ => query.getAllEventsULTRAMODE(userData.id))
         .then(
           ({ rows }) => res.json({ userInfo: userData, events: rows })
           //   filterEventsBasedOnUserAvailability(userData.id, rows)
@@ -146,55 +146,55 @@ function addNewCategoriesAndAvailabilityToDatabase(userData, calendar_items) {
   });
 }
 
-function getEventsBasedOnUserExcludedCategories(id) {
-  return query.getUserCategoryPreferences(id, false).then(({ rows }) => {
-    const categories = rows.map(row => row.name);
-    return query.getAllEventsExcludingCategories(categories);
-  });
-}
+// function getEventsBasedOnUserExcludedCategories(id) {
+//   return query.getUserCategoryPreferences(id, false).then(({ rows }) => {
+//     const categories = rows.map(row => row.name);
+//     return query.getAllEventsExcludingCategories(categories);
+//   });
+// }
 
-function filterEventsBasedOnUserAvailability(id, events) {
-  return query.getUserUnavailable(id).then(({ rows }) => {
-    const UnavailableTimes = rows.map(row => [
-      moment(row.time_start),
-      moment(row.time_end)
-    ]);
-    const filteredEvents = compareTimesAndRemoveEvents(
-      events,
-      UnavailableTimes
-    );
-    return filteredEvents;
-  });
-}
+// function filterEventsBasedOnUserAvailability(id, events) {
+//   return query.getUserUnavailable(id).then(({ rows }) => {
+//     const UnavailableTimes = rows.map(row => [
+//       moment(row.time_start),
+//       moment(row.time_end)
+//     ]);
+//     const filteredEvents = compareTimesAndRemoveEvents(
+//       events,
+//       UnavailableTimes
+//     );
+//     return filteredEvents;
+//   });
+// }
 
-function compareTimesAndRemoveEvents(events, unavailableTimes) {
-  unavailableTimes.forEach(time => {
-    const unavailable_start = time[0];
-    const unavailable_end = time[1];
-    events = events.filter(event => {
-      return !moment(event.time_start).isBetween(
-        unavailable_start,
-        unavailable_end,
-        null,
-        '()'
-      );
-    });
-  });
-  return events;
-}
+// function compareTimesAndRemoveEvents(events, unavailableTimes) {
+//   unavailableTimes.forEach(time => {
+//     const unavailable_start = time[0];
+//     const unavailable_end = time[1];
+//     events = events.filter(event => {
+//       return !moment(event.time_start).isBetween(
+//         unavailable_start,
+//         unavailable_end,
+//         null,
+//         '()'
+//       );
+//     });
+//   });
+//   return events;
+// }
 
-function sortEventsBasedOnUserPreferences(id, events) {
-  return query.getUserCategoryPreferences(id, true).then(({ rows }) => {
-    return events.sort((a, b) => {
-      for (let i = 0; i < rows.length; i++) {
-        if (a.category === rows[i].name || b.category === rows[i].name) {
-          return -1;
-        }
-      }
-      return 1;
-    });
-  });
-}
+// function sortEventsBasedOnUserPreferences(id, events) {
+//   return query.getUserCategoryPreferences(id, true).then(({ rows }) => {
+//     return events.sort((a, b) => {
+//       for (let i = 0; i < rows.length; i++) {
+//         if (a.category === rows[i].name || b.category === rows[i].name) {
+//           return -1;
+//         }
+//       }
+//       return 1;
+//     });
+//   });
+// }
 
 async function verifyTokenAndSendUserCategories(token, res) {
   const categories = await query
