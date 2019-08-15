@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import PreferencesContainer from './PreferencesContainer';
+import UnavailableTime from './UnavailableTime';
 import { Grid, Typography, Avatar } from '@material-ui/core/';
 
 export default class SettingsView extends React.Component {
@@ -65,7 +66,7 @@ export default class SettingsView extends React.Component {
           </Grid>
           <Grid item xs={8}>
             <div style={{ border: 'black solid 1px' }}>
-              <h1>Box</h1>
+              <UnavailableTime />
             </div>
           </Grid>
         </Grid>
