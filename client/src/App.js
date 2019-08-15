@@ -13,6 +13,7 @@ export default class App extends Component {
     super(props);
     this.handleLoadEvents = this.handleLoadEvents.bind(this);
     this.state = {
+      path: '/',
       isSignedIn: null,
       PORT: 9000,
       userToken: '',
@@ -255,6 +256,7 @@ export default class App extends Component {
     this.seperateEventsByDate = this.seperateEventsByDate.bind(this);
     this.handleMicroCardClick = this.handleMicroCardClick.bind(this);
     this.changeDetailsDay = this.changeDetailsDay.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentDidMount() {
@@ -347,6 +349,10 @@ export default class App extends Component {
       .catch();
   }
 
+  handlePageClick(path) {
+    this.setState({ path: path })
+  }
+
   render() {
     const {
       loaded,
@@ -357,7 +363,8 @@ export default class App extends Component {
       eventsTomorrowPlusPlus,
       selectedDaysEvents,
       clickedMicroCard,
-      PORT
+      PORT,
+      path
     } = this.state;
     return (
       <Router>
@@ -365,6 +372,8 @@ export default class App extends Component {
           port={PORT}
           loadEvents={this.handleLoadEvents}
           isSignedIn={isSignedIn}
+          path={path}
+          handlePageClick={this.handlePageClick}
         />
         <Switch>
           <Route
