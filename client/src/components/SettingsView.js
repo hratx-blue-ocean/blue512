@@ -36,7 +36,7 @@ export default class SettingsView extends React.Component {
   render() {
     return (
       <>
-        <Grid container spacing={1} justify="center" alignItems="center">
+        <Grid container spacing={1} justify="center" alignItems="flex-start">
           <Grid item>
             <Avatar
               align="center"

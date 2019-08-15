@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   root: {
     width: 300,
-    padding: 20,
+    marginLeft: 40,
     justifyItems: 'center'
   },
   margin: {
@@ -52,15 +52,37 @@ export default function PreferencesContainer({
     : 0;
   return (
     <>
-      <ListItem style={{ marginBottom: 10, textAlign: 'center' }}>
-        <ListItemText primary={`${cat}`} />
+      <ListItem
+        style={{ marginTop: 10, marginBottom: 15, textAlign: 'center' }}
+      >
+        <ListItemText
+          primary={cat}
+          secondary={
+            <div className={classes.root}>
+              <Slider
+                valueLabelFormat={valueLabelFormat}
+                aria-labelledby="discrete-slider-restrict"
+                step={null}
+                valueLabelDisplay="auto"
+                marks={marks}
+                defaultValue={defaultuserPreferenceSliderValue}
+                onChangeCommitted={(event, value) => {
+                  const category = cat;
+                  const id = userPreference ? userPreference['id'] : null;
+                  const token = userToken;
+                  const preferred =
+                    value === 100 ? true : value === 0 ? false : null;
+                  handleChange({ category, id, token, preferred });
+                }}
+              />
+            </div>
+          }
+        />
       </ListItem>
-      <ListItem style={{ marginBottom: 30 }}>
+      {/* <ListItem style={{ marginBottom: 30 }}>
         <ListItemSecondaryAction>
           <div className={classes.root}>
             <Slider
-              // style={{ position: 'absolute', left: '50%' }}
-              align="center"
               valueLabelFormat={valueLabelFormat}
               aria-labelledby="discrete-slider-restrict"
               step={null}
@@ -78,7 +100,7 @@ export default function PreferencesContainer({
             />
           </div>
         </ListItemSecondaryAction>
-      </ListItem>
+      </ListItem> */}
       <Divider />
     </>
   );
