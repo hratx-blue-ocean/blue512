@@ -253,6 +253,7 @@ export default class App extends Component {
     };
     this.api = `http://localhost:8000/api/example`;
     this.seperateEventsByDate = this.seperateEventsByDate.bind(this);
+    this.handleMicroCardClick = this.handleMicroCardClick.bind(this);
   }
 
   componentDidMount() {
@@ -272,7 +273,9 @@ export default class App extends Component {
       }
     });
   }
-
+  handleMicroCardClick(event) {
+    this.setState({clickedMicroCard: [event]})
+  }
   seperateEventsByDate(alsoEvents) {
     // console.log(events || `testing and didn't get events`); 
     // '2019-08-16T00:00:00.000Z'
@@ -320,12 +323,10 @@ export default class App extends Component {
         this.seperateEventsByDate(data.data.events);
         this.setState({
           eventsAll: data.data.events,
-          isSignedIn: isSignedIn
+          isSignedIn: isSignedIn,
+          loaded: true
         });
       })
-      //   .then(() => {
-      //     console.log('signed in & within loadEventsAnon:', this.state.eventsAll)
-      // })
       .catch();
   }
 
@@ -337,6 +338,7 @@ export default class App extends Component {
       eventsToday,
       eventsTomorrow,
       eventsTomorrowPlusPlus,
+      clickedMicroCard,
       PORT
     } = this.state;
     return (
@@ -365,9 +367,11 @@ export default class App extends Component {
             exact
             render={() => (
               <DetailedView
+                clickedMicroCard={clickedMicroCard}
                 events={eventsAll}
                 eventsToday={eventsToday}
                 eventsTomorrow={eventsTomorrow}
+                handleMicroCardClick={this.handleMicroCardClick}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
               />
             )}
