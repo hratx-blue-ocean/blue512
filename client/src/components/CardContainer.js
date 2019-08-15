@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CardContainer({ event, day, animationTime }) {
+export default function CardContainer({ event, day, animationTime, handleAddToCalClick }) {
   const classes = useStyles();
 
   return (
@@ -18,7 +18,10 @@ export default function CardContainer({ event, day, animationTime }) {
         <Typography variant='h5' align='center' gutterBottom={true}>
           {day}
         </Typography>
-        <CardMaker event={event} animationTime={animationTime} />
+        <CardMaker
+          event={event}
+          animationTime={animationTime}
+          handleAddToCalClick={handleAddToCalClick} />
       </Grid>
     </>
   );
