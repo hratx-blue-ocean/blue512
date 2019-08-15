@@ -20,7 +20,8 @@ export default class UnavailableTime extends React.Component {
       eventName: '',
       datepickerDate: new Date(),
       datepickerStart: new Date(),
-      datepickerEnd: new Date()
+      datepickerEnd: new Date(),
+      unavailableTimes: {}
     };
     this.handleTimeStartChange = this.handleTimeStartChange.bind(this);
     this.handleTimeEndChange = this.handleTimeEndChange.bind(this);
@@ -55,6 +56,14 @@ export default class UnavailableTime extends React.Component {
 
   handleNameChange(eventName) {
     this.setState({ eventName });
+  }
+
+  componentDidMount() {
+    axios
+      .get(`/api/unavailable?token=${this.props.userToken}`)
+      .then(({ data }) => data.filter(time => time.recurring))
+      .then(unavailableTimes => this.setState({ unavailableTimes }))
+      .catch();
   }
 
   render() {
@@ -110,6 +119,7 @@ export default class UnavailableTime extends React.Component {
         <Fab color="primary" aria-label="add">
           <AddIcon onClick={() => this.handleSubmit()} />
         </Fab>
+        <UnavailableTimeWrapper times={this.state.unavailableTimes} />
       </>
     );
   }
