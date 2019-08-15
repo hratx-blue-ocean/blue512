@@ -188,9 +188,20 @@ const addNewUnavailable = data => {
   const item_id = data.id;
 
   const query = {
+    name: 'addNewUnavailable',
     text:
       'INSERT INTO unavailable (time_start, time_end, user_id, item_id) VALUES ($1, $2, $3, $4) ON CONFLICT (item_id) DO NOTHING',
     values: [time_start, time_end, user_id, item_id]
+  };
+
+  return db.query(query);
+};
+
+const getUserUnavailable = id => {
+  const query = {
+    name: 'getUserUnavailable',
+    text: 'SELECT * FROM unavailable WHERE user_id=$1',
+    values: [id]
   };
 
   return db.query(query);
@@ -232,5 +243,6 @@ module.exports = {
   deleteUserCategoryPreference,
   getUserPreferences,
   deleteOldExperiences,
-  deleteOldUnavailable
+  deleteOldUnavailable,
+  getUserUnavailable
 };
