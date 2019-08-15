@@ -11,7 +11,8 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   root: {
     width: 300,
-    padding: 40
+    padding: 20,
+    justifyItems: 'center'
   },
   margin: {
     height: theme.spacing(3)
@@ -51,11 +52,15 @@ export default function PreferencesContainer({
     : 0;
   return (
     <>
-      <ListItem style={{ margin: 10 }}>
+      <ListItem style={{ marginBottom: 10, textAlign: 'center' }}>
         <ListItemText primary={`${cat}`} />
+      </ListItem>
+      <ListItem style={{ marginBottom: 30 }}>
         <ListItemSecondaryAction>
           <div className={classes.root}>
             <Slider
+              // style={{ position: 'absolute', left: '50%' }}
+              align="center"
               valueLabelFormat={valueLabelFormat}
               aria-labelledby="discrete-slider-restrict"
               step={null}

@@ -47,22 +47,26 @@ export default class SettingsView extends React.Component {
           </Grid>
           <Grid item>
             <Typography variant="h4" style={{ marginTop: 10 }} align="center">
-              Hello {this.props.user.first_name}!
+              Hello {this.props.user.first_name}
             </Typography>
           </Grid>
-          <Grid item xs={12} justify="center">
+          <Grid item xs={12}>
             <Typography variant="subtitle1" align="center">
               Help us custom tailor your CityScout experience!
             </Typography>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={4}>
             <PreferencesContainer
               categories={this.state.categories}
               userPreferences={this.state.userPreferences}
               handleChange={this.postNewPreference}
               userToken={this.props.userToken}
-              style={{ align: 'center' }}
             />
+          </Grid>
+          <Grid item xs={8}>
+            <div style={{ border: 'black solid 1px' }}>
+              <h1>Box</h1>
+            </div>
           </Grid>
         </Grid>
       </>
