@@ -1,8 +1,8 @@
 const path = require('path');
 const SRC_DIR = path.join(__dirname, '/src');
 const DIST_DIR = path.join(__dirname, '/public');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+//   .BundleAnalyzerPlugin;
 var CompressionPlugin = require('compression-webpack-plugin');
 const webpack = require('webpack');
 
@@ -14,7 +14,7 @@ module.exports = {
   },
   plugins: [
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
     new CompressionPlugin({
       // asset: '[path].gz[query]',
       algorithm: 'gzip',
