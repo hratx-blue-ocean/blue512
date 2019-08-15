@@ -170,7 +170,9 @@ export default function PrimarySearchAppBar(props) {
             More Events
           </Button>
           <Typography className={classes.title}>
-            <img src="./logo.png" style={{ "max-height": "75px", "marginTop": "-10px", "marginBottom": "-20px" }}></img>
+            <a href="http://cityscout.io">
+              <img src="./logo.png" style={{ "max-height": "75px", "marginTop": "-10px", "marginBottom": "-20px" }}></img>
+            </a>
           </Typography>
           {/* <div className={classes.grow} /> */}
           <div className={classes.sectionDesktop}>
