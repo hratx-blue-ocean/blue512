@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import MainView from './components/MainView.js';
 import DetailedView from './components/DetailedView.js';
@@ -277,16 +276,19 @@ export default class App extends Component {
     this.setState({clickedMicroCard: [event]})
   }
   seperateEventsByDate(alsoEvents) {
-    // console.log(events || `testing and didn't get events`); 
+    // console.log(events || `testing and didn't get events`);
     // '2019-08-16T00:00:00.000Z'
     const todayArr = [],
       tomorrowArr = [],
-      tomorrowPlusPlusArr = []
+      tomorrowPlusPlusArr = [];
 
     alsoEvents.forEach(event => {
-      let parsedTimeStart = Number(event.time_start.split('T')[0].split('-')[2]);
+      let parsedTimeStart = Number(
+        event.time_start.split('T')[0].split('-')[2]
+      );
 
-      if (parsedTimeStart === this.state.today) { // make sure to remove the minus 2 for development
+      if (parsedTimeStart === this.state.today) {
+        // make sure to remove the minus 2 for development
         todayArr.push(event);
       }
       if (parsedTimeStart === this.state.today + 1) {
@@ -316,9 +318,7 @@ export default class App extends Component {
 
   loadEventsAnon(isSignedIn) {
     axios
-      .get(
-        `/api/events`
-      )
+      .get(`/api/events`)
       .then(data => {
         this.seperateEventsByDate(data.data.events);
         this.setState({
@@ -379,7 +379,12 @@ export default class App extends Component {
           <Route
             path="/settings"
             exact
-            render={() => <SettingsView userToken={this.state.userToken} />}
+            render={() => (
+              <SettingsView
+                user={this.state.user}
+                userToken={this.state.userToken}
+              />
+            )}
           />
         </Switch>
       </Router>

@@ -3,11 +3,11 @@ import Preference from './Preference';
 import { List } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '70%'
-  }
-}));
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     width: '30%'
+//   }
+// }));
 
 export default function PreferencesContainer({
   categories,
@@ -15,10 +15,10 @@ export default function PreferencesContainer({
   handleChange,
   userToken
 }) {
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
     <>
-      <List className={classes.root}>
+      <List>
         {categories
           .filter(cat => cat !== 'undefined')
           .map(cat => (

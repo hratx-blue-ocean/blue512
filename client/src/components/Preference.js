@@ -3,16 +3,16 @@ import {
   ListItem,
   ListItemText,
   Slider,
-  Typography,
-  ListItemSecondaryAction
+  ListItemSecondaryAction,
+  Divider
 } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
-import { mergeClasses } from '@material-ui/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: 300,
-    padding: 40
+    marginLeft: 40,
+    justifyItems: 'center'
   },
   margin: {
     height: theme.spacing(3)
@@ -45,8 +45,6 @@ export default function PreferencesContainer({
 }) {
   const classes = useStyles();
   // if the user has a preference for the category, userPreference will be an object that references the category ID and their preference
-  console.log(userPreference);
-  // const userPreference = userPreference ? userPreference : null;
   const defaultuserPreferenceSliderValue = !userPreference
     ? 50
     : userPreference['preferred']
@@ -54,8 +52,34 @@ export default function PreferencesContainer({
     : 0;
   return (
     <>
-      <ListItem>
-        <ListItemText primary={`${cat}`} />
+      <ListItem
+        style={{ marginTop: 10, marginBottom: 15, textAlign: 'center' }}
+      >
+        <ListItemText
+          primary={cat}
+          secondary={
+            <div className={classes.root}>
+              <Slider
+                valueLabelFormat={valueLabelFormat}
+                aria-labelledby="discrete-slider-restrict"
+                step={null}
+                valueLabelDisplay="auto"
+                marks={marks}
+                defaultValue={defaultuserPreferenceSliderValue}
+                onChangeCommitted={(event, value) => {
+                  const category = cat;
+                  const id = userPreference ? userPreference['id'] : null;
+                  const token = userToken;
+                  const preferred =
+                    value === 100 ? true : value === 0 ? false : null;
+                  handleChange({ category, id, token, preferred });
+                }}
+              />
+            </div>
+          }
+        />
+      </ListItem>
+      {/* <ListItem style={{ marginBottom: 30 }}>
         <ListItemSecondaryAction>
           <div className={classes.root}>
             <Slider
@@ -66,7 +90,6 @@ export default function PreferencesContainer({
               marks={marks}
               defaultValue={defaultuserPreferenceSliderValue}
               onChangeCommitted={(event, value) => {
-                console.log(userPreference);
                 const category = cat;
                 const id = userPreference ? userPreference['id'] : null;
                 const token = userToken;
@@ -77,7 +100,8 @@ export default function PreferencesContainer({
             />
           </div>
         </ListItemSecondaryAction>
-      </ListItem>
+      </ListItem> */}
+      <Divider />
     </>
   );
 }
