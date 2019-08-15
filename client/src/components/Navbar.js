@@ -169,6 +169,14 @@ export default function PrimarySearchAppBar(props) {
           >
             More Events
           </Button>
+          <Button
+            component={RouterLink}
+            to="/search"
+            className={classes.button}
+          >
+            Search
+          </Button>
+
           <Typography className={classes.title}>
             <a href="http://cityscout.io">
               <img src="./logo.png" style={{ "max-height": "75px", "marginTop": "-10px", "marginBottom": "-20px" }}></img>
