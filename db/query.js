@@ -196,6 +196,26 @@ const addNewUnavailable = data => {
   return db.query(query);
 };
 
+const deleteOldExperiences = () => {
+  const query = {
+    name: 'deleteOldExperiences',
+    text: 'DELETE FROM experiences WHERE time_start < NOW()',
+    values: []
+  };
+
+  return db.query(query);
+};
+
+const deleteOldUnavailable = () => {
+  const query = {
+    name: 'deleteOldUnavailable',
+    text: 'DELETE FROM unavilable WHERE time_start < NOW()',
+    values: []
+  };
+
+  return db.query(query);
+};
+
 module.exports = {
   getAllEvents,
   getAllEventsExcludingCategories,
@@ -210,5 +230,7 @@ module.exports = {
   changeUserCategoryPreference,
   addUserCategoryPreference,
   deleteUserCategoryPreference,
-  getUserPreferences
+  getUserPreferences,
+  deleteOldExperiences,
+  deleteOldUnavailable
 };
