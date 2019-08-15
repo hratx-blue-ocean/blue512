@@ -6,7 +6,7 @@ import spinner from '../../public/spinner.gif';
 
 
 // import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Container } from '@material-ui/core/';
+import { Paper, Typography, Grid, Container } from '@material-ui/core/';
 
 // const useStyles = makeStyles(theme => ({
 // }));
@@ -24,13 +24,18 @@ export default function MainView({ loaded, events, eventsToday, eventsTomorrow, 
     <>
 
       {loaded ?
-        <Container maxWidth="lg">
-          <Grid container>
-            <CardContainer event={events[0]} day={'Today'} animationTime={400} />
-            <CardContainer event={events[1]} day={'Tomorrow'} animationTime={600} />
-            <CardContainer event={events[2]} day={tomorrowPlusPlus} animationTime={800} />
-          </Grid>
-        </Container>
+        <div>
+          <Container maxWidth="lg" align='center'>
+            <Typography variant='h3' color="textSecondary" style={{ marginTop: 125, marginBottom: 50 }}>
+              Top Picks For You
+            </Typography>
+            <Grid container>
+              <CardContainer event={events[0]} day={'Today'} animationTime={400} />
+              <CardContainer event={events[1]} day={'Tomorrow'} animationTime={600} />
+              <CardContainer event={events[2]} day={tomorrowPlusPlus} animationTime={800} />
+            </Grid>
+          </Container>
+        </div>
 
         :
         <div style={{ paddingTop: '20vh', display: 'flex', justifyContent: 'center' }}>
