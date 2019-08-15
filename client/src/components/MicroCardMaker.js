@@ -20,12 +20,13 @@ const useStyles = makeStyles({
   }
 });
 
-export default function MicroCardMaker({ event }) {
+export default function MicroCardMaker({ event, handleMicroCardClick }) {
   const classes = useStyles();
   const eventStart = Date(event.time_start)
+  
 
   return (
-    <ListItem alignItems='flex-start'>
+    <ListItem alignItems='flex-start' onClick={()=>(handleMicroCardClick(event))}>
       <Card className={classes.card}>
         <CardActionArea>
           <CardMedia
