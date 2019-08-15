@@ -2,6 +2,7 @@ const router = require('express').Router();
 const query = require('../../db/query.js');
 const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const moment = require('moment');
 
 /**
  * @param {String} req.params.ID Returns events that fit specificed users avilability and preferences. Accepted values (Google OAuth ID)
@@ -29,12 +30,25 @@ router.post('/events', (req, res) => {
           return Promise.all(queries);
         })
         .then(_ => query.getUserPreferences(data.id))
-        .then(data => {
-          const categories = data.rows.map(row => row.name);
+        .then(({ rows }) => {
+          const categories = rows.map(row => row.name);
           return query.getAllEventsExcludingCategories(categories);
         })
         .then(response => {
-          res.json({ userInfo: data, events: response.rows });
+          query.getUserUnavailable(data.id).then(({ rows }) => {
+            const UnavailableTimes = rows.map(row => [
+              moment(row.time_start),
+              moment(row.time_end)
+            ]);
+            const events = compareTimesAndRemoveEvents(
+              response.rows,
+              UnavailableTimes
+            );
+            res.json({
+              userInfo: data,
+              events
+            });
+          });
         });
     })
     .catch(err => {
@@ -104,6 +118,23 @@ async function verify(token) {
   const last_name = payload['family_name'];
   const avatar_url = payload['picture'];
   return { id, email, first_name, last_name, avatar_url };
+}
+
+// Compare times and delete conflicting events
+function compareTimesAndRemoveEvents(events, unavailableTimes) {
+  unavailableTimes.forEach(time => {
+    const unavailable_start = time[0];
+    const unavailable_end = time[1];
+    events = events.filter(event => {
+      return !moment(event.time_start).isBetween(
+        unavailable_start,
+        unavailable_end,
+        null,
+        '()'
+      );
+    });
+  });
+  return events;
 }
 
 //Verify with token and get user category preferred

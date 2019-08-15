@@ -1,20 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 import PreferencesContainer from './PreferencesContainer';
-import { Grid, Container } from '@material-ui/core/';
+import { Grid, Typography, Avatar } from '@material-ui/core/';
 
 export default class SettingsView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: '',
       categories: [],
       userPreferences: ''
     };
     this.postNewPreference = this.postNewPreference.bind(this);
   }
   componentDidMount() {
-    console.log(this.props.userToken);
     axios
       .get(`/api/categories?token=${this.props.userToken}`)
       .then(results => results.data)
@@ -24,7 +22,6 @@ export default class SettingsView extends React.Component {
   }
 
   postNewPreference({ category, id, token, preferred }) {
-    console.log('token is: ', token);
     axios
       .post(`/api/categories`, {
         category,
@@ -39,8 +36,26 @@ export default class SettingsView extends React.Component {
   render() {
     return (
       <>
-        <Container maxWidth="lg">
-          <Grid container>
+        <Grid container spacing={1} justify="center" alignItems="flex-start">
+          <Grid item>
+            <Avatar
+              align="center"
+              alt="User Avatar"
+              src={this.props.user.avatar_url}
+              style={{ marginTop: 10, width: 40, height: 40 }}
+            />
+          </Grid>
+          <Grid item>
+            <Typography variant="h4" style={{ marginTop: 10 }} align="center">
+              Hello {this.props.user.first_name}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="subtitle1" align="center">
+              Help us custom tailor your CityScout experience!
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
             <PreferencesContainer
               categories={this.state.categories}
               userPreferences={this.state.userPreferences}
@@ -48,7 +63,12 @@ export default class SettingsView extends React.Component {
               userToken={this.props.userToken}
             />
           </Grid>
-        </Container>
+          <Grid item xs={8}>
+            <div style={{ border: 'black solid 1px' }}>
+              <h1>Box</h1>
+            </div>
+          </Grid>
+        </Grid>
       </>
     );
   }
