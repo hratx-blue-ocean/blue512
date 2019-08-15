@@ -354,21 +354,21 @@ export default class App extends Component {
     this.setState({ path: path })
   }
 
-  handleAddToCalClick(event) {
-    this.addToCalendar(event);
+  handleAddToCalClick(item) {
+    this.addToCalendar(item);
   }
 
-  addToCalendar(event) {
-    let eventStart = new Date(event.time_start);
+  addToCalendar(item) {
+    let eventStart = new Date(item.time_start);
     let eventEnd;
-    if (event.time_end) {
-      eventEnd = new Date(event.time_end);
+    if (item.time_end) {
+      eventEnd = new Date(item.time_end);
     } else {
       eventEnd = new Date(eventStart)
       eventEnd.setHours(eventEnd.getHours() + 2);
     }
     const gCalEvent = {
-      summary: event.name,
+      summary: item.name,
       start: {
         dateTime: eventStart
       },
