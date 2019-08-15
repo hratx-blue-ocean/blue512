@@ -1,5 +1,5 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import { Grid, Typography } from '@material-ui/core/';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -45,6 +45,10 @@ export default class UnavailableTime extends React.Component {
   render() {
     return (
       <>
+        <Typography variant="subtitle1" align="center">
+          Tell us when you are unavailable. We assume these times are recurring
+          - delete them below if they are no longer relevant.
+        </Typography>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="space-around">
             <KeyboardDatePicker
