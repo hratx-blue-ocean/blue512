@@ -3,7 +3,7 @@ const Helpers = require("./helpers.js");
 const getZipCode = require("latlng-to-zip"); //here for scaling
 const zipToCity = require("zipcodes");
 const googleImages = require('google-images');
-
+const google = require('google-parser');
 
 const callAPI = () => {
     let dates = Helpers._getDate();
@@ -16,29 +16,49 @@ const callAPI = () => {
         .catch(err => console.log(err))
 };
 
+let deleteObj = [];
+const findImage = async (term, category, location, venue) => {
+    const client = new googleImages('001419127335946044126:kujzldodmpm', 'AIzaSyCm4SMZAvhXi6nsfqSK_wIBbo-yC0_7V-8');
+    let newSearch = `${term} ${venue} ${category}`;
+    if (category === 'concerts' || category === 'performing-arts') {
+        newSearch = `${term} ${location} ${venue}`;
+    }
+    console.log(newSearch);
 
-const findImage = async (term, category) => {
-    const client = new googleImages('001419127335946044126:kujzldodmpm', 'AIzaSyAWqMcWfisUQs-BOvqjkwnalUJpvzkf-x4');
-    let combinedTerm = term + '' + category;
-    let searchTerm = combinedTerm.replace(/[^A-Za-z]/g, " ");
-    console.log(searchTerm)
-    let results = await client.search(searchTerm)
-        .then(images => {
-            return images[0].url
-        })
-        .catch(err => {
-            return 'no image'
-        });
+    let getRidOfSymbols = newSearch.replace(/[^A-Za-z]/g, " ");
+    let condensedSearch = getRidOfSymbols;
+    let image = '';
 
-    return results
+    let results = await google.jpg(newSearch);
 
+    for (let i = 0; i <= Math.floor(results.length / 2); i++) {
+        if (!results[i].img.includes('evbuc') && results[i].img !== undefined && !results[i].img.includes('video') && !results[i].img.includes('zoogletools') && !results[i].img.includes('fbsbx.com') && !results[i].img.includes('wixmp.com') && !results[i].img.includes('thedailybeast.com') && !results[i].img.includes('cloudinary.com')) {
+            image = results[i].img;
+            break;
+        }
+    }
+
+    if (image === '') {
+        let otherResults = await client.search(condensedSearch)
+            .then(images => {
+                for (let i = 0; i < 5; i++) {
+                    if (!images[i].url.includes('evbuc') && images[i].url !== undefined && !images[i].url.includes('video') && !images[i].url.includes('zoogletools') && !images[i].url.includes('fbsbx.com') && images[i].url.includes('wixmp.com') && images[i].url.includes('thedailybeast.com') && !images[i].url.includes('cloudinary.com')) {
+                        return images[i].url;
+                    }
+                }
+            })
+            .catch(err => {
+                deleteObj.push(term);
+                return null;
+            });
+        return otherResults;
+    }
+    return;
 }
 
 const restructureData = data => {
 
-    let events = [];
-
-    data.forEach(async (event) => {
+    const eventPromises = data.map(async (event) => {
 
         if (event.state === "active") {
             let restructured = {};
@@ -71,22 +91,22 @@ const restructureData = data => {
             if (event.description !== "") {
                 restructured.description = event.description;
             }
+            restructured.image = null;
+            const result = await findImage(restructured.name, restructured.category, restructured.location, restructured.venue);
+            restructured.image = result;
 
-            const result = await findImage(restructured.name, restructured.category);
-            restructured.images = result;
 
-            console.log(restructured.images)
-
-            events.push(restructured)
-
+            // console.log(restructured.image)
+            return restructured;
         }
     })
-    console.log(events);
-    return events
+
+    return Promise.all(eventPromises);
+
 }
 
 const getData = () => {
-    return callAPI().then(data => restructureData(data));
+    return callAPI().then(data => restructureData(data)).then(console.log);
 };
 
 getData();
