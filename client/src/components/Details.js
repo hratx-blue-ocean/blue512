@@ -35,7 +35,7 @@ export default function Details({ event }) {
            </Typography>
            <Typography variant='h5' component='p'>
              <ButtonGroup>
-              <Button>Add to calender</Button>
+              <Button>Add to calendar</Button>
               <Button>Get more info *url*</Button>
              </ButtonGroup>
            </Typography>
