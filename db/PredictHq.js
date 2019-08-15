@@ -2,6 +2,8 @@ const axios = require("axios");
 const Helpers = require("./helpers.js");
 const getZipCode = require("latlng-to-zip"); //here for scaling
 const zipToCity = require("zipcodes");
+const googleImages = require('google-images');
+
 
 const callAPI = () => {
     let dates = Helpers._getDate();
@@ -9,15 +11,35 @@ const callAPI = () => {
     return axios
         .get(`https://api.predicthq.com/v1/events?active.gte=${dates.currentDateStr}&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`, { headers: { "Authorization": process.env.API_KEY_PREDICTHQ } })
         .then(res => {
-            console.log(res.data)
             return res.data.results;
         })
         .catch(err => console.log(err))
 };
 
-const restructureData = async data => {
+
+const findImage = async (term, category) => {
+    const client = new googleImages('001419127335946044126:kujzldodmpm', 'AIzaSyAWqMcWfisUQs-BOvqjkwnalUJpvzkf-x4');
+    let combinedTerm = term + '' + category;
+    let searchTerm = combinedTerm.replace(/[^A-Za-z]/g, " ");
+    console.log(searchTerm)
+    let results = await client.search(searchTerm)
+        .then(images => {
+            return images[0].url
+        })
+        .catch(err => {
+            return 'no image'
+        });
+
+    return results
+
+}
+
+const restructureData = data => {
+
     let events = [];
-    data.forEach(event => {
+
+    data.forEach(async (event) => {
+
         if (event.state === "active") {
             let restructured = {};
 
@@ -25,9 +47,9 @@ const restructureData = async data => {
             const { title } = event;
 
             restructured.name = title || null;
-            restructured.url =
+            restructured.url = null;
 
-                restructured.event_id = event.id;
+            restructured.event_id = event.id;
             restructured.time_start = event.start;
             restructured.time_end = null;
             if (event.end) {
@@ -37,17 +59,6 @@ const restructureData = async data => {
             if (event.category) {
                 restructured.category = event.category;
             }
-
-            restructured.image = null;
-            // restructured.image = await
-            // axios.get(
-            //     `https://serpapi.com/search.json?q=${restructured.name}&location=Austin%2C+Texas%2C+United+States&hl=en&gl=us&output=json&tbm=isch&source=test`
-            // )
-            //     .then(res => {
-            //         console.log(res.data.images_results[0].original)
-            //         return res.data.images_results[0].original
-            //     })
-            //     .catch(err => console.log(err));
 
             restructured.venue = null;
             if (event.entities[0]) {
@@ -60,12 +71,19 @@ const restructureData = async data => {
             if (event.description !== "") {
                 restructured.description = event.description;
             }
+
+            const result = await findImage(restructured.name, restructured.category);
+            restructured.images = result;
+
             console.log(restructured.images)
-            events.push(restructured);
+
+            events.push(restructured)
+
         }
-    });
-    return events;
-};
+    })
+    console.log(events);
+    return events
+}
 
 const getData = () => {
     return callAPI().then(data => restructureData(data));

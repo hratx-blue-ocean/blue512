@@ -28,6 +28,7 @@
     "body-parser": "^1.19.0",
     "cron": "^1.7.1",
     "dotenv": "^8.0.0",
+    "google-images": "^2.1.0",
     "latlng-to-zip": "0.0.2",
     "pg": "^7.12.1",
     "setup": "0.0.3",

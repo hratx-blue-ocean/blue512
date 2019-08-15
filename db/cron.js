@@ -48,6 +48,10 @@ const atMidnightEveryDay = new CronJob("0 0 0 * * *", () => {
     .catch(console.log);
 });
 
+savePredictHQData()
+  .then(console.log)
+  .catch(console.log);
+
 module.export = {
   atMidnightEveryDay
 };
