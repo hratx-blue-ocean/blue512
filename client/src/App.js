@@ -257,6 +257,7 @@ export default class App extends Component {
     this.handleMicroCardClick = this.handleMicroCardClick.bind(this);
     this.changeDetailsDay = this.changeDetailsDay.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
+    this.handleAddToCalClick = this.handleAddToCalClick.bind(this);
   }
 
   componentDidMount() {
@@ -353,6 +354,40 @@ export default class App extends Component {
     this.setState({ path: path })
   }
 
+  handleAddToCalClick(item) {
+    this.addToCalendar(item);
+  }
+
+  addToCalendar(item) {
+    let eventStart = new Date(item.time_start);
+    let eventEnd;
+    if (item.time_end) {
+      eventEnd = new Date(item.time_end);
+    } else {
+      eventEnd = new Date(eventStart)
+      eventEnd.setHours(eventEnd.getHours() + 2);
+    }
+    const gCalEvent = {
+      summary: item.name,
+      start: {
+        dateTime: eventStart
+      },
+      end: {
+        dateTime: eventEnd
+      }
+    };
+    // console.log(gCalEvent)
+    let request = window.gapi.client.calendar.events.insert({
+      calendarId: 'primary',
+      resource: gCalEvent
+    });
+    request.execute(function (event) {
+      console.log('event successfully added')
+      //Add notification or toast
+      // console.log(event.htmlLink);
+    });
+  }
+
   render() {
     const {
       loaded,
@@ -386,6 +421,7 @@ export default class App extends Component {
                 eventsToday={eventsToday}
                 eventsTomorrow={eventsTomorrow}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+                handleAddToCalClick={this.handleAddToCalClick}
               />
             )}
           />
