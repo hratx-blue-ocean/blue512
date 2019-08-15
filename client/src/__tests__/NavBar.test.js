@@ -5,7 +5,7 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  InputBase,
+  // InputBase,
   Button
 } from '@material-ui/core';
 
@@ -20,7 +20,7 @@ describe('Nav Bar component', () => {
   test('it renders the corect child components', () => {
     expect(wrapper.find(AppBar).length).toBeGreaterThan(0);
     expect(wrapper.find(Button).length).toBeGreaterThan(0);
-    expect(wrapper.find(InputBase).length).toBeGreaterThan(0);
+    // expect(wrapper.find(InputBase).length).toBeGreaterThan(0);
     expect(wrapper.find(Toolbar).length).toBeGreaterThan(0);
     expect(wrapper.find(Typography).length).toBeGreaterThan(0);
   });
