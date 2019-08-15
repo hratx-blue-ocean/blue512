@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core/';
+import { Grid, Typography, Fab, TextField } from '@material-ui/core/';
+import AddIcon from '@material-ui/icons/Add';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -7,6 +8,7 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import moment from 'moment';
+import axios from 'axios';
 
 export default class UnavailableTime extends React.Component {
   constructor(props) {
@@ -15,17 +17,17 @@ export default class UnavailableTime extends React.Component {
       date: '',
       timeStart: '',
       timeEnd: '',
+      eventName: '',
       datepickerDate: new Date(),
       datepickerStart: new Date(),
-      datepickerEnd: new Date(),
-      recurring: false
+      datepickerEnd: new Date()
     };
     this.handleTimeStartChange = this.handleTimeStartChange.bind(this);
     this.handleTimeEndChange = this.handleTimeEndChange.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  // // The first commit of Material-UI
-  // const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   handleDateChange(_, value) {
     const date = moment(value, 'MM/DD/YYYY').format('YYYY-MM-DD');
@@ -42,13 +44,32 @@ export default class UnavailableTime extends React.Component {
     this.setState({ timeEnd, datepickerEnd: _ });
   }
 
+  handleSubmit() {
+    axios.post(`/api/unavailable`, {
+      token: this.props.userToken,
+      name: this.state.eventName,
+      time_start: `${this.state.date} ${this.state.timeStart}`,
+      time_end: `${this.state.date} ${this.state.timeEnd}`
+    });
+  }
+
+  handleNameChange(eventName) {
+    this.setState({ eventName });
+  }
+
   render() {
     return (
       <>
         <Typography variant="subtitle1" align="center">
-          Tell us when you are unavailable. We assume these times are recurring
-          - delete them below if they are no longer relevant.
+          Tell us when you are unavailable. We assume these times are recurring.
+          Please delete them below if they are no longer relevant!
         </Typography>
+        <TextField
+          id="standard-name"
+          label="Event Name"
+          onChange={e => this.handleNameChange(e.target.value)}
+          style={{ marginLeft: 10 }}
+        />
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="space-around">
             <KeyboardDatePicker
@@ -86,6 +107,9 @@ export default class UnavailableTime extends React.Component {
             />
           </Grid>
         </MuiPickersUtilsProvider>
+        <Fab color="primary" aria-label="add">
+          <AddIcon onClick={() => this.handleSubmit()} />
+        </Fab>
       </>
     );
   }
