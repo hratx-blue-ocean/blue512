@@ -63,9 +63,9 @@ const addNewCategory = category => {
   return db.query(query);
 };
 
-const getUserCategoryPreferences = user_id => {
+const getUserCategories = user_id => {
   const query = {
-    name: 'getUserCategoryPreferences',
+    name: 'getUserCategories',
     text:
       'SELECT uc.id, c.name, uc.preferred FROM users_categories uc LEFT OUTER JOIN categories c ON uc.category_id=c.id WHERE user_id=$1',
     values: [user_id]
@@ -172,15 +172,16 @@ const getUserData = id => {
   return db.query(query);
 };
 
-const getUserPreferences = id => {
+const getUserCategoryPreferences = (id, preferred) => {
   const query = {
     text:
-      'SELECT c.name FROM users_categories uc INNER JOIN categories c ON uc.category_id=c.id WHERE uc.user_id = $1',
-    values: [id]
+      'SELECT c.name FROM users_categories uc INNER JOIN categories c ON uc.category_id=c.id WHERE uc.user_id = $1 AND uc.preferred=$2',
+    values: [id, preferred]
   };
 
   return db.query(query);
 };
+
 const addNewUnavailable = data => {
   const time_start = data.start.dateTime;
   const time_end = data.end.dateTime;
@@ -237,11 +238,11 @@ module.exports = {
   addNewUser,
   getUserData,
   addNewUnavailable,
-  getUserCategoryPreferences,
+  getUserCategories,
   changeUserCategoryPreference,
   addUserCategoryPreference,
   deleteUserCategoryPreference,
-  getUserPreferences,
+  getUserCategoryPreferences,
   deleteOldExperiences,
   deleteOldUnavailable,
   getUserUnavailable
