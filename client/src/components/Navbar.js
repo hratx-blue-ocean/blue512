@@ -22,7 +22,11 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block'
-    }
+    },
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    fontSize: 18,
+    // maxHeight: '200px'
   },
   button: {
     margin: theme.spacing(1),
@@ -88,6 +92,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
+  console.log('Navbar props:', props)
 
   const getData = function (id_token, calendar_items) {
     axios
@@ -141,20 +146,19 @@ export default function PrimarySearchAppBar(props) {
     }}>
       <AppBar position="fixed">
         <Toolbar>
-          <Typography className={classes.title}>CityScout</Typography>
-          <div className={classes.search}>
+          {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <SearchIcon />
+            <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ 'aria-label': 'search' }}
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput
+            }}
+            inputProps={{ 'aria-label': 'search' }}
             />
-          </div>
+          </div> */}
           <Button component={RouterLink} to="/" className={classes.button}>
             Some Events
           </Button>
@@ -165,7 +169,12 @@ export default function PrimarySearchAppBar(props) {
           >
             More Events
           </Button>
-          <div className={classes.grow} />
+          <Typography className={classes.title}>
+            <a href="http://cityscout.io">
+              <img src="./logo.png" style={{ "max-height": "75px", "marginTop": "-10px", "marginBottom": "-20px" }}></img>
+            </a>
+          </Typography>
+          {/* <div className={classes.grow} /> */}
           <div className={classes.sectionDesktop}>
             <div
               className={classes.button}
