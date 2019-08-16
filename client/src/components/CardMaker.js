@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { createMuiTheme, withStyles, makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -15,19 +16,25 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddCircle from '@material-ui/icons/AddCircle';
 import AddIcon from '@material-ui/icons/Add';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
+import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 import { Grow, Fab } from '@material-ui/core/';
 import moment from 'moment';
 import Link from '@material-ui/core/Link';
 
 
+
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: 360
+    maxWidth: 400,
   },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
+  },
+  actions: {
+    display: "flex",
+    justifyContent: "space-between"
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -44,46 +51,25 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CardMaker({ event, animationTime }) {
+const theme = createMuiTheme({
+  palette: {
+    // primary: {
+    //   // main: "#00c853",
+    // },
+    secondary: {
+      main: "#f44336",
+    }
+  },
+});
+
+
+export default function CardMaker({ event, animationTime, handleAddToCalClick }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
   function handleExpandClick() {
     setExpanded(!expanded);
   }
-
-  function addToCalendar(event) {
-    // console.log('Clicked on:', event)
-    let eventStart = new Date(event.time_start);
-    let eventEnd;
-    if (event.time_end) {
-      eventEnd = new Date(event.time_end);
-    } else {
-      eventEnd = new Date(eventStart)
-      eventEnd.setHours(eventEnd.getHours() + 2);
-    }
-    const gCalEvent = {
-      summary: event.name,
-      start: {
-        dateTime: eventStart
-      },
-      end: {
-        dateTime: eventEnd
-      }
-    };
-    // console.log(gCalEvent)
-    let request = window.gapi.client.calendar.events.insert({
-      calendarId: 'primary',
-      resource: gCalEvent
-    });
-    request.execute(function (event) {
-      console.log('event successfully added')
-      //Add notification or toast
-      // console.log(event.htmlLink);
-    });
-
-  }
-
 
   return (
     <Grow in={true} timeout={animationTime}>
@@ -97,7 +83,9 @@ export default function CardMaker({ event, animationTime }) {
           image={event.img}
         />
 
-        <CardContent>
+        {/* Adding minimum height to CardContent allows all cards to be the same size
+        Even on cards where event titles wrap to the next line */}
+        <CardContent style={{ minHeight: 140 }}>
           <Typography variant="h6"  >
             <Link href={event.url} color="textPrimary">
               {event.name}
@@ -111,15 +99,26 @@ export default function CardMaker({ event, animationTime }) {
           </Typography>
         </CardContent>
 
-        <CardActions disableSpacing>
+        <CardActions>
           <Fab
-            color="secondary"
+            color="primary"
             aria-label="add"
-            onClick={() => { addToCalendar(event) }}
+            onClick={() => { handleAddToCalClick(event) }}
           >
-            {/* <AddIcon /> */}
             <CalendarIcon />
           </Fab>
+
+          {/* This themeprovider overrides the default theme colors at this component level
+          Using it to get the red color without using that color at the global level */}
+          <ThemeProvider theme={theme}>
+            <Fab
+              color="secondary"
+              aria-label="add"
+              onClick={() => { console.log('next event') }}
+            >
+              <CloseIcon />
+            </Fab>
+          </ThemeProvider>
 
           <IconButton
             className={clsx(classes.expand, {

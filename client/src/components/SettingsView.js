@@ -9,11 +9,22 @@ export default class SettingsView extends React.Component {
     super(props);
     this.state = {
       categories: [],
-      userPreferences: ''
+      userPreferences: []
     };
     this.postNewPreference = this.postNewPreference.bind(this);
+    this.getCategories = this.getCategories.bind(this);
   }
   componentDidMount() {
+    this.getCategories();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.userToken !== prevProps.userToken) {
+      this.getCategories();
+    }
+  }
+
+  getCategories() {
     axios
       .get(`/api/categories?token=${this.props.userToken}`)
       .then(results => results.data)
@@ -42,13 +53,13 @@ export default class SettingsView extends React.Component {
             <Avatar
               align="center"
               alt="User Avatar"
-              src={this.props.user.avatar_url}
+              src={this.props.user ? this.props.user.avatar_url : ''}
               style={{ marginTop: 10, width: 40, height: 40 }}
             />
           </Grid>
           <Grid item>
             <Typography variant="h4" style={{ marginTop: 10 }} align="center">
-              Hello {this.props.user.first_name}
+              Hello {this.props.user ? this.props.user.first_name : ''}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -65,9 +76,7 @@ export default class SettingsView extends React.Component {
             />
           </Grid>
           <Grid item xs={8}>
-            <div style={{ border: 'black solid 1px' }}>
-              <UnavailableTime userToken={this.props.userToken} />
-            </div>
+            <UnavailableTime userToken={this.props.userToken} />
           </Grid>
         </Grid>
       </>
