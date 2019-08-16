@@ -17,23 +17,28 @@ const getAllEventsULTRAMODE = id => {
   const query = {
     text: `SELECT e.id, e.name, e.experience_api_id, e.description, e.url, e.img, e.venue, e.location, e.time_start,
     e.time_end, e.price_min, e.price_max, c.name AS category
-    FROM experiences e
+  FROM experiences e
     LEFT OUTER JOIN categories c ON e.category_id=c.id
-    WHERE e.category_id!= ALL(SELECT id
+  WHERE e.category_id!= ALL(SELECT id
     FROM categories
     WHERE id= 
-    ANY(SELECT category_id
+      ANY(SELECT category_id
     FROM users_categories
     WHERE user_id=$1 AND preferred=false))
-    ORDER BY e.category_id
-    = ANY
-    (SELECT id
-    FROM categories
-    WHERE id= 
-    ANY(SELECT category_id
-    FROM users_categories
-    WHERE user_id=$1 AND preferred=true))
-    DESC`,
+    AND not exists 
+      (select 1
+    from unavailable u
+    where u.time_start <= e.time_start
+      AND u.time_end >= e.time_start AND user_id=$1  AND u.recurring!=true LIMIT 1)
+  ORDER BY e.category_id
+  = ANY
+  (SELECT id
+  FROM categories
+  WHERE id= 
+      ANY(SELECT category_id
+  FROM users_categories
+  WHERE user_id=$1 AND preferred=true))
+  DESC;`,
     values: [id]
   };
 

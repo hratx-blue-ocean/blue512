@@ -12,7 +12,7 @@ const _createReqStr = (page = 1) => {
 
   let reqStr = `https://www.eventbriteapi.com/v3/events/search/?token=${
     process.env.API_KEY_EVENTBRITE
-    }&location.latitude=${latitude}&location.longitude=${longitude}&start_date.range_end=${futureDate}&page=${page}&expand=ticket_classes,venue,category`;
+  }&location.latitude=${latitude}&location.longitude=${longitude}&start_date.range_end=${futureDate}&page=${page}&expand=ticket_classes,venue,category`;
 
   return reqStr;
 };
