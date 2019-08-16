@@ -71,9 +71,22 @@ export default function CardMaker({
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   function handleExpandClick() {
     setExpanded(!expanded);
+  }
+
+  function renderSnackBar() {
+    setOpen(true);
+  }
+
+  function closeSnackBar(event, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
   }
 
   const noEventFound = () => {
@@ -100,8 +113,6 @@ export default function CardMaker({
       </Grow>
     );
   };
-
-  const renderSnackBar = () => {};
 
   if (!event) {
     return noEventFound();
@@ -137,6 +148,7 @@ export default function CardMaker({
             aria-label="add"
             onClick={() => {
               handleCardActionClick(event, true);
+              renderSnackBar();
             }}
           >
             <CalendarIcon />
@@ -175,6 +187,22 @@ export default function CardMaker({
             <Typography paragraph>{event.description}</Typography>
           </CardContent>
         </Collapse>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={open}
+          autoHideDuration={4000}
+          onClose={closeSnackBar}
+          color="primary"
+        >
+          <SnackbarContent
+            onClose={closeSnackBar}
+            variant="success"
+            message="Event successfully added to your Google calendar!"
+          />
+        </Snackbar>
       </Card>
     </Grow>
   );
