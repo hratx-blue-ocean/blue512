@@ -27,14 +27,13 @@ const useStyles = makeStyles(theme => ({
 
 const overmorrow = moment().add(2, 'days').format('dddd')
 
-export default function MicroCardContainer({ 
-  eventsToday, 
-  eventsTomorrow, 
-  eventsTomorrowPlusPlus, 
-  selectedDaysEvents, 
-  handleMicroCardClick, 
-  changeDetailsDay }) 
-  {
+export default function MicroCardContainer({
+  eventsToday,
+  eventsTomorrow,
+  eventsTomorrowPlusPlus,
+  selectedDaysEvents,
+  handleMicroCardClick,
+  changeDetailsDay }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -46,14 +45,14 @@ export default function MicroCardContainer({
   const animationTimeouts = [];
 
   for (let event = 0; event < selectedDaysEvents.length; event++) {
-      animationTimeout += 300;
-      animationTimeouts.push(animationTimeout);
+    animationTimeout += 300;
+    animationTimeouts.push(animationTimeout);
   }
 
   return (
 
     <Fade in={true} timeout={1000}>
-      <Grid item xs={4}>
+      <Grid item xs={12} sm={4}>
         <Paper className={classes.root}>
           <Tabs
             value={value}
@@ -71,7 +70,7 @@ export default function MicroCardContainer({
 
           <Paper className={classes.ListPaper}>
             <List className={classes.root}>
-              {selectedDaysEvents.map( (event, index) => <MicroCardMaker key={event.experience_api_id} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
+              {selectedDaysEvents.map((event, index) => <MicroCardMaker key={event.experience_api_id} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
             </List>
           </Paper>
         </Paper>
