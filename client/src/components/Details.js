@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
   pad: {
     padding: "11px",
-  }, 
+  },
   fab: {
     margin: theme.spacing(1),
   },
@@ -29,67 +29,67 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Details({ event, openModal, closeModal }) {
+export default function Details({ event, openModal, closeModal, handleCardActionClick }) {
   const classes = useStyles();
 
   return (<>
     <Hidden only="xs">
-    <Grid item sm={8} xs={false} style={{ height: '90vh'}} >
-      <div>
-        <Paper className={classes.root} style={{maxHeight: '100vh', overflow: 'auto'}} >
+      <Grid item sm={8} xs={false} style={{ height: '90vh' }} >
+        <div>
+          <Paper className={classes.root} style={{ maxHeight: '100vh', overflow: 'auto' }} >
 
 
             <Grid container justify="center">
 
               <Grid item xs={12} align="center">
                 <Typography variant='h4' component='h2' className={classes.pad}>
-                 {event[0].name}
+                  {event.name}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} align="center">
-                <img src={event[0].img} className={classes.media}/>
+                <img src={event.img} className={classes.media} />
               </Grid>
 
 
             </Grid>
-          
-           <Typography variant='h5' component='h5' className={classes.pad}>
-              {moment(event[0].time_start).format('ddd, MMM DD, h:mm a')}
-              <Fab className={classes.fab} 
+
+            <Typography variant='h5' component='h5' className={classes.pad}>
+              {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
+              <Fab className={classes.fab}
                 color="primary"
                 aria-label="add"
-                onClick={() => { addToCalendar(event) }}> 
-                  <CalendarIcon />
-                </Fab>
-           </Typography>
+                onClick={() => { handleCardActionClick(event, true) }}>
+                <CalendarIcon />
+              </Fab>
+            </Typography>
 
-           <Typography variant='h5' component='h5' className={classes.pad} >
-             @ {event[0].venue}  {event[0].location}
-           </Typography>
+            <Typography variant='h5' component='h5' className={classes.pad} >
+              @ {event.venue}  {event.location}
+            </Typography>
 
-          <Typography variant='h6' component='h5' className={classes.pad}>
-          <ShowMoreText
+            <Typography variant='h6' component='h5' className={classes.pad}>
+              <ShowMoreText
                 lines={4}
                 more='Show more'
                 less='Show less'
                 anchorClass=''
                 expanded={false}
-            >
-                {event[0].description}
-            </ShowMoreText>
+              >
+                {event.description}
+              </ShowMoreText>
 
-           </Typography>
+            </Typography>
 
-              <Button href={event[0].url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
+            <Button href={event.url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
 
-        </Paper>
-      </div>
-    </Grid>
+          </Paper>
+        </div>
+      </Grid>
     </Hidden>
 
-<Hidden smUp="true">
-    <Modal
+    <Hidden smUp={true}>
+      <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
         open={open}
@@ -98,61 +98,61 @@ export default function Details({ event, openModal, closeModal }) {
       >
         <div>
 
-        <Grid item sm={8} xs={false} style={{ height: '90vh'}} >
-      <div>
-        <Paper className={classes.pad} style={{maxHeight: '100vh', overflow: 'auto'}} >
-          <Typography variant='h6' component='h6' className={classes.pad}>
-            {event[0].name}
-          </Typography>
+          <Grid item sm={8} xs={false} style={{ height: '90vh' }} >
+            <div>
+              <Paper className={classes.pad} style={{ maxHeight: '100vh', overflow: 'auto' }} >
+                <Typography variant='h6' component='h6' className={classes.pad}>
+                  {event.name}
+                </Typography>
 
-            <img src={event[0].img} className={classes.media}/>
-          
-           <Typography variant='subtitle1'  className={classes.pad}>
-              {moment(event[0].time_start).format('ddd, MMM DD, h:mm a')}
+                <img src={event.img} className={classes.media} />
 
-              <Fab className={classes.fab} 
-                color="primary"
-                aria-label="add"
-                onClick={() => { addToCalendar(event) }}> 
-                  <CalendarIcon />
-                </Fab>
+                <Typography variant='subtitle1' className={classes.pad}>
+                  {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
 
-                <Fab
-                  color="secondary"
-                  aria-label="add"
-                  onClick={closeModal}
-                 >
-              <CloseIcon />
-            </Fab>
-           </Typography>
+                  <Fab className={classes.fab}
+                    color="primary"
+                    aria-label="add"
+                    onClick={() => { addToCalendar(event) }}>
+                    <CalendarIcon />
+                  </Fab>
 
-           <Typography variant='h6' component='h6' className={classes.pad} >
-             @ {event[0].venue}  {event[0].location}
-           </Typography>
+                  <Fab
+                    color="secondary"
+                    aria-label="add"
+                    onClick={closeModal}
+                  >
+                    <CloseIcon />
+                  </Fab>
+                </Typography>
 
-          <Typography variant='subtitle2'  className={classes.pad}>
-          <ShowMoreText
-                lines={4}
-                more='Show more'
-                less='Show less'
-                anchorClass=''
-                expanded={false}
-            >
-                {event[0].description}
-            </ShowMoreText>
+                <Typography variant='h6' component='h6' className={classes.pad} >
+                  @ {event.venue}  {event.location}
+                </Typography>
 
-           </Typography>
+                <Typography variant='subtitle2' className={classes.pad}>
+                  <ShowMoreText
+                    lines={4}
+                    more='Show more'
+                    less='Show less'
+                    anchorClass=''
+                    expanded={false}
+                  >
+                    {event.description}
+                  </ShowMoreText>
 
-              <Button href={event[0].url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
+                </Typography>
 
-        </Paper>
-      </div>
-    </Grid>
+                <Button href={event.url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
 
-</div>
+              </Paper>
+            </div>
+          </Grid>
+
+        </div>
       </Modal>
-      </Hidden>
-</>
+    </Hidden>
+  </>
   )
 
 }

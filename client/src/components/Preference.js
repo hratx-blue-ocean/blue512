@@ -1,19 +1,8 @@
 import React from 'react';
-import {
-  ListItem,
-  ListItemText,
-  Slider,
-  ListItemSecondaryAction,
-  Divider
-} from '@material-ui/core/';
+import { Grid, ListItem, ListItemText, Slider, Divider } from '@material-ui/core/';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: 300,
-    marginLeft: 40,
-    justifyItems: 'center'
-  },
   margin: {
     height: theme.spacing(3)
   }
@@ -47,48 +36,31 @@ export default function PreferencesContainer({
   // if the user has a preference for the category, userPreference will be an object that references the category ID and their preference
   const defaultuserPreferenceSliderValue = !userPreference
     ? 50
-    : userPreference['preferred']
-    ? 100
-    : 0;
+    : userPreference.preferred
+      ? 100
+      : 0;
   return (
     <>
       <ListItem
-        style={{ marginTop: 10, marginBottom: 15, textAlign: 'center' }}
+        style={{ marginTop: 10, marginBottom: 10 }}
       >
-        <ListItemText
-          primary={cat}
-          secondary={
-            <div className={classes.root}>
-              <Slider
-                valueLabelFormat={valueLabelFormat}
-                aria-labelledby="discrete-slider-restrict"
-                step={null}
-                valueLabelDisplay="auto"
-                marks={marks}
-                defaultValue={defaultuserPreferenceSliderValue}
-                onChangeCommitted={(event, value) => {
-                  const category = cat;
-                  const id = userPreference ? userPreference['id'] : null;
-                  const token = userToken;
-                  const preferred =
-                    value === 100 ? true : value === 0 ? false : null;
-                  handleChange({ category, id, token, preferred });
-                }}
-              />
-            </div>
-          }
-        />
-      </ListItem>
-      {/* <ListItem style={{ marginBottom: 30 }}>
-        <ListItemSecondaryAction>
-          <div className={classes.root}>
+        <Grid container justify="center">
+
+          <Grid item xs={12} align="center">
+            <ListItemText
+              primary={cat}
+            />
+          </Grid>
+
+          <Grid item xs={12} align="center" style={{ paddingLeft: '10%', paddingRight: '10%' }}>
             <Slider
               valueLabelFormat={valueLabelFormat}
               aria-labelledby="discrete-slider-restrict"
               step={null}
-              valueLabelDisplay="auto"
+              valueLabelDisplay="off"
               marks={marks}
               defaultValue={defaultuserPreferenceSliderValue}
+              value={defaultuserPreferenceSliderValue}
               onChangeCommitted={(event, value) => {
                 const category = cat;
                 const id = userPreference ? userPreference['id'] : null;
@@ -98,9 +70,10 @@ export default function PreferencesContainer({
                 handleChange({ category, id, token, preferred });
               }}
             />
-          </div>
-        </ListItemSecondaryAction>
-      </ListItem> */}
+
+          </Grid>
+        </Grid>
+      </ListItem>
       <Divider />
     </>
   );

@@ -1,5 +1,9 @@
 import React from 'react';
-import { createMuiTheme, withStyles, makeStyles } from '@material-ui/core/styles';
+import {
+  createMuiTheme,
+  withStyles,
+  makeStyles
+} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -22,33 +26,31 @@ import { Grow, Fab } from '@material-ui/core/';
 import moment from 'moment';
 import Link from '@material-ui/core/Link';
 
-
-
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: 400,
+    maxWidth: 400
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '56.25%' // 16:9
   },
   actions: {
-    display: "flex",
-    justifyContent: "space-between"
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+      duration: theme.transitions.duration.shortest
+    })
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(180deg)'
   },
   avatar: {
-    backgroundColor: red[500],
-  },
+    backgroundColor: red[500]
+  }
 }));
 
 const theme = createMuiTheme({
@@ -57,13 +59,16 @@ const theme = createMuiTheme({
     //   // main: "#00c853",
     // },
     secondary: {
-      main: "#f44336",
+      main: '#f44336'
     }
-  },
+  }
 });
 
-
-export default function CardMaker({ event, animationTime }) {
+export default function CardMaker({
+  event,
+  animationTime,
+  handleCardActionClick
+}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -71,55 +76,47 @@ export default function CardMaker({ event, animationTime }) {
     setExpanded(!expanded);
   }
 
-  function addToCalendar(event) {
-    // console.log('Clicked on:', event)
-    let eventStart = new Date(event.time_start);
-    let eventEnd;
-    if (event.time_end) {
-      eventEnd = new Date(event.time_end);
-    } else {
-      eventEnd = new Date(eventStart)
-      eventEnd.setHours(eventEnd.getHours() + 2);
-    }
-    const gCalEvent = {
-      summary: event.name,
-      start: {
-        dateTime: eventStart
-      },
-      end: {
-        dateTime: eventEnd
-      }
-    };
-    // console.log(gCalEvent)
-    let request = window.gapi.client.calendar.events.insert({
-      calendarId: 'primary',
-      resource: gCalEvent
-    });
-    request.execute(function (event) {
-      console.log('event successfully added')
-      //Add notification or toast
-      // console.log(event.htmlLink);
-    });
+  const noEventFound = () => {
+    return (
+      <Grow in={true} timeout={animationTime}>
+        <Card className={classes.card}>
+          <CardMedia
+            className={classes.media}
+            image={
+              'https://cdn4.wpbeginner.com/wp-content/uploads/2016/01/best404pluginswp.jpg'
+            }
+          />
 
+          {/* Adding minimum height to CardContent allows all cards to be the same size
+        Even on cards where event titles wrap to the next line */}
+          <CardContent style={{ minHeight: 140 }}>
+            <Typography variant="h6">Sorry! No events found</Typography>
+            <Typography variant="body2" color="textSecondary">
+              Try modifying your category interests and/or editing your
+              unavailable times from the Settings page
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grow>
+    );
+  };
+
+  if (!event) {
+    return noEventFound();
   }
-
 
   return (
     <Grow in={true} timeout={animationTime}>
       <Card className={classes.card}>
-
         {/* <CardHeader
         // Stuff above the image would go here
         /> */}
-        <CardMedia
-          className={classes.media}
-          image={event.img}
-        />
+        <CardMedia className={classes.media} image={event.img} />
 
         {/* Adding minimum height to CardContent allows all cards to be the same size
         Even on cards where event titles wrap to the next line */}
         <CardContent style={{ minHeight: 140 }}>
-          <Typography variant="h6"  >
+          <Typography variant="h6">
             <Link href={event.url} color="textPrimary">
               {event.name}
             </Link>
@@ -136,7 +133,9 @@ export default function CardMaker({ event, animationTime }) {
           <Fab
             color="primary"
             aria-label="add"
-            onClick={() => { addToCalendar(event) }}
+            onClick={() => {
+              handleCardActionClick(event, true);
+            }}
           >
             <CalendarIcon />
           </Fab>
@@ -147,7 +146,9 @@ export default function CardMaker({ event, animationTime }) {
             <Fab
               color="secondary"
               aria-label="add"
-              onClick={() => { console.log('next event') }}
+              onClick={() => {
+                handleCardActionClick(event, false);
+              }}
             >
               <CloseIcon />
             </Fab>
@@ -155,7 +156,7 @@ export default function CardMaker({ event, animationTime }) {
 
           <IconButton
             className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
+              [classes.expandOpen]: expanded
             })}
             onClick={handleExpandClick}
             aria-expanded={expanded}
@@ -169,12 +170,9 @@ export default function CardMaker({ event, animationTime }) {
 
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>
-              Description? {event.description}
-            </Typography>
+            <Typography paragraph>{event.description}</Typography>
           </CardContent>
         </Collapse>
-
       </Card>
     </Grow>
   );
