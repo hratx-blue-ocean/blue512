@@ -35,7 +35,7 @@ const _categorize = category => {
     category === "Arts" ||
     category === "performing-arts"
   ) {
-    cateogry = "Arts & Theatre";
+    category = "Arts & Theatre";
   } else if (category === "Sports & Fitness" || category === "Sports") {
     category = "Sports & Fitness";
   } else if (category === "Other" || category === "undefined") {
