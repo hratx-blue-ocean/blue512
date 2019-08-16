@@ -2,7 +2,14 @@ import React from 'react';
 import axios from 'axios';
 import PreferencesContainer from './PreferencesContainer';
 import UnavailableTime from './UnavailableTime';
-import { Grid, Typography, Avatar } from '@material-ui/core/';
+import {
+  Grid,
+  Typography,
+  Avatar,
+  FormGroup,
+  FormControlLabel,
+  Switch
+} from '@material-ui/core/';
 
 export default class SettingsView extends React.Component {
   constructor(props) {
@@ -43,12 +50,20 @@ export default class SettingsView extends React.Component {
       })
       .then(results =>
         this.setState({ userPreferences: results.data.userPreferences })
-      );
+      )
+      .then(() => this.props.loadEvents(this.props.userToken, []))
+      .catch();
   }
   render() {
     return (
       <>
-        <Grid container spacing={1} justify="center" alignItems="flex-start">
+        <Grid
+          container
+          spacing={1}
+          justify="center"
+          alignItems="flex-start"
+          direction="row"
+        >
           <Grid item>
             <Avatar
               align="center"
@@ -62,6 +77,15 @@ export default class SettingsView extends React.Component {
               Hello {this.props.user ? this.props.user.first_name : ''}
             </Typography>
           </Grid>
+          <Grid item>
+            <FormGroup row>
+              <FormControlLabel
+                label="Dark Mode"
+                control={<Switch color="primary" />}
+              />
+            </FormGroup>
+          </Grid>
+
           <Grid item xs={12}>
             <Typography variant="subtitle1" align="center">
               Help us custom tailor your CityScout experience!
