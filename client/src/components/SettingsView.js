@@ -50,7 +50,9 @@ export default class SettingsView extends React.Component {
       })
       .then(results =>
         this.setState({ userPreferences: results.data.userPreferences })
-      );
+      )
+      .then(() => this.props.loadEvents(this.props.userToken))
+      .catch();
   }
   render() {
     return (
