@@ -3,7 +3,6 @@ import { List } from '@material-ui/core';
 import UnavailableTimeIndividual from './UnavailableTimeIndividual';
 
 export default function UnavailableTimeContainer({ times, handleDelete }) {
-  console.log(times);
   return (
     <List>
       {times.map(time => (
