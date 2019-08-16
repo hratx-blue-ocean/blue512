@@ -67,7 +67,7 @@ const theme = createMuiTheme({
 export default function CardMaker({
   event,
   animationTime,
-  handleAddToCalClick
+  handleCardActionClick
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -134,7 +134,7 @@ export default function CardMaker({
             color="primary"
             aria-label="add"
             onClick={() => {
-              handleAddToCalClick(event);
+              handleCardActionClick(event, true);
             }}
           >
             <CalendarIcon />
@@ -147,7 +147,7 @@ export default function CardMaker({
               color="secondary"
               aria-label="add"
               onClick={() => {
-                console.log('next event');
+                handleCardActionClick(event, false);
               }}
             >
               <CloseIcon />
