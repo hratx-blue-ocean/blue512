@@ -242,18 +242,20 @@ const deleteRecurringUnavailable = item_id => {
 const deleteOldExperiences = () => {
   const query = {
     name: 'deleteOldExperiences',
-    text: 'DELETE FROM experiences WHERE time_start < NOW()',
+    text:
+      "DELETE FROM experiences WHERE time_start < NOW() - INTERVAL '7 hours'",
     values: []
   };
 
   return db.query(query);
+  x;
 };
 
 const deleteOldUnavailable = () => {
   const query = {
     name: 'deleteOldUnavailable',
     text:
-      'DELETE FROM unavailable WHERE time_start < NOW() AND recurring IS NULL',
+      "DELETE FROM unavailable WHERE time_start < NOW() - INTERVAL '7 hours' AND recurring IS NULL",
     values: []
   };
 
