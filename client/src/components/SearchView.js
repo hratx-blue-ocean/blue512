@@ -9,55 +9,54 @@ import FuzzySearch from 'fuzzy-search'
 import { Grid, Container } from '@material-ui/core/';
 
 export default class SearchView extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            input:'',
+            input: '',
             filteredEvents: []
         };
-        // this.handleChange = this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.filterEvents = this.filterEvents.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
     }
 
-    componentDidUpdate(prevProps){
+    componentDidUpdate(prevProps) {
         //move props into filteredEvents
-        if(this.props.events.length !== prevProps.events.length){
-            this.setState({ filteredEvents: this.props.events})
+        if (this.props.events.length !== prevProps.events.length) {
+            this.setState({ filteredEvents: this.props.events })
         }
-       
     }
-    
 
-    handleChange(e){
-        this.setState({ input: e.target.value})
+    handleChange(e) {
+        this.setState({ input: e.target.value })
         filterEvents()
     }
 
-    filterEvents(){
+    filterEvents() {
         let fuzzy = new FuzzySearch(this.state.filteredEvents, [], {
             caseSensitive: false,
             sort: true
         })
         let result = fuzzy.search(this.state.input);
-        this.setState({ filteredEvents: result});
+        this.setState({ filteredEvents: result });
     }
-    
-    render(){
-        console.log(this.state.filterEvents)
-        return(
+
+    render() {
+
+        return (
 
             <>
                 {/* {this.state.filterEvents.map((event) => {
                     return (<>{event.name}</>)
                 })} */}
-                
+
                 <p>oi</p>
             </>
         )
     }
-    
+
 }
 // export default function SearchView({ events }) {
 //   // const classes = useStyles();
