@@ -3,17 +3,8 @@ import CardContainer from './CardContainer.js';
 import moment from 'moment';
 import spinner from '../../public/spinner.gif';
 import { Grow } from '@material-ui/core/';
+import { Typography, Grid, Container } from '@material-ui/core/';
 
-// import fetch from 'node-fetch';
-
-// import { makeStyles } from '@material-ui/core/styles';
-import { Paper, Typography, Grid, Container } from '@material-ui/core/';
-
-// const useStyles = makeStyles(theme => ({
-// }));
-
-// const today = moment().format('dddd')
-// const tomorrow = moment().add(1, 'days').format('dddd')
 const tomorrowPlusPlus = moment()
   .add(2, 'days')
   .format('dddd');
@@ -27,8 +18,6 @@ export default function MainView({
   eventsTomorrowPlusPlus,
   handleCardActionClick
 }) {
-  // const classes = useStyles();
-
   return (
     <>
       {loaded ? (
@@ -47,19 +36,21 @@ export default function MainView({
             </Grow>
             <Grid container>
               <CardContainer
-                event={events[0]}
+                event={eventsToday.length ? eventsToday[0] : ''}
                 day={'Today'}
                 animationTime={400}
                 handleCardActionClick={handleCardActionClick}
               />
               <CardContainer
-                event={events[1]}
+                event={eventsTomorrow.length ? eventsTomorrow[0] : ''}
                 day={'Tomorrow'}
                 animationTime={600}
                 handleCardActionClick={handleCardActionClick}
               />
               <CardContainer
-                event={events[2]}
+                event={
+                  eventsTomorrowPlusPlus.length ? eventsTomorrowPlusPlus[0] : ''
+                }
                 day={tomorrowPlusPlus}
                 animationTime={800}
                 handleCardActionClick={handleCardActionClick}

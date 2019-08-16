@@ -172,7 +172,7 @@ export default function CardMaker({
 
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>Description? {event.description}</Typography>
+            <Typography paragraph>{event.description}</Typography>
           </CardContent>
         </Collapse>
       </Card>
