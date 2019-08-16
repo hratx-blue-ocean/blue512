@@ -79,12 +79,12 @@ export default class SettingsView extends React.Component {
                 />
               </Grid>
               <Grid item align="center">
-                <Typography variant="h2" style={{ marginTop: 10 }} align="center">
+                <Typography variant="h2" style={{ marginTop: 10 }} align="center" color="textSecondary">
                   Hello {this.props.user ? this.props.user.first_name : ''}
                 </Typography>
               </Grid>
               <Grid item xs={12} style={{ marginTop: 20, marginBottom: 40 }}>
-                <Typography variant="subtitle1" align="center">
+                <Typography variant="subtitle1" align="center" color="textSecondary">
                   Help us custom tailor your CityScout experience!
             </Typography>
               </Grid>
