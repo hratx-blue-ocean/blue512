@@ -32,6 +32,7 @@ function initClient() {
   });
   window.gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => {
     if (window.gapi.auth2.getAuthInstance().isSignedIn.Ab) {
+      console.log('in the listen', window.gapi.client.calendar);
       window.getCalData(
         gapi.auth2.getAuthInstance().currentUser.Ab.Zi.id_token
       );
@@ -42,6 +43,7 @@ function initClient() {
   });
   init.then(_ => {
     if (window.gapi.auth2.getAuthInstance().isSignedIn.Ab) {
+      console.log('in the init', window.gapi.client.calendar);
       window.getCalData(
         gapi.auth2.getAuthInstance().currentUser.Ab.Zi.id_token
       );
