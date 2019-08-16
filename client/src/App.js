@@ -13,6 +13,7 @@ export default class App extends Component {
     super(props);
     this.handleLoadEvents = this.handleLoadEvents.bind(this);
     this.state = {
+      path: '/',
       isSignedIn: null,
       PORT: 9000,
       userToken: '',
@@ -255,6 +256,8 @@ export default class App extends Component {
     this.seperateEventsByDate = this.seperateEventsByDate.bind(this);
     this.handleMicroCardClick = this.handleMicroCardClick.bind(this);
     this.changeDetailsDay = this.changeDetailsDay.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
+    this.handleAddToCalClick = this.handleAddToCalClick.bind(this);
   }
 
   componentDidMount() {
@@ -276,20 +279,19 @@ export default class App extends Component {
   }
 
   changeDetailsDay(event) {
-    if (event.target.textContent === "Today") {
-      this.setState({ selectedDaysEvents: this.state.eventsToday })
+    if (event.target.textContent === 'Today') {
+      this.setState({ selectedDaysEvents: this.state.eventsToday });
     }
-    if (event.target.textContent === "Tomorrow") {
-      this.setState({ selectedDaysEvents: this.state.eventsTomorrow })
+    if (event.target.textContent === 'Tomorrow') {
+      this.setState({ selectedDaysEvents: this.state.eventsTomorrow });
     }
-    if (event.target.textContent === "Overmorrow") {
-      this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus })
+    if (event.target.textContent === 'Overmorrow') {
+      this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus });
     }
   }
 
-
   handleMicroCardClick(event) {
-    this.setState({ clickedMicroCard: [event] })
+    this.setState({ clickedMicroCard: [event] });
   }
   seperateEventsByDate(alsoEvents) {
     // console.log(events || `testing and didn't get events`);
@@ -322,15 +324,25 @@ export default class App extends Component {
     });
   }
 
-  handleLoadEvents(data) {
-    this.seperateEventsByDate(data.events);
-    this.setState({
-      eventsAll: data.events,
-      user: data.userInfo,
-      isSignedIn: true,
-      userToken: data.id_token,
-      loaded: true
-    });
+  handleLoadEvents(token, calendar_items) {
+    axios
+      .post('/api/events', {
+        token,
+        calendar_items,
+        limit: null,
+        day: null
+      })
+      .then(({ data }) => {
+        this.seperateEventsByDate(data.events);
+        this.setState({
+          eventsAll: data.events,
+          user: data.userInfo,
+          isSignedIn: true,
+          userToken: token,
+          loaded: true
+        });
+      })
+      .catch(console.log);
   }
 
   loadEventsAnon(isSignedIn) {
@@ -347,6 +359,44 @@ export default class App extends Component {
       .catch();
   }
 
+  handlePageClick(path) {
+    this.setState({ path: path });
+  }
+
+  handleAddToCalClick(item) {
+    this.addToCalendar(item);
+  }
+
+  addToCalendar(item) {
+    let eventStart = new Date(item.time_start);
+    let eventEnd;
+    if (item.time_end) {
+      eventEnd = new Date(item.time_end);
+    } else {
+      eventEnd = new Date(eventStart)
+      eventEnd.setHours(eventEnd.getHours() + 2);
+    }
+    const gCalEvent = {
+      summary: item.name,
+      start: {
+        dateTime: eventStart
+      },
+      end: {
+        dateTime: eventEnd
+      }
+    };
+    // console.log(gCalEvent)
+    let request = window.gapi.client.calendar.events.insert({
+      calendarId: 'primary',
+      resource: gCalEvent
+    });
+    request.execute(function (event) {
+      console.log('event successfully added')
+      //Add notification or toast
+      // console.log(event.htmlLink);
+    });
+  }
+
   render() {
     const {
       loaded,
@@ -357,7 +407,8 @@ export default class App extends Component {
       eventsTomorrowPlusPlus,
       selectedDaysEvents,
       clickedMicroCard,
-      PORT
+      PORT,
+      path
     } = this.state;
     return (
       <Router>
@@ -365,6 +416,8 @@ export default class App extends Component {
           port={PORT}
           loadEvents={this.handleLoadEvents}
           isSignedIn={isSignedIn}
+          path={path}
+          handlePageClick={this.handlePageClick}
         />
         <Switch>
           <Route
@@ -377,6 +430,7 @@ export default class App extends Component {
                 eventsToday={eventsToday}
                 eventsTomorrow={eventsTomorrow}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+                handleAddToCalClick={this.handleAddToCalClick}
               />
             )}
           />
@@ -403,6 +457,7 @@ export default class App extends Component {
               <SettingsView
                 user={this.state.user}
                 userToken={this.state.userToken}
+                loadEvents={this.handleLoadEvents}
               />
             )}
           />

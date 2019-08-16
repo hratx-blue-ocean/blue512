@@ -7,10 +7,12 @@ import Button from '@material-ui/core/Button';
 import moment from 'moment';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
 import ShowMoreText from 'react-show-more-text';
+import { minWidth } from '@material-ui/system';
 
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(9, 7),
+    height: '90vh'
   },
   pad: {
     padding: "5px",
@@ -18,21 +20,34 @@ const useStyles = makeStyles(theme => ({
   fab: {
     // margin: "10px",
     margin: theme.spacing(1),
-  }
+  },
+  media: {
+    //display: 'flex',
+    minHeight: '30vh',
+    maxHeight: '50vh',
+    objectFit: 'cover',
+    maxWidth: '100%',
+
+   // maxWidth: '70vw',
+    //minWidth: '70%',
+
+  },
 }));
 
 export default function Details({ event }) {
   const classes = useStyles()
+  console.log(event[0].img)
+  //const height = event[0].img.height;
   return (
-    <Grid item xs={8}>
+    <Grid item xs={8} style={{ height: '90vh', display: 'inline-block' }}>
       <div>
-        <Paper className={classes.root}>
+        <Paper className={classes.root} style={{maxHeight: '100vh', overflow: 'auto'}}>
           <Typography variant='h4' component='h2' className={classes.pad}>
             {event[0].name}
           </Typography>
 
-          <img src={event[0].img} style={{ width: '100%' }}/>
-
+            <img src={event[0].img} className={classes.media}/>
+          
            <Typography variant='h5' component='h5' className={classes.pad}>
               {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
               <Fab className={classes.fab} 
@@ -46,7 +61,7 @@ export default function Details({ event }) {
            </Typography>
 
            <Typography variant='h5' component='h5' className={classes.pad}>
-             @ {event[0].venue} , {event[0].location}
+             @ {event[0].venue}  {event[0].location}
            </Typography>
 
           <Typography variant='h6' component='h5' className={classes.pad}>
@@ -62,7 +77,7 @@ export default function Details({ event }) {
 
            </Typography>
 
-              <Button href={event[0].url}className={classes.pad}>Get more info</Button>
+              <Button href={event[0].url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
 
         </Paper>
       </div>
