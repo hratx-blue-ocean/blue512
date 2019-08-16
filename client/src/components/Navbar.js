@@ -188,17 +188,12 @@ export default function PrimarySearchAppBar(props) {
           >
             More Events
           </Button>
-          <Typography className={classes.title}>
-            <a href="http://cityscout.io">
-              <img
-                src="./logo.png"
-                style={{
-                  maxHeight: '75px',
-                  marginTop: '-10px',
-                  marginBottom: '-20px'
-                }}
-              />
-            </a>
+          <Typography
+            className={classes.title}
+            component={RouterLink}
+            to="/"
+            onClick={() => { props.handlePageClick('/') }}>
+            <img src="./logo.png" style={{ "maxHeight": "75px", "marginTop": "-10px", "marginBottom": "-20px" }}></img>
           </Typography>
           {/* <div className={classes.grow} /> */}
           <div className={classes.sectionDesktop}>
