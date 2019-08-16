@@ -21,16 +21,20 @@ const useStyles = makeStyles(theme => ({
   },
   ListPaper: {
     maxHeight: '100vh',
-    overflow: 'auto',
-    background: 'blue !important',
-    color: 'primary !important',
-    square: true
+    overflow: 'auto'
   }
 }));
 
 const overmorrow = moment().add(2, 'days').format('dddd')
 
-export default function MicroCardContainer({ eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, selectedDaysEvents, handleMicroCardClick, changeDetailsDay }) {
+export default function MicroCardContainer({ 
+  eventsToday, 
+  eventsTomorrow, 
+  eventsTomorrowPlusPlus, 
+  selectedDaysEvents, 
+  handleMicroCardClick, 
+  changeDetailsDay }) 
+  {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -66,7 +70,7 @@ export default function MicroCardContainer({ eventsToday, eventsTomorrow, events
 
         <Paper className={classes.ListPaper}>
           <List className={classes.root}>
-            {selectedDaysEvents.map( (event, index) => <MicroCardMaker key={event.name} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
+            {selectedDaysEvents.map( (event, index) => <MicroCardMaker key={event.experience_api_id} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
           </List>
         </Paper>
       </Paper>
