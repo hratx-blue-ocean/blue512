@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
   pad: {
     padding: "5px",
-  }, 
+  },
   fab: {
     // margin: "10px",
     margin: theme.spacing(1),
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     objectFit: 'cover',
     maxWidth: '100%',
 
-   // maxWidth: '70vw',
+    // maxWidth: '70vw',
     //minWidth: '70%',
 
   },
@@ -36,48 +36,47 @@ const useStyles = makeStyles(theme => ({
 
 export default function Details({ event }) {
   const classes = useStyles()
-  console.log(event[0].img)
-  //const height = event[0].img.height;
+
   return (
     <Grid item xs={8} style={{ height: '90vh', display: 'inline-block' }}>
       <div>
-        <Paper className={classes.root} style={{maxHeight: '100vh', overflow: 'auto'}}>
+        <Paper className={classes.root} style={{ maxHeight: '100vh', overflow: 'auto' }}>
           <Typography variant='h4' component='h2' className={classes.pad}>
-            {event[0].name}
+            {event.name}
           </Typography>
 
-            <img src={event[0].img} className={classes.media}/>
-          
-           <Typography variant='h5' component='h5' className={classes.pad}>
-              {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
-              <Fab className={classes.fab} 
-                color="secondary"
-                aria-label="add"
-                onClick={() => { addToCalendar(event) }}> 
-                  add  
-                  <CalendarIcon />
-                </Fab>
-              {/* <Button className={classes.pad}>Add to calendar</Button> */}
-           </Typography>
+          <img src={event.img} className={classes.media} />
 
-           <Typography variant='h5' component='h5' className={classes.pad}>
-             @ {event[0].venue}  {event[0].location}
-           </Typography>
+          <Typography variant='h5' component='h5' className={classes.pad}>
+            {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
+            <Fab className={classes.fab}
+              color="secondary"
+              aria-label="add"
+              onClick={() => { addToCalendar(event) }}>
+              add
+                  <CalendarIcon />
+            </Fab>
+            {/* <Button className={classes.pad}>Add to calendar</Button> */}
+          </Typography>
+
+          <Typography variant='h5' component='h5' className={classes.pad}>
+            @ {event.venue}  {event.location}
+          </Typography>
 
           <Typography variant='h6' component='h5' className={classes.pad}>
-          <ShowMoreText
-                lines={4}
-                more='Show more'
-                less='Show less'
-                anchorClass=''
-                expanded={false}
+            <ShowMoreText
+              lines={4}
+              more='Show more'
+              less='Show less'
+              anchorClass=''
+              expanded={false}
             >
-                {event[0].description}
+              {event.description}
             </ShowMoreText>
 
-           </Typography>
+          </Typography>
 
-              <Button href={event[0].url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
+          <Button href={event.url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
 
         </Paper>
       </div>

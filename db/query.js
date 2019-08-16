@@ -4,7 +4,7 @@ const uuid = require('uuid/v4');
 const getAllEvents = () => {
   const query = {
     name: 'getAllEvents',
-    text: `SELECT e.name, e.description, e.url, e.img, e.venue, e.location, e.time_start, 
+    text: `SELECT e.name, e.experience_api_id e.description, e.url, e.img, e.venue, e.location, e.time_start, 
             e.time_end, e.price_min, e.price_max, c.name AS category FROM experiences e 
             LEFT OUTER JOIN categories c ON e.category_id=c.id`,
     values: []
@@ -13,31 +13,28 @@ const getAllEvents = () => {
   return db.query(query);
 };
 
-const getAllEventsExcludingCategories = arrayOfCategories => {
-  const buildConditional = length => {
-    let str = '';
-    if (!length) {
-      return str;
-    }
-    str += 'WHERE ';
-    let i = 1;
-    while (i <= length) {
-      str += `c.name != $${i}`;
-      if (i < length) {
-        str += ` AND `;
-      }
-      i++;
-    }
-    return str;
-  };
-
-  const conditionalString = buildConditional(arrayOfCategories.length);
-
+const getAllEventsULTRAMODE = id => {
   const query = {
-    text: `SELECT e.name, e.description, e.url, e.img, e.venue, e.location, e.time_start, 
-              e.time_end, e.price_min, e.price_max, c.name AS category FROM experiences e 
-              LEFT OUTER JOIN categories c ON e.category_id=c.id ${conditionalString}`,
-    values: [...arrayOfCategories]
+    text: `SELECT e.name, e.experience_api_id, e.description, e.url, e.img, e.venue, e.location, e.time_start,
+    e.time_end, e.price_min, e.price_max, c.name AS category
+    FROM experiences e
+    LEFT OUTER JOIN categories c ON e.category_id=c.id
+    WHERE e.category_id!= ALL(SELECT id
+    FROM categories
+    WHERE id= 
+    ANY(SELECT category_id
+    FROM users_categories
+    WHERE user_id=$1 AND preferred=false))
+    ORDER BY e.category_id
+    = ANY
+    (SELECT id
+    FROM categories
+    WHERE id= 
+    ANY(SELECT category_id
+    FROM users_categories
+    WHERE user_id=$1 AND preferred=true))
+    DESC`,
+    values: [id]
   };
 
   return db.query(query);
@@ -183,6 +180,18 @@ const getUserCategoryPreferences = (id, preferred) => {
   return db.query(query);
 };
 
+const addUserExperience = (user_id, experience_id) => {
+  experience_id = parseInt(experience_id);
+  const query = {
+    name: 'addUserExperience',
+    text:
+      'INSERT INTO users_experiences (user_id, experience_id) VALUES ($1, $2)',
+    values: [user_id, experience_id]
+  };
+
+  return db.query(query);
+};
+
 const addNewUnavailable = data => {
   const time_start = data.start.dateTime;
   const time_end = data.end.dateTime;
@@ -253,7 +262,6 @@ const deleteOldUnavailable = () => {
 
 module.exports = {
   getAllEvents,
-  getAllEventsExcludingCategories,
   getAllCategories,
   addEvent,
   addNewCategory,
@@ -265,10 +273,11 @@ module.exports = {
   changeUserCategoryPreference,
   addUserCategoryPreference,
   deleteUserCategoryPreference,
-  getUserCategoryPreferences,
   deleteOldExperiences,
   deleteOldUnavailable,
   getUserUnavailable,
+  addUserExperience,
+  getAllEventsULTRAMODE,
   addRecurringUnavailable,
   deleteRecurringUnavailable
 };
