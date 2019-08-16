@@ -6,7 +6,11 @@ export default function UnavailableTimeContainer({ times, handleDelete }) {
   return (
     <List>
       {times.map(time => (
-        <UnavailableTimeIndividual time={time} handleDelete={handleDelete} />
+        <UnavailableTimeIndividual
+          key={time.id}
+          time={time}
+          handleDelete={handleDelete}
+        />
       ))}
     </List>
   );
