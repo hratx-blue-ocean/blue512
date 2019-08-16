@@ -14,7 +14,7 @@ export default class App extends Component {
     super(props);
     this.handleLoadEvents = this.handleLoadEvents.bind(this);
     this.state = {
-      path: '/',
+      path: window.location.pathname,
       isSignedIn: null,
       PORT: 9000,
       userToken: '',
@@ -230,33 +230,20 @@ export default class App extends Component {
           description: null
         }
       ],
-      clickedMicroCard: {
-        source_API: 'TicketMaster',
-        name: 'Hadley Crowl',
-        url:
-          'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-        event_id: 'Z7r9jZ1Aejbot',
-        time_start: '2019-08-11T02:00:00Z',
-        time_end: null,
-        category: 'Music',
-        img:
-          'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-        venue: 'Gruene Hall',
-        location: 'New Braunfels',
-        price_min: null,
-        price_max: null,
-        description: null
-      },
+      clickedMicroCard: {},
       today: '',
       loaded: false,
-      selectedDaysEvents: []
+      selectedDaysEvents: [],
+      openModal: false
     };
     this.api = `http://localhost:8000/api/example`;
     this.seperateEventsByDate = this.seperateEventsByDate.bind(this);
     this.handleMicroCardClick = this.handleMicroCardClick.bind(this);
     this.changeDetailsDay = this.changeDetailsDay.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
-    this.handleAddToCalClick = this.handleAddToCalClick.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.handleCardActionClick = this.handleCardActionClick.bind(this);
+    this.removeEvent = this.removeEvent.bind(this);
   }
 
   componentDidMount() {
@@ -278,10 +265,10 @@ export default class App extends Component {
   }
 
   changeDetailsDay(event) {
+    console.log('changeDetailsDay:', event.target.textContent);
     if (event.target.textContent === 'Today') {
       this.setState({ selectedDaysEvents: this.state.eventsToday });
-    }
-    if (event.target.textContent === 'Tomorrow') {
+    } else if (event.target.textContent === 'Tomorrow') {
       this.setState({ selectedDaysEvents: this.state.eventsTomorrow });
     } else {
       this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus });
@@ -289,19 +276,24 @@ export default class App extends Component {
   }
 
   handleMicroCardClick(event) {
-    this.setState({ clickedMicroCard: event });
+    this.setState({ clickedMicroCard: event, openModal: true });
   }
-  seperateEventsByDate(alsoEvents) {
+
+  closeModal() {
+    this.setState({ openModal: false });
+  }
+
+  seperateEventsByDate(allEvents) {
     // console.log(events || `testing and didn't get events`);
     // '2019-08-16T00:00:00.000Z'
     const todayArr = [],
       tomorrowArr = [],
       tomorrowPlusPlusArr = [];
 
-    alsoEvents.forEach(event => {
-      let parsedTimeStart = Number(
-        event.time_start.split('T')[0].split('-')[2]
-      );
+    allEvents.forEach(event => {
+      // event.time_start = event.time_start.substr(0, event.time_start.length - 1);
+      // console.log(event.time_start)
+      let parsedTimeStart = new Date(event.time_start).getDate();
 
       if (parsedTimeStart === this.state.today) {
         // make sure to remove the minus 2 for development
@@ -318,7 +310,8 @@ export default class App extends Component {
       eventsToday: todayArr,
       eventsTomorrow: tomorrowArr,
       eventsTomorrowPlusPlus: tomorrowPlusPlusArr,
-      selectedDaysEvents: todayArr
+      selectedDaysEvents: todayArr,
+      eventsAll: allEvents
     });
   }
 
@@ -351,7 +344,9 @@ export default class App extends Component {
         this.setState({
           eventsAll: data.data.events,
           isSignedIn: isSignedIn,
-          loaded: true
+          loaded: true,
+          userToken: null,
+          user: null
         });
       })
       .catch();
@@ -361,8 +356,16 @@ export default class App extends Component {
     this.setState({ path: path });
   }
 
-  handleAddToCalClick(item) {
-    this.addToCalendar(item);
+  handleCardActionClick(item, add) {
+    if (add === true) {
+      this.addToCalendar(item);
+    } else if (this.state.userToken !== '') {
+      axios
+        .post(`/api/user_event/${item.id}`, { token: this.state.userToken })
+        .then(this.removeEvent(item));
+    } else {
+      this.removeEvent(item);
+    }
   }
 
   addToCalendar(item) {
@@ -388,11 +391,25 @@ export default class App extends Component {
       calendarId: 'primary',
       resource: gCalEvent
     });
+    let context = this;
     request.execute(function(event) {
       console.log('event successfully added');
+      context.removeEvent(item);
       //Add notification or toast
       // console.log(event.htmlLink);
     });
+  }
+
+  removeEvent(item) {
+    console.log(item);
+    const allEvents = [...this.state.eventsAll];
+    for (let i = 0; i < allEvents.length; i++) {
+      if (allEvents[i].experience_api_id === item.experience_api_id) {
+        allEvents.splice(i, 1);
+        break;
+      }
+    }
+    this.seperateEventsByDate(allEvents);
   }
 
   render() {
@@ -405,8 +422,10 @@ export default class App extends Component {
       eventsTomorrowPlusPlus,
       selectedDaysEvents,
       clickedMicroCard,
+      user,
       PORT,
-      path
+      path,
+      openModal
     } = this.state;
     return (
       <Router>
@@ -423,12 +442,13 @@ export default class App extends Component {
             exact
             render={() => (
               <MainView
+                name={user}
                 loaded={loaded}
                 events={eventsAll}
                 eventsToday={eventsToday}
                 eventsTomorrow={eventsTomorrow}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
-                handleAddToCalClick={this.handleAddToCalClick}
+                handleCardActionClick={this.handleCardActionClick}
               />
             )}
           />
@@ -445,6 +465,9 @@ export default class App extends Component {
                 changeDetailsDay={this.changeDetailsDay}
                 handleMicroCardClick={this.handleMicroCardClick}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+                closeModal={this.closeModal}
+                openModal={openModal}
+                handleCardActionClick={this.handleCardActionClick}
               />
             )}
           />

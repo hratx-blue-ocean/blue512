@@ -19,29 +19,29 @@ const _getDate = () => {
 
   let dates = {
     currentDateStr:
-      currentYear + "-" + currentMonth + "-" + currentDay + "T00:00:00Z",
+      currentYear + '-' + currentMonth + '-' + currentDay + 'T00:00:00Z',
     futureDateStr:
-      futureYear + "-" + futureMonth + "-" + futureDay + "T00:00:00Z"
+      futureYear + '-' + futureMonth + '-' + futureDay + 'T00:00:00Z'
   };
 
   return dates;
 };
 
 const _categorize = category => {
-  if (category === "Music" || category === "concerts") {
-    category = "Music";
+  if (category === 'Music' || category === 'concerts') {
+    category = 'Music';
   } else if (
-    category === "Arts & Theatre" ||
-    category === "Arts" ||
-    category === "performing-arts"
+    category === 'Arts & Theatre' ||
+    category === 'Arts' ||
+    category === 'performing-arts'
   ) {
-    category = "Arts & Theatre";
-  } else if (category === "Sports & Fitness" || category === "Sports") {
-    category = "Sports & Fitness";
-  } else if (category === "Other" || category === "undefined") {
-    category = "Other";
-  } else if (category === "Community" || category === "community") {
-    cateogry = "Community";
+    category = 'Arts & Theatre';
+  } else if (category === 'Sports & Fitness' || category === 'Sports') {
+    category = 'Sports & Fitness';
+  } else if (category === 'Other' || category === 'undefined') {
+    category = 'Other';
+  } else if (category === 'Community' || category === 'community') {
+    category = 'Community';
   }
 
   return category;

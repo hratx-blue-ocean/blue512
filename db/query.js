@@ -4,7 +4,7 @@ const uuid = require('uuid/v4');
 const getAllEvents = () => {
   const query = {
     name: 'getAllEvents',
-    text: `SELECT e.name, e.experience_api_id e.description, e.url, e.img, e.venue, e.location, e.time_start, 
+    text: `SELECT e.id, e.name, e.experience_api_id, e.description, e.url, e.img, e.venue, e.location, e.time_start,
             e.time_end, e.price_min, e.price_max, c.name AS category FROM experiences e 
             LEFT OUTER JOIN categories c ON e.category_id=c.id`,
     values: []
@@ -15,7 +15,7 @@ const getAllEvents = () => {
 
 const getAllEventsULTRAMODE = id => {
   const query = {
-    text: `SELECT e.name, e.experience_api_id, e.description, e.url, e.img, e.venue, e.location, e.time_start,
+    text: `SELECT e.id, e.name, e.experience_api_id, e.description, e.url, e.img, e.venue, e.location, e.time_start,
     e.time_end, e.price_min, e.price_max, c.name AS category
   FROM experiences e
     LEFT OUTER JOIN categories c ON e.category_id=c.id
@@ -286,3 +286,4 @@ module.exports = {
   addRecurringUnavailable,
   deleteRecurringUnavailable
 };
+getAllEvents;

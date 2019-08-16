@@ -22,7 +22,7 @@ import AddIcon from '@material-ui/icons/Add';
 import CalendarIcon from '@material-ui/icons/CalendarToday';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
-import { Grow, Fab } from '@material-ui/core/';
+import { Grow, Fab, Snackbar, SnackbarContent } from '@material-ui/core/';
 import moment from 'moment';
 import Link from '@material-ui/core/Link';
 
@@ -67,10 +67,11 @@ const theme = createMuiTheme({
 export default function CardMaker({
   event,
   animationTime,
-  handleAddToCalClick
+  handleCardActionClick
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const imageFallbacks = [
     'https://img.freepik.com/free-photo/smooth-dark-blue-with-black-vignette-studio-well-use-as-background-business-report-digital-website-template_1258-748.jpg?size=626&ext=jpg',
@@ -83,6 +84,47 @@ export default function CardMaker({
 
   function handleExpandClick() {
     setExpanded(!expanded);
+  }
+
+  function renderSnackBar() {
+    setOpen(true);
+  }
+
+  function closeSnackBar(event, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  }
+
+  const noEventFound = () => {
+    return (
+      <Grow in={true} timeout={animationTime}>
+        <Card className={classes.card}>
+          <CardMedia
+            className={classes.media}
+            image={
+              'https://cdn4.wpbeginner.com/wp-content/uploads/2016/01/best404pluginswp.jpg'
+            }
+          />
+
+          {/* Adding minimum height to CardContent allows all cards to be the same size
+        Even on cards where event titles wrap to the next line */}
+          <CardContent style={{ minHeight: 140 }}>
+            <Typography variant="h6">Sorry! No events found</Typography>
+            <Typography variant="body2" color="textSecondary">
+              Try modifying your category interests and/or editing your
+              unavailable times from the Settings page
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grow>
+    );
+  };
+
+  if (!event) {
+    return noEventFound();
   }
 
   return (
@@ -120,7 +162,8 @@ export default function CardMaker({
             color="primary"
             aria-label="add"
             onClick={() => {
-              handleAddToCalClick(event);
+              handleCardActionClick(event, true);
+              renderSnackBar();
             }}
           >
             <CalendarIcon />
@@ -133,7 +176,7 @@ export default function CardMaker({
               color="secondary"
               aria-label="add"
               onClick={() => {
-                console.log('next event');
+                handleCardActionClick(event, false);
               }}
             >
               <CloseIcon />
@@ -156,9 +199,25 @@ export default function CardMaker({
 
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>Description? {event.description}</Typography>
+            <Typography paragraph>{event.description}</Typography>
           </CardContent>
         </Collapse>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={open}
+          autoHideDuration={4000}
+          onClose={closeSnackBar}
+          color="primary"
+        >
+          <SnackbarContent
+            onClose={closeSnackBar}
+            variant="success"
+            message="Event successfully added to your Google calendar!"
+          />
+        </Snackbar>
       </Card>
     </Grow>
   );
