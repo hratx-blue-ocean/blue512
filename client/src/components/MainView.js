@@ -2,7 +2,7 @@ import React from 'react';
 import CardContainer from './CardContainer.js';
 import moment from 'moment';
 import spinner from '../../public/spinner.gif';
-import { Grow } from '@material-ui/core/';
+import { Fade } from '@material-ui/core/';
 import { Typography, Grid, Container } from '@material-ui/core/';
 
 const tomorrowPlusPlus = moment()
@@ -25,7 +25,7 @@ export default function MainView({
           <Container maxWidth="lg" align="center">
               { name 
                 ? <>
-                    <Grow in={true} timeout={500}>
+                    <Fade in={true} timeout={500}>
                       <Typography
                         variant="h3"
                         color="textSecondary"
@@ -33,8 +33,8 @@ export default function MainView({
                       >
                       {`Hello, ${name.first_name}`}
                       </Typography>
-                    </Grow>
-                    <Grow in={true} timeout={800}>
+                    </Fade>
+                    <Fade in={true} timeout={800}>
                       <Typography
                         variant="h3"
                         color="textSecondary"
@@ -42,9 +42,9 @@ export default function MainView({
                       >
                         Here are your Top Picks
                       </Typography>
-                    </Grow>
+                    </Fade>
                   </>
-                : <Grow in={true} timeout={400}>
+                : <Fade in={true} timeout={400}>
                     <Typography
                       variant="h3"
                       color="textSecondary"
@@ -52,7 +52,7 @@ export default function MainView({
                     >
                       Here are your Top Picks
                     </Typography>
-                  </Grow>
+                  </Fade>
               }
             
             <Grid container>
