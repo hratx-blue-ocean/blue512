@@ -241,7 +241,7 @@ export default class App extends Component {
     this.handleMicroCardClick = this.handleMicroCardClick.bind(this);
     this.changeDetailsDay = this.changeDetailsDay.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
-    this.handleAddToCalClick = this.handleAddToCalClick.bind(this);
+    this.handleCardActionClick = this.handleCardActionClick.bind(this);
     this.removeEvent = this.removeEvent.bind(this);
   }
 
@@ -270,7 +270,7 @@ export default class App extends Component {
     }
     else if (event.target.textContent === "Tomorrow") {
       this.setState({ selectedDaysEvents: this.state.eventsTomorrow })
-    } 
+    }
     else {
       this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus })
 
@@ -351,8 +351,12 @@ export default class App extends Component {
     this.setState({ path: path });
   }
 
-  handleAddToCalClick(item) {
-    this.addToCalendar(item);
+  handleCardActionClick(item, add) {
+    if (add === true) {
+      this.addToCalendar(item);
+    } else {
+      this.removeEvent(item);
+    }
   }
 
   addToCalendar(item) {
@@ -434,7 +438,7 @@ export default class App extends Component {
                 eventsToday={eventsToday}
                 eventsTomorrow={eventsTomorrow}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
-                handleAddToCalClick={this.handleAddToCalClick}
+                handleCardActionClick={this.handleCardActionClick}
               />
             )}
           />
