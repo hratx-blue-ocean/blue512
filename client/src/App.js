@@ -354,6 +354,9 @@ export default class App extends Component {
   handleCardActionClick(item, add) {
     if (add === true) {
       this.addToCalendar(item);
+    } else if (this.state.userToken !== '') {
+      axios.post(`/api/user_event/${item.id}`, { token: this.state.userToken })
+        .then(this.removeEvent(item));
     } else {
       this.removeEvent(item);
     }
