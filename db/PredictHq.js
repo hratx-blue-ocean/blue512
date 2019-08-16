@@ -16,14 +16,13 @@ const callAPI = () => {
         .catch(err => console.log(err))
 };
 
-let deleteObj = [];
+
 const findImage = async (term, category, location, venue) => {
-    const client = new googleImages('001419127335946044126:kujzldodmpm', 'AIzaSyCm4SMZAvhXi6nsfqSK_wIBbo-yC0_7V-8');
+    const client = new googleImages(process.env.GG_CX, process.env.GG_API_KEY);
     let newSearch = `${term} ${venue} ${category}`;
     if (category === 'concerts' || category === 'performing-arts') {
         newSearch = `${term} ${location} ${venue}`;
     }
-    console.log(newSearch);
 
     let getRidOfSymbols = newSearch.replace(/[^A-Za-z]/g, " ");
     let condensedSearch = getRidOfSymbols;
@@ -32,7 +31,7 @@ const findImage = async (term, category, location, venue) => {
     let results = await google.jpg(newSearch);
 
     for (let i = 0; i <= Math.floor(results.length / 2); i++) {
-        if (!results[i].img.includes('evbuc') && results[i].img !== undefined && !results[i].img.includes('video') && !results[i].img.includes('zoogletools') && !results[i].img.includes('fbsbx.com') && !results[i].img.includes('wixmp.com') && !results[i].img.includes('thedailybeast.com') && !results[i].img.includes('cloudinary.com')) {
+        if (!results[i].img.includes('evbuc') && results[i].img !== undefined && !results[i].img.includes('video') && !results[i].img.includes('zoogletools') && !results[i].img.includes('fbsbx.com') && !results[i].img.includes('wixmp.com') && !results[i].img.includes('thedailybeast.com') && !results[i].img.includes('cloudinary.com') && !results[i].img.includes('gannett-cdn.com')) {
             image = results[i].img;
             break;
         }
@@ -42,7 +41,7 @@ const findImage = async (term, category, location, venue) => {
         let otherResults = await client.search(condensedSearch)
             .then(images => {
                 for (let i = 0; i < 5; i++) {
-                    if (!images[i].url.includes('evbuc') && images[i].url !== undefined && !images[i].url.includes('video') && !images[i].url.includes('zoogletools') && !images[i].url.includes('fbsbx.com') && images[i].url.includes('wixmp.com') && images[i].url.includes('thedailybeast.com') && !images[i].url.includes('cloudinary.com')) {
+                    if (!images[i].url.includes('evbuc') && images[i].url !== undefined && !images[i].url.includes('video') && !images[i].url.includes('zoogletools') && !images[i].url.includes('fbsbx.com') && images[i].url.includes('wixmp.com') && images[i].url.includes('thedailybeast.com') && !images[i].url.includes('cloudinary.com') && !images[i].url.includes('gannett-cdn.com')) {
                         return images[i].url;
                     }
                 }
@@ -53,7 +52,7 @@ const findImage = async (term, category, location, venue) => {
             });
         return otherResults;
     }
-    return;
+    return image;
 }
 
 const restructureData = data => {
@@ -106,7 +105,7 @@ const restructureData = data => {
 }
 
 const getData = () => {
-    return callAPI().then(data => restructureData(data)).then(console.log);
+    return callAPI().then(data => restructureData(data));
 };
 
 getData();
