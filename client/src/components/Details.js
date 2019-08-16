@@ -38,10 +38,8 @@ export default function Details({ event, openModal, closeModal, handleCardAction
 
       <Grid item sm={8} xs={false} style={{ height: '90vh' }} >
         <div>
-    <Fade in={true} timeout={200}>
 
           <Paper className={classes.root} style={{ maxHeight: '100vh', overflow: 'auto' }} >
-
 
             <Grid container justify="center">
 
@@ -88,7 +86,6 @@ export default function Details({ event, openModal, closeModal, handleCardAction
             <Button href={event.url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
 
           </Paper>
-          </Fade>
         </div>
       </Grid>
       </Slide>
