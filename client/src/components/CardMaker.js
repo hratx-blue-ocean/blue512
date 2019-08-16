@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMuiTheme, withStyles, makeStyles } from '@material-ui/core/styles';
+import { createMuiTheme, makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
