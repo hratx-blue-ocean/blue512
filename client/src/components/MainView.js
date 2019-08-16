@@ -26,17 +26,14 @@ export default function MainView({
               { name 
                 ? <>
                     <Fade in={true} timeout={500}>
-                      <Typography
-                        variant="h3"
-                        color="textSecondary"
-                        style={{ marginTop: 100 }}
-                      >
+                    <Typography variant="h2" style={{ marginTop: 10 }} align="center" color="textSecondary" style={{ marginTop: 100, marginBottom: 0 }}>
                       {`Hello, ${name.first_name}`}
                       </Typography>
                     </Fade>
                     <Fade in={true} timeout={800}>
                       <Typography
-                        variant="h3"
+                      variant="h2"
+                        align="center"
                         color="textSecondary"
                         style={{ marginTop: 20, marginBottom: 10 }}
                       >
@@ -44,15 +41,29 @@ export default function MainView({
                       </Typography>
                     </Fade>
                   </>
-                : <Fade in={true} timeout={400}>
-                    <Typography
-                      variant="h3"
-                      color="textSecondary"
-                      style={{ marginTop: 125, marginBottom: 50 }}
+                :  <>
+                    <Fade in={true} timeout={400}>
+                    <Typography 
+                      variant="h2" 
+                      style={{ marginTop: 10 }} 
+                      align="center" 
+                      color="textSecondary" 
+                      style={{ marginTop: 100, marginBottom: 0 }}
                     >
-                      Here are your Top Picks
-                    </Typography>
-                  </Fade>
+                        Here are our suggestions
+                      </Typography>
+                    </Fade>
+                    <Fade in={true} timeout={800}>
+                      <Typography
+                        variant="h5" 
+                        align="center" 
+                        color="textSecondary" 
+                        style={{ marginTop: 20, marginBottom: 10 }}
+                      >
+                        Log in for a custom tailored experience
+                      </Typography>
+                    </Fade>
+                  </>
               }
             
             <Grid container>
