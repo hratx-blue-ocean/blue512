@@ -408,7 +408,6 @@ export default class App extends Component {
     for (let i = 0; i < allEvents.length; i++) {
       if (allEvents[i].experience_api_id === item.experience_api_id) {
         allEvents.splice(i, 1)
-        console.log('Event found and spliced')
         break;
       }
     }
