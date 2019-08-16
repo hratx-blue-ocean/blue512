@@ -81,6 +81,12 @@ export default class UnavailableTime extends React.Component {
       .catch();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.userToken !== prevProps.userToken) {
+      this.getUnavailableTimes();
+    }
+  }
+
   componentDidMount() {
     this.getUnavailableTimes();
   }
