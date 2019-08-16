@@ -170,6 +170,28 @@ const getUserData = id => {
   return db.query(query);
 };
 
+const getUserCategoryPreferences = (id, preferred) => {
+  const query = {
+    text:
+      'SELECT c.name FROM users_categories uc INNER JOIN categories c ON uc.category_id=c.id WHERE uc.user_id = $1 AND uc.preferred=$2',
+    values: [id, preferred]
+  };
+
+  return db.query(query);
+};
+
+const addUserExperience = (user_id, experience_id) => {
+  experience_id = parseInt(experience_id);
+  const query = {
+    name: 'addUserExperience',
+    text:
+      'INSERT INTO users_experiences (user_id, experience_id) VALUES ($1, $2)',
+    values: [user_id, experience_id]
+  };
+
+  return db.query(query);
+};
+
 const addNewUnavailable = data => {
   const time_start = data.start.dateTime;
   const time_end = data.end.dateTime;
@@ -254,6 +276,7 @@ module.exports = {
   deleteOldExperiences,
   deleteOldUnavailable,
   getUserUnavailable,
+  addUserExperience,
   getAllEventsULTRAMODE,
   addRecurringUnavailable,
   deleteRecurringUnavailable
