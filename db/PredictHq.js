@@ -72,10 +72,7 @@ const restructureData = data => {
             if (event.end) {
                 restructured.time_end = event.end;
             }
-            restructured.category = "Other";
-            if (event.category) {
-                restructured.category = _categorize(event.category);
-            }
+
 
             restructured.venue = null;
             if (event.entities[0]) {
@@ -89,11 +86,14 @@ const restructureData = data => {
                 restructured.description = event.description;
             }
 
-            const result = await findImage(restructured.name, restructured.category, restructured.location, restructured.venue);
+            const result = await findImage(restructured.name, event.category, restructured.location, restructured.venue);
             restructured.image = result;
 
+            restructured.category = "Other";
+            if (event.category) {
+                restructured.category = _categorize(event.category);
+            }
 
-            // console.log(restructured.image)
             return restructured;
         }
     })
