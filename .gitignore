@@ -65,3 +65,4 @@ typings/
 
 # Webpack
 bundle.js
+bundle.js.gz
