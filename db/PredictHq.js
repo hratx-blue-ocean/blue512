@@ -103,10 +103,9 @@ const restructureData = data => {
 }
 
 const getData = () => {
-    return callAPI().then(data => restructureData(data)).then(console.log);
+    return callAPI().then(data => restructureData(data));
 };
 
-getData();
 module.exports = { getData };
 
 
