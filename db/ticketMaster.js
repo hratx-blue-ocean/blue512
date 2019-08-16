@@ -9,9 +9,9 @@ const callAPI = () => {
   return axios
     .get(
       `https://app.ticketmaster.com/discovery/v2/events?apikey=${
-        process.env.API_KEY_TICKETMASTER
+      process.env.API_KEY_TICKETMASTER
       }&latlong=${latitude},${longitude}&radius=50&unit=miles&locale=*&startDateTime=${
-        dates.currentDateStr
+      dates.currentDateStr
       }&endDateTime=${dates.futureDateStr}&size=100`
     )
     .then(response => {
@@ -62,5 +62,6 @@ const restructureData = data => {
 const getData = () => {
   return callAPI().then(data => restructureData(data));
 };
+
 
 module.exports = { getData };

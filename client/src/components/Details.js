@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Details({ event, openModal, closeModal }) {
+export default function Details({ event, openModal, closeModal, handleCardActionClick }) {
   const classes = useStyles();
 
   return (<>
@@ -43,19 +43,19 @@ export default function Details({ event, openModal, closeModal }) {
 
               <Grid item xs={12} align="center">
                 <Typography variant='h4' component='h2' className={classes.pad}>
-                 {event[0].name}
+                 {event.name}
                 </Typography>
               </Grid>
 
               <Grid item xs={12} align="center">
-                <img src={event[0].img} className={classes.media}/>
+                <img src={event.img} className={classes.media}/>
               </Grid>
 
 
             </Grid>
           
            <Typography variant='h5' component='h5' className={classes.pad}>
-              {moment(event[0].time_start).format('ddd, MMM DD, h:mm a')}
+              {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
               <Fab className={classes.fab} 
                 color="primary"
                 aria-label="add"
@@ -65,7 +65,7 @@ export default function Details({ event, openModal, closeModal }) {
            </Typography>
 
            <Typography variant='h5' component='h5' className={classes.pad} >
-             @ {event[0].venue}  {event[0].location}
+             @ {event.venue}  {event.location}
            </Typography>
 
           <Typography variant='h6' component='h5' className={classes.pad}>
@@ -76,12 +76,12 @@ export default function Details({ event, openModal, closeModal }) {
                 anchorClass=''
                 expanded={false}
             >
-                {event[0].description}
+                {event.description}
             </ShowMoreText>
 
            </Typography>
 
-              <Button href={event[0].url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
+              <Button href={event.url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
 
         </Paper>
       </div>
@@ -102,18 +102,18 @@ export default function Details({ event, openModal, closeModal }) {
       <div>
         <Paper className={classes.pad} style={{maxHeight: '100vh', overflow: 'auto'}} >
           <Typography variant='h6' component='h6' className={classes.pad}>
-            {event[0].name}
+            {event.name}
           </Typography>
 
-            <img src={event[0].img} className={classes.media}/>
+            <img src={event.img} className={classes.media}/>
           
            <Typography variant='subtitle1'  className={classes.pad}>
-              {moment(event[0].time_start).format('ddd, MMM DD, h:mm a')}
+              {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
 
               <Fab className={classes.fab} 
                 color="primary"
                 aria-label="add"
-                onClick={() => { addToCalendar(event) }}> 
+                onClick={() => { handleCardActionClick(event, true) }}>
                   <CalendarIcon />
                 </Fab>
 
@@ -127,7 +127,7 @@ export default function Details({ event, openModal, closeModal }) {
            </Typography>
 
            <Typography variant='h6' component='h6' className={classes.pad} >
-             @ {event[0].venue}  {event[0].location}
+             @ {event.venue}  {event.location}
            </Typography>
 
           <Typography variant='subtitle2'  className={classes.pad}>
@@ -138,12 +138,12 @@ export default function Details({ event, openModal, closeModal }) {
                 anchorClass=''
                 expanded={false}
             >
-                {event[0].description}
+              {event.description}
             </ShowMoreText>
 
-           </Typography>
+          </Typography>
 
-              <Button href={event[0].url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
+          <Button href={event.url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
 
         </Paper>
       </div>

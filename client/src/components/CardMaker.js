@@ -63,46 +63,13 @@ const theme = createMuiTheme({
 });
 
 
-export default function CardMaker({ event, animationTime }) {
+export default function CardMaker({ event, animationTime, handleCardActionClick }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
   function handleExpandClick() {
     setExpanded(!expanded);
   }
-
-  function addToCalendar(event) {
-    // console.log('Clicked on:', event)
-    let eventStart = new Date(event.time_start);
-    let eventEnd;
-    if (event.time_end) {
-      eventEnd = new Date(event.time_end);
-    } else {
-      eventEnd = new Date(eventStart)
-      eventEnd.setHours(eventEnd.getHours() + 2);
-    }
-    const gCalEvent = {
-      summary: event.name,
-      start: {
-        dateTime: eventStart
-      },
-      end: {
-        dateTime: eventEnd
-      }
-    };
-    // console.log(gCalEvent)
-    let request = window.gapi.client.calendar.events.insert({
-      calendarId: 'primary',
-      resource: gCalEvent
-    });
-    request.execute(function (event) {
-      console.log('event successfully added')
-      //Add notification or toast
-      // console.log(event.htmlLink);
-    });
-
-  }
-
 
   return (
     <Grow in={true} timeout={animationTime}>
@@ -136,7 +103,7 @@ export default function CardMaker({ event, animationTime }) {
           <Fab
             color="primary"
             aria-label="add"
-            onClick={() => { addToCalendar(event) }}
+            onClick={() => { handleCardActionClick(event, true) }}
           >
             <CalendarIcon />
           </Fab>
@@ -147,7 +114,7 @@ export default function CardMaker({ event, animationTime }) {
             <Fab
               color="secondary"
               aria-label="add"
-              onClick={() => { console.log('next event') }}
+              onClick={() => { handleCardActionClick(event, false) }}
             >
               <CloseIcon />
             </Fab>
