@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Details({ event }) {
+export default function Details({ event, handleCardActionClick }) {
   const classes = useStyles()
 
   return (
@@ -52,7 +52,7 @@ export default function Details({ event }) {
             <Fab className={classes.fab}
               color="secondary"
               aria-label="add"
-              onClick={() => { addToCalendar(event) }}>
+              onClick={() => { handleCardActionClick(event, true) }}>
               add
                   <CalendarIcon />
             </Fab>

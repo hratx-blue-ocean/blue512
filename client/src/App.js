@@ -241,7 +241,7 @@ export default class App extends Component {
     this.handleMicroCardClick = this.handleMicroCardClick.bind(this);
     this.changeDetailsDay = this.changeDetailsDay.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
-    this.handleAddToCalClick = this.handleAddToCalClick.bind(this);
+    this.handleCardActionClick = this.handleCardActionClick.bind(this);
     this.removeEvent = this.removeEvent.bind(this);
   }
 
@@ -270,7 +270,7 @@ export default class App extends Component {
     }
     else if (event.target.textContent === "Tomorrow") {
       this.setState({ selectedDaysEvents: this.state.eventsTomorrow })
-    } 
+    }
     else {
       this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus })
 
@@ -351,8 +351,15 @@ export default class App extends Component {
     this.setState({ path: path });
   }
 
-  handleAddToCalClick(item) {
-    this.addToCalendar(item);
+  handleCardActionClick(item, add) {
+    if (add === true) {
+      this.addToCalendar(item);
+    } else if (this.state.userToken !== '') {
+      axios.post(`/api/user_event/${item.id}`, { token: this.state.userToken })
+        .then(this.removeEvent(item));
+    } else {
+      this.removeEvent(item);
+    }
   }
 
   addToCalendar(item) {
@@ -409,6 +416,7 @@ export default class App extends Component {
       eventsTomorrowPlusPlus,
       selectedDaysEvents,
       clickedMicroCard,
+      user,
       PORT,
       path
     } = this.state;
@@ -427,12 +435,13 @@ export default class App extends Component {
             exact
             render={() => (
               <MainView
+                name={user}
                 loaded={loaded}
                 events={eventsAll}
                 eventsToday={eventsToday}
                 eventsTomorrow={eventsTomorrow}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
-                handleAddToCalClick={this.handleAddToCalClick}
+                handleCardActionClick={this.handleCardActionClick}
               />
             )}
           />
@@ -449,6 +458,7 @@ export default class App extends Component {
                 changeDetailsDay={this.changeDetailsDay}
                 handleMicroCardClick={this.handleMicroCardClick}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+                handleCardActionClick={this.handleCardActionClick}
               />
             )}
           />
