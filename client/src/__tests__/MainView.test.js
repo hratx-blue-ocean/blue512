@@ -6,14 +6,21 @@ import { Grid, Container } from '@material-ui/core/';
 
 const getProps = () => ({
   loaded: true
-})
+});
 
 describe('Main View component', () => {
   let wrapper;
-  const { loaded } = getProps()
+  const { loaded } = getProps();
 
   beforeAll(() => {
-    wrapper = shallow(<MainView loaded={loaded} events={['foo', 'bar', 'baz']} />);
+    wrapper = shallow(
+      <MainView
+        loaded={loaded}
+        eventsToday={['foo', 'bar', 'baz']}
+        eventsTomorrow={['foo', 'bar', 'baz']}
+        eventsTomorrowPlusPlus={['foo', 'bar', 'baz']}
+      />
+    );
   });
 
   test('it renders without crashing', () => {
