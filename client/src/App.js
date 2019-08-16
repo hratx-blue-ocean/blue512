@@ -283,8 +283,7 @@ export default class App extends Component {
     }
     if (event.target.textContent === "Tomorrow") {
       this.setState({ selectedDaysEvents: this.state.eventsTomorrow })
-    }
-    if (event.target.textContent === "Overmorrow") {
+    } else {
       this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus })
     }
   }
