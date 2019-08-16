@@ -2,7 +2,7 @@ import React from 'react';
 import CardContainer from './CardContainer.js';
 import moment from 'moment';
 import spinner from '../../public/spinner.gif';
-import { Grow } from '@material-ui/core/';
+import { Fade } from '@material-ui/core/';
 import { Typography, Grid, Container } from '@material-ui/core/';
 
 const tomorrowPlusPlus = moment()
@@ -23,17 +23,38 @@ export default function MainView({
       {loaded ? (
         <div>
           <Container maxWidth="lg" align="center">
-            <Grow in={true} timeout={400}>
-              <Typography
-                variant="h3"
-                color="textSecondary"
-                style={{ marginTop: 125, marginBottom: 50 }}
-              >
-                {name
-                  ? `Hello ${name.first_name}, here are your top picks`
-                  : `Top Picks For You`}
-              </Typography>
-            </Grow>
+              { name 
+                ? <>
+                    <Fade in={true} timeout={500}>
+                      <Typography
+                        variant="h3"
+                        color="textSecondary"
+                        style={{ marginTop: 100 }}
+                      >
+                      {`Hello, ${name.first_name}`}
+                      </Typography>
+                    </Fade>
+                    <Fade in={true} timeout={800}>
+                      <Typography
+                        variant="h3"
+                        color="textSecondary"
+                        style={{ marginTop: 20, marginBottom: 10 }}
+                      >
+                        Here are your Top Picks
+                      </Typography>
+                    </Fade>
+                  </>
+                : <Fade in={true} timeout={400}>
+                    <Typography
+                      variant="h3"
+                      color="textSecondary"
+                      style={{ marginTop: 125, marginBottom: 50 }}
+                    >
+                      Here are your Top Picks
+                    </Typography>
+                  </Fade>
+              }
+            
             <Grid container>
               <CardContainer
                 event={eventsToday.length ? eventsToday[0] : ''}
