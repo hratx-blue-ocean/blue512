@@ -9,8 +9,11 @@ import {
   FormGroup,
   FormControlLabel,
   Switch,
-  Container
+  Container,
+  Paper
 } from '@material-ui/core/';
+
+
 
 export default class SettingsView extends React.Component {
   constructor(props) {
@@ -56,6 +59,7 @@ export default class SettingsView extends React.Component {
       .catch();
   }
   render() {
+
     return (
       <>
         {/* This is the master level container. It prevents the container from stretching beyond a certain width.
@@ -90,17 +94,33 @@ export default class SettingsView extends React.Component {
 
             {/* UnavailableTime column (Will take up half screen space on "medium+" sizes, and full screen space on anything smaller*/}
             <Grid item sm={12} md={6}>
-              <UnavailableTime userToken={this.props.userToken} />
+              <Paper style={{
+                padding: 20,
+                margin: 20,
+                display: 'flex',
+                overflow: 'auto',
+                flexDirection: 'column',
+              }}>
+                <UnavailableTime userToken={this.props.userToken} />
+              </Paper>
             </Grid>
 
             {/* UnavailableTime column (Will take up half screen space on "medium+" sizes, and full screen space on anything smaller*/}
             <Grid item sm={12} md={6}>
-              <PreferencesContainer
-                categories={this.state.categories}
-                userPreferences={this.state.userPreferences}
-                handleChange={this.postNewPreference}
-                userToken={this.props.userToken}
-              />
+              <Paper style={{
+                padding: 20,
+                margin: 20,
+                display: 'flex',
+                overflow: 'auto',
+                flexDirection: 'column',
+              }}>
+                <PreferencesContainer
+                  categories={this.state.categories}
+                  userPreferences={this.state.userPreferences}
+                  handleChange={this.postNewPreference}
+                  userToken={this.props.userToken}
+                />
+              </Paper>
             </Grid>
           </Grid>
 
