@@ -42,8 +42,8 @@ export default function PreferencesContainer({
   const defaultuserPreferenceSliderValue = !userPreference
     ? 50
     : userPreference.preferred
-    ? 100
-    : 0;
+      ? 100
+      : 0;
   return (
     <>
       <ListItem

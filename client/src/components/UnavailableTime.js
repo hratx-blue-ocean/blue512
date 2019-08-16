@@ -10,6 +10,7 @@ import {
 import moment from 'moment';
 import axios from 'axios';
 import UnavailableTimeContainer from './UnavailableTimeContainer';
+import Title from './Title.js';
 
 export default class UnavailableTime extends React.Component {
   constructor(props) {
@@ -94,6 +95,7 @@ export default class UnavailableTime extends React.Component {
   render() {
     return (
       <>
+        <Title>When Are Busy?</Title>
         <Typography variant="subtitle1" align="center">
           Tell us when you are unavailable. We assume these times are recurring.
           Please delete them below if they are no longer relevant!
