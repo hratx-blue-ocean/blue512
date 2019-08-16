@@ -29,7 +29,7 @@ const getAllEventsULTRAMODE = id => {
       (select 1
     from unavailable u
     where u.time_start <= e.time_start
-      AND u.time_end >= e.time_start AND user_id=$1 LIMIT 1)
+      AND u.time_end >= e.time_start AND user_id=$1  AND u.recurring!=true LIMIT 1)
   ORDER BY e.category_id
   = ANY
   (SELECT id

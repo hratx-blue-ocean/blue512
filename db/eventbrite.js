@@ -12,7 +12,7 @@ const _createReqStr = (page = 1) => {
 
   let reqStr = `https://www.eventbriteapi.com/v3/events/search/?token=${
     process.env.API_KEY_EVENTBRITE
-    }&location.latitude=${latitude}&location.longitude=${longitude}&start_date.range_end=${futureDate}&page=${page}&expand=ticket_classes,venue,category`;
+  }&location.latitude=${latitude}&location.longitude=${longitude}&start_date.range_end=${futureDate}&page=${page}&expand=ticket_classes,venue,category`;
 
   return reqStr;
 };
@@ -83,8 +83,8 @@ const restructureData = data => {
       restructured.name = event.name.text || null;
       restructured.url = url || null;
       restructured.event_id = id;
-      restructured.time_start = event.start.local;
-      restructured.time_end = event.end.local;
+      restructured.time_start = event.start.utc;
+      restructured.time_end = event.end.utc;
       restructured.category = 'Other';
       if (event.category_id) {
         restructured.category = _categorize(event.category.short_name);

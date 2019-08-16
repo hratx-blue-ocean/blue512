@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import {
   MenuItem,
@@ -32,6 +33,11 @@ const useStyles = makeStyles(theme => ({
     paddingTop: '4px',
     cursor: 'pointer'
   },
+
+  expandIcon: {
+    fontSize: '48px',
+    cursor: 'pointer'
+  },
   inputInput: {
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -49,24 +55,23 @@ const SearchView = function(props) {
   const [eventsLength, setEventsLength] = useState(props.events);
   const [totalEventCount, setTotalEventCount] = useState(3);
   const [searchTerm, setSearchTerm] = useState('');
+  const [expandClicked, setExpandClicked] = useState(false);
+  const [pageLength, setPageLength] = useState(15);
 
   useEffect(() => {
     if (totalEventCount !== props.events.length) {
-      console.log('new props!', props.events.length);
+      setPageLength(15);
       setTotalEventCount(props.events.length);
       setEvents(props.events);
-      setGrid(buildGrid(props.events));
+      setGrid(buildGrid(props.events, 15));
     } else if (events.length !== eventsLength) {
-      console.log('new events length!');
-      setGrid(buildGrid(events));
+      setPageLength(15);
+      setGrid(buildGrid(events, 15));
       setEventsLength(events.length);
+    } else if (expandClicked) {
+      setGrid(buildGrid(events));
+      setExpandClicked(false);
     }
-    // else if (oldSearchTerm !== searchTerm) {
-    //   // setBooleans(searchedBoolean(searchTerm));
-    //   setEvents(filter(searchTerm));
-    //   setOldSearchTerm(searchTerm);
-    //   console.log('newSearchTerm!', searchTerm, booleans);
-    // }
   });
 
   const filter = function(search) {
@@ -99,9 +104,13 @@ const SearchView = function(props) {
     return filteredEvents;
   };
 
-  const buildGrid = function(events) {
+  const buildGrid = function(events, num = null) {
     let arr = [];
+    num = num || pageLength;
     for (let i = 0; i < events.length; i += 3) {
+      if (i >= num) {
+        break;
+      }
       arr.push(
         <Grid key={`cardSearchGrid${events[i].experience_api_id}`} container>
           {buildCards(i, events)}{' '}
@@ -122,7 +131,7 @@ const SearchView = function(props) {
           key={`cardSearchCard${events[j].experience_api_id}`}
           event={events[j]}
           day={''}
-          animationTime={j * 400}
+          animationTime={(j % 15) * 400}
           handleAddToCalClick={props.handleAddToCalClick}
         />
       );
@@ -142,6 +151,12 @@ const SearchView = function(props) {
 
   const handleClick = function(e) {
     setEvents(filter(searchTerm));
+  };
+
+  const handleExpand = function() {
+    setPageLength(pageLength + 15);
+    setExpandClicked(true);
+    console.log('clicked', pageLength);
   };
 
   return (
@@ -172,6 +187,13 @@ const SearchView = function(props) {
         ) : (
           <div>Sorry, we don't have any events for you to search today.</div>
         )}
+      </Container>
+      <Container maxWidth="lg" align="center">
+        <ExpandMore
+          className={classes.expandIcon}
+          fontSize="large"
+          onClick={handleExpand}
+        />
       </Container>
     </>
   );

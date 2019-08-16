@@ -28,8 +28,8 @@ router.post('/user_event/:id', (req, res) => {
       console.log('CAUTION: ', err);
       query
         .getAllEvents()
-        .then(response => {
-          res.json({ events: response.rows });
+        .then(({ rows }) => {
+          res.json({ events: rows });
         })
         .catch(console.log);
     });
@@ -47,8 +47,8 @@ router.post('/events', (req, res) => {
       console.log('CAUTION: ', err);
       query
         .getAllEvents()
-        .then(response => {
-          res.json({ events: response.rows });
+        .then(({ rows }) => {
+          res.json({ events: rows });
         })
         .catch(console.log);
     });

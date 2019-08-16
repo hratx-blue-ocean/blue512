@@ -1,5 +1,9 @@
 import React from 'react';
-import { createMuiTheme, withStyles, makeStyles } from '@material-ui/core/styles';
+import {
+  createMuiTheme,
+  withStyles,
+  makeStyles
+} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -22,33 +26,31 @@ import { Grow, Fab } from '@material-ui/core/';
 import moment from 'moment';
 import Link from '@material-ui/core/Link';
 
-
-
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: 400,
+    maxWidth: 400
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '56.25%' // 16:9
   },
   actions: {
-    display: "flex",
-    justifyContent: "space-between"
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
     transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
+      duration: theme.transitions.duration.shortest
+    })
   },
   expandOpen: {
-    transform: 'rotate(180deg)',
+    transform: 'rotate(180deg)'
   },
   avatar: {
-    backgroundColor: red[500],
-  },
+    backgroundColor: red[500]
+  }
 }));
 
 const theme = createMuiTheme({
@@ -57,15 +59,27 @@ const theme = createMuiTheme({
     //   // main: "#00c853",
     // },
     secondary: {
-      main: "#f44336",
+      main: '#f44336'
     }
-  },
+  }
 });
 
-
-export default function CardMaker({ event, animationTime, handleAddToCalClick }) {
+export default function CardMaker({
+  event,
+  animationTime,
+  handleAddToCalClick
+}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+
+  const imageFallbacks = [
+    'https://img.freepik.com/free-photo/smooth-dark-blue-with-black-vignette-studio-well-use-as-background-business-report-digital-website-template_1258-748.jpg?size=626&ext=jpg',
+    'https://wallpapercave.com/wp/AdQaK85.jpg',
+    'https://img.freepik.com/free-vector/white-textured-paper_53876-86282.jpg?size=626&ext=jpg',
+    'https://i.pinimg.com/originals/d3/32/28/d33228dd741723a0c66b221e36f2aaaf.jpg',
+    'https://images.clipartlogo.com/files/istock/previews/1012/101248891-dark-green-abstract-background.jpg',
+    'https://cdn.pixabay.com/photo/2015/03/26/09/48/landscape-690345_960_720.jpg'
+  ];
 
   function handleExpandClick() {
     setExpanded(!expanded);
@@ -74,19 +88,21 @@ export default function CardMaker({ event, animationTime, handleAddToCalClick })
   return (
     <Grow in={true} timeout={animationTime}>
       <Card className={classes.card}>
-
         {/* <CardHeader
         // Stuff above the image would go here
         /> */}
         <CardMedia
           className={classes.media}
-          image={event.img}
+          image={
+            event.img ||
+            imageFallbacks[Math.floor(Math.random() * imageFallbacks.length)]
+          }
         />
 
         {/* Adding minimum height to CardContent allows all cards to be the same size
         Even on cards where event titles wrap to the next line */}
         <CardContent style={{ minHeight: 140 }}>
-          <Typography variant="h6"  >
+          <Typography variant="h6">
             <Link href={event.url} color="textPrimary">
               {event.name}
             </Link>
@@ -103,7 +119,9 @@ export default function CardMaker({ event, animationTime, handleAddToCalClick })
           <Fab
             color="primary"
             aria-label="add"
-            onClick={() => { handleAddToCalClick(event) }}
+            onClick={() => {
+              handleAddToCalClick(event);
+            }}
           >
             <CalendarIcon />
           </Fab>
@@ -114,7 +132,9 @@ export default function CardMaker({ event, animationTime, handleAddToCalClick })
             <Fab
               color="secondary"
               aria-label="add"
-              onClick={() => { console.log('next event') }}
+              onClick={() => {
+                console.log('next event');
+              }}
             >
               <CloseIcon />
             </Fab>
@@ -122,7 +142,7 @@ export default function CardMaker({ event, animationTime, handleAddToCalClick })
 
           <IconButton
             className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
+              [classes.expandOpen]: expanded
             })}
             onClick={handleExpandClick}
             aria-expanded={expanded}
@@ -136,12 +156,9 @@ export default function CardMaker({ event, animationTime, handleAddToCalClick })
 
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>
-              Description? {event.description}
-            </Typography>
+            <Typography paragraph>Description? {event.description}</Typography>
           </CardContent>
         </Collapse>
-
       </Card>
     </Grow>
   );
