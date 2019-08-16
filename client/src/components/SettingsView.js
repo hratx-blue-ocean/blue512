@@ -8,7 +8,8 @@ import {
   Avatar,
   FormGroup,
   FormControlLabel,
-  Switch
+  Switch,
+  Container
 } from '@material-ui/core/';
 
 export default class SettingsView extends React.Component {
@@ -57,52 +58,53 @@ export default class SettingsView extends React.Component {
   render() {
     return (
       <>
-        <Grid
-          container
-          spacing={1}
-          justify="center"
-          alignItems="flex-start"
-          direction="row"
-        >
-          <Grid item>
-            <Avatar
-              align="center"
-              alt="User Avatar"
-              src={this.props.user ? this.props.user.avatar_url : ''}
-              style={{ marginTop: 10, width: 40, height: 40 }}
-            />
-          </Grid>
-          <Grid item>
-            <Typography variant="h4" style={{ marginTop: 10 }} align="center">
-              Hello {this.props.user ? this.props.user.first_name : ''}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <FormGroup row>
-              <FormControlLabel
-                label="Dark Mode"
-                control={<Switch color="primary" />}
+        {/* This is the master level container. It prevents the container from stretching beyond a certain width.
+        So on a large screen, the horizontal width will max out at a certain size.  */}
+        <Container maxWidth="lg" style={{ marginTop: 80 }}>
+
+          {/* This is a "Grid container" (different than above "Container"). Grid items should be wrapped in this type of container. 
+          This section holds the title text and avatar. */}
+          <Grid container justify="center">
+            <Grid item align="center">
+              <Avatar
+                alt="User Avatar"
+                src={this.props.user ? this.props.user.avatar_url : ''}
+                style={{ marginTop: 10, marginRight: 10, width: 60, height: 60 }}
               />
-            </FormGroup>
+            </Grid>
+            <Grid item align="center">
+              <Typography variant="h2" style={{ marginTop: 10 }} align="center">
+                Hello {this.props.user ? this.props.user.first_name : ''}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} style={{ marginTop: 20, marginBottom: 40 }}>
+              <Typography variant="subtitle1" align="center">
+                Help us custom tailor your CityScout experience!
+            </Typography>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12}>
-            <Typography variant="subtitle1" align="center">
-              Help us custom tailor your CityScout experience!
-            </Typography>
+          {/* This container will hold both the settings toggles, and UnavailableTime
+          They will display side by side on large screens, and will stack on small screens */}
+          <Grid container>
+
+            {/* UnavailableTime column (Will take up half screen space on "medium+" sizes, and full screen space on anything smaller*/}
+            <Grid item sm={12} md={6}>
+              <UnavailableTime userToken={this.props.userToken} />
+            </Grid>
+
+            {/* UnavailableTime column (Will take up half screen space on "medium+" sizes, and full screen space on anything smaller*/}
+            <Grid item sm={12} md={6}>
+              <PreferencesContainer
+                categories={this.state.categories}
+                userPreferences={this.state.userPreferences}
+                handleChange={this.postNewPreference}
+                userToken={this.props.userToken}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <PreferencesContainer
-              categories={this.state.categories}
-              userPreferences={this.state.userPreferences}
-              handleChange={this.postNewPreference}
-              userToken={this.props.userToken}
-            />
-          </Grid>
-          <Grid item xs={8}>
-            <UnavailableTime userToken={this.props.userToken} />
-          </Grid>
-        </Grid>
+
+        </Container>
       </>
     );
   }
