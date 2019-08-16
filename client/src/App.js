@@ -354,7 +354,9 @@ export default class App extends Component {
         this.setState({
           eventsAll: data.data.events,
           isSignedIn: isSignedIn,
-          loaded: true
+          loaded: true,
+          userToken: null,
+          user: null
         });
       })
       .catch();

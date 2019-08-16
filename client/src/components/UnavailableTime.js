@@ -10,6 +10,7 @@ import {
 import moment from 'moment';
 import axios from 'axios';
 import UnavailableTimeContainer from './UnavailableTimeContainer';
+import Title from './Title.js';
 
 export default class UnavailableTime extends React.Component {
   constructor(props) {
@@ -94,53 +95,68 @@ export default class UnavailableTime extends React.Component {
   render() {
     return (
       <>
-        <Typography variant="subtitle1" align="center">
+        <Title>When Are Busy?</Title>
+        <Typography variant="subtitle2" color="textSecondary">
           Tell us when you are unavailable. We assume these times are recurring.
           Please delete them below if they are no longer relevant!
         </Typography>
-        <TextField
-          id="standard-name"
-          label="Event Name"
-          onChange={e => this.handleNameChange(e.target.value)}
-          style={{ marginLeft: 10 }}
-        />
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Grid container justify="space-around">
-            <KeyboardDatePicker
-              margin="normal"
-              id="date-picker-dialog"
-              label="Date"
-              format="MM/dd/yyyy"
-              value={this.state.datepickerDate}
-              onChange={this.handleDateChange}
-              KeyboardButtonProps={{
-                'aria-label': 'change date'
-              }}
-            />
-            <KeyboardTimePicker
-              margin="normal"
-              id="time-picker"
-              label="Time Start"
-              value={this.state.datepickerStart}
-              onChange={this.handleTimeStartChange}
-              minutesStep={5}
-              KeyboardButtonProps={{
-                'aria-label': 'change time'
-              }}
-            />
-            <KeyboardTimePicker
-              margin="normal"
-              id="time-picker"
-              label="Time End"
-              value={this.state.datepickerEnd}
-              onChange={this.handleTimeEndChange}
-              minutesStep={5}
-              KeyboardButtonProps={{
-                'aria-label': 'change time'
-              }}
+
+        <Grid container>
+          <Grid item xs={12}>
+            <TextField
+              id="standard-name"
+              label="Event Name"
+              onChange={e => this.handleNameChange(e.target.value)}
+              fullWidth={true}
             />
           </Grid>
-        </MuiPickersUtilsProvider>
+
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid item xs={12}>
+              <KeyboardDatePicker
+                margin="normal"
+                id="date-picker-dialog"
+                label="Date"
+                format="MM/dd/yyyy"
+                value={this.state.datepickerDate}
+                onChange={this.handleDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date'
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <KeyboardTimePicker
+                margin="normal"
+                id="time-picker"
+                label="Time Start"
+                value={this.state.datepickerStart}
+                onChange={this.handleTimeStartChange}
+                minutesStep={5}
+                KeyboardButtonProps={{
+                  'aria-label': 'change time'
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <KeyboardTimePicker
+                margin="normal"
+                id="time-picker"
+                label="Time End"
+                value={this.state.datepickerEnd}
+                onChange={this.handleTimeEndChange}
+                minutesStep={5}
+                KeyboardButtonProps={{
+                  'aria-label': 'change time'
+                }}
+              />
+            </Grid>
+          </MuiPickersUtilsProvider>
+
+        </Grid>
+
+
+
         <Fab color="primary" aria-label="add">
           <AddIcon onClick={() => this.handleSubmit()} />
         </Fab>
