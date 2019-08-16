@@ -182,6 +182,18 @@ const getUserCategoryPreferences = (id, preferred) => {
   return db.query(query);
 };
 
+const addUserExperience = (user_id, experience_id) => {
+  experience_id = parseInt(experience_id);
+  const query = {
+    name: 'addUserExperience',
+    text:
+      'INSERT INTO users_experiences (user_id, experience_id) VALUES ($1, $2)',
+    values: [user_id, experience_id]
+  };
+
+  return db.query(query);
+};
+
 const addNewUnavailable = data => {
   const time_start = data.start.dateTime;
   const time_end = data.end.dateTime;
@@ -221,7 +233,7 @@ const deleteOldExperiences = () => {
 const deleteOldUnavailable = () => {
   const query = {
     name: 'deleteOldUnavailable',
-    text: 'DELETE FROM unavilable WHERE time_start < NOW()',
+    text: 'DELETE FROM unavailable WHERE time_start < NOW()',
     values: []
   };
 
@@ -245,5 +257,6 @@ module.exports = {
   getUserCategoryPreferences,
   deleteOldExperiences,
   deleteOldUnavailable,
-  getUserUnavailable
+  getUserUnavailable,
+  addUserExperience
 };

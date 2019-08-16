@@ -18,6 +18,23 @@ router.get('/events', (req, res) => {
     .catch(console.log);
 });
 
+router.post('/user_event/:id', (req, res) => {
+  const event_id = req.params.id;
+  verify(req.body.token)
+    .then(userData => {
+      addUserExperienceToDatabase(userData.id, event_id).then(_ => res.end());
+    })
+    .catch(err => {
+      console.log('CAUTION: ', err);
+      query
+        .getAllEvents()
+        .then(response => {
+          res.json({ events: response.rows });
+        })
+        .catch(console.log);
+    });
+});
+
 router.post('/events', (req, res) => {
   const { calendar_items } = req.body;
   verify(req.body.token)
@@ -104,6 +121,10 @@ async function verify(token) {
   const last_name = payload['family_name'];
   const avatar_url = payload['picture'];
   return { id, email, first_name, last_name, avatar_url };
+}
+
+function addUserExperienceToDatabase(user_id, experience_id) {
+  return query.addUserExperience(user_id, experience_id);
 }
 
 function addNewCategoriesAndAvailabilityToDatabase(userData, calendar_items) {
