@@ -95,7 +95,7 @@ export default class UnavailableTime extends React.Component {
   render() {
     return (
       <>
-        <Title>When Are Busy?</Title>
+        <Title>When are you busy?</Title>
         <Typography variant="subtitle2" color="textSecondary">
           Tell us when you are unavailable. We assume these times are recurring.
           Please delete them below if they are no longer relevant!
@@ -152,10 +152,7 @@ export default class UnavailableTime extends React.Component {
               />
             </Grid>
           </MuiPickersUtilsProvider>
-
         </Grid>
-
-
 
         <Fab color="primary" aria-label="add">
           <AddIcon onClick={() => this.handleSubmit()} />
