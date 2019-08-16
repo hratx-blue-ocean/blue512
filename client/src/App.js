@@ -242,12 +242,9 @@ export default class App extends Component {
     this.handleMicroCardClick = this.handleMicroCardClick.bind(this);
     this.changeDetailsDay = this.changeDetailsDay.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
-<<<<<<< HEAD
     this.closeModal = this.closeModal.bind(this);
-=======
     this.handleCardActionClick = this.handleCardActionClick.bind(this);
     this.removeEvent = this.removeEvent.bind(this);
->>>>>>> development
   }
 
   componentDidMount() {
@@ -283,31 +280,20 @@ export default class App extends Component {
   }
 
   handleMicroCardClick(event) {
-<<<<<<< HEAD
     this.setState({ clickedMicroCard: [event] })
-
-    //const [open, setOpen] = React.useState(false);
-
-
     this.setState({ openModal: true }) 
-
-    console.log('clicked')
-    
   }
-
 
   closeModal() {
     this.setState({ openModal: false })
     console.log('close clicked') 
   };
 
-
   seperateEventsByDate(alsoEvents) {
-=======
     this.setState({ clickedMicroCard: event });
   }
-  seperateEventsByDate(allEvents) {
->>>>>>> development
+
+    seperateEventsByDate(allEvents) {
     // console.log(events || `testing and didn't get events`);
     // '2019-08-16T00:00:00.000Z'
     const todayArr = [],
@@ -486,12 +472,9 @@ export default class App extends Component {
                 changeDetailsDay={this.changeDetailsDay}
                 handleMicroCardClick={this.handleMicroCardClick}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
-<<<<<<< HEAD
                 closeModal={this.closeModal}
                 openModal={openModal}
-=======
                 handleCardActionClick={this.handleCardActionClick}
->>>>>>> development
               />
             )}
           />

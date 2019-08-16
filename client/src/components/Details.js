@@ -88,7 +88,7 @@ export default function Details({ event, openModal, closeModal, handleCardAction
     </Grid>
     </Hidden>
 
-<Hidden smUp="true">
+<Hidden smUp='true'>
     <Modal
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"

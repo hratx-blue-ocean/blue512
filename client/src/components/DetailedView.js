@@ -3,11 +3,7 @@ import MicroCardContainer from './MicroCardContainer.js'
 import Details from './Details.js'
 import { Grid, Container } from '@material-ui/core/';
 
-<<<<<<< HEAD
-export default function DetailedView({ clickedMicroCard, events, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, selectedDaysEvents, handleMicroCardClick, changeDetailsDay, openModal, closeModal }) {
-=======
-export default function DetailedView({ clickedMicroCard, events, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, selectedDaysEvents, handleMicroCardClick, changeDetailsDay, handleCardActionClick }) {
->>>>>>> development
+export default function DetailedView({ clickedMicroCard, events, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, selectedDaysEvents, handleMicroCardClick, changeDetailsDay, openModal, closeModal, handleCardActionClick  }) {
   return (
     <>
       <Grid container>
@@ -22,16 +18,13 @@ export default function DetailedView({ clickedMicroCard, events, eventsToday, ev
         />
         <Details
           event={clickedMicroCard}
-<<<<<<< HEAD
           events={events}
           eventsToday={eventsToday}
           eventsTomorrow={eventsTomorrow}
           eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
           openModal={openModal}
           closeModal={closeModal}
-=======
           handleCardActionClick={handleCardActionClick}
->>>>>>> development
         />
       </Grid>
     </>
