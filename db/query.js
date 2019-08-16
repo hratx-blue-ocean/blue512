@@ -25,6 +25,9 @@ const getAllEventsULTRAMODE = id => {
     ANY(SELECT category_id
     FROM users_categories
     WHERE user_id=$1 AND preferred=false))
+    AND not exists 
+    (select * from unavailable u where u.time_start <= e.time_start 
+    AND u.time_end >= e.time_start AND user_id=$1)
     ORDER BY e.category_id
     = ANY
     (SELECT id
