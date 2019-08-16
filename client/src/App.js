@@ -242,6 +242,7 @@ export default class App extends Component {
     this.changeDetailsDay = this.changeDetailsDay.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
     this.handleAddToCalClick = this.handleAddToCalClick.bind(this);
+    this.removeEvent = this.removeEvent.bind(this);
   }
 
   componentDidMount() {
@@ -279,14 +280,14 @@ export default class App extends Component {
   handleMicroCardClick(event) {
     this.setState({ clickedMicroCard: event });
   }
-  seperateEventsByDate(alsoEvents) {
+  seperateEventsByDate(allEvents) {
     // console.log(events || `testing and didn't get events`);
     // '2019-08-16T00:00:00.000Z'
     const todayArr = [],
       tomorrowArr = [],
       tomorrowPlusPlusArr = [];
 
-    alsoEvents.forEach(event => {
+    allEvents.forEach(event => {
       let parsedTimeStart = Number(
         event.time_start.split('T')[0].split('-')[2]
       );
@@ -306,7 +307,8 @@ export default class App extends Component {
       eventsToday: todayArr,
       eventsTomorrow: tomorrowArr,
       eventsTomorrowPlusPlus: tomorrowPlusPlusArr,
-      selectedDaysEvents: todayArr
+      selectedDaysEvents: todayArr,
+      eventsAll: allEvents
     });
   }
 
@@ -376,11 +378,25 @@ export default class App extends Component {
       calendarId: 'primary',
       resource: gCalEvent
     });
+    let context = this
     request.execute(function (event) {
       console.log('event successfully added')
+      context.removeEvent(item);
       //Add notification or toast
       // console.log(event.htmlLink);
     });
+  }
+
+  removeEvent(item) {
+    console.log(item);
+    const allEvents = [...this.state.eventsAll];
+    for (let i = 0; i < allEvents.length; i++) {
+      if (allEvents[i].experience_api_id === item.experience_api_id) {
+        allEvents.splice(i, 1)
+        break;
+      }
+    }
+    this.seperateEventsByDate(allEvents)
   }
 
   render() {
