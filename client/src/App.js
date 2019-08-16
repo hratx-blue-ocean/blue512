@@ -458,6 +458,7 @@ export default class App extends Component {
                 changeDetailsDay={this.changeDetailsDay}
                 handleMicroCardClick={this.handleMicroCardClick}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+                handleCardActionClick={this.handleCardActionClick}
               />
             )}
           />
