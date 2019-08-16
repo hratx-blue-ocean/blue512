@@ -234,14 +234,16 @@ export default class App extends Component {
       clickedMicroCard: {},
       today: '',
       loaded: false,
-      selectedDaysEvents: []
+      selectedDaysEvents: [],
+      openModal: false,
     };
     this.api = `http://localhost:8000/api/example`;
     this.seperateEventsByDate = this.seperateEventsByDate.bind(this);
     this.handleMicroCardClick = this.handleMicroCardClick.bind(this);
     this.changeDetailsDay = this.changeDetailsDay.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
-    this.handleAddToCalClick = this.handleAddToCalClick.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.handleCardActionClick = this.handleCardActionClick.bind(this);
     this.removeEvent = this.removeEvent.bind(this);
   }
 
@@ -270,7 +272,7 @@ export default class App extends Component {
     }
     else if (event.target.textContent === "Tomorrow") {
       this.setState({ selectedDaysEvents: this.state.eventsTomorrow })
-    } 
+    }
     else {
       this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus })
 
@@ -278,9 +280,16 @@ export default class App extends Component {
   }
 
   handleMicroCardClick(event) {
-    this.setState({ clickedMicroCard: event });
+    this.setState({ clickedMicroCard: event, openModal: true })
   }
+
+  closeModal() {
+    this.setState({ openModal: false })
+  };
+
   seperateEventsByDate(allEvents) {
+
+
     // console.log(events || `testing and didn't get events`);
     // '2019-08-16T00:00:00.000Z'
     const todayArr = [],
@@ -288,9 +297,9 @@ export default class App extends Component {
       tomorrowPlusPlusArr = [];
 
     allEvents.forEach(event => {
-      let parsedTimeStart = Number(
-        event.time_start.split('T')[0].split('-')[2]
-      );
+      // event.time_start = event.time_start.substr(0, event.time_start.length - 1);
+      // console.log(event.time_start)
+      let parsedTimeStart = new Date(event.time_start).getDate();
 
       if (parsedTimeStart === this.state.today) {
         // make sure to remove the minus 2 for development
@@ -341,7 +350,9 @@ export default class App extends Component {
         this.setState({
           eventsAll: data.data.events,
           isSignedIn: isSignedIn,
-          loaded: true
+          loaded: true,
+          userToken: null,
+          user: null
         });
       })
       .catch();
@@ -351,8 +362,15 @@ export default class App extends Component {
     this.setState({ path: path });
   }
 
-  handleAddToCalClick(item) {
-    this.addToCalendar(item);
+  handleCardActionClick(item, add) {
+    if (add === true) {
+      this.addToCalendar(item);
+    } else if (this.state.userToken !== '') {
+      axios.post(`/api/user_event/${item.id}`, { token: this.state.userToken })
+        .then(this.removeEvent(item));
+    } else {
+      this.removeEvent(item);
+    }
   }
 
   addToCalendar(item) {
@@ -409,8 +427,10 @@ export default class App extends Component {
       eventsTomorrowPlusPlus,
       selectedDaysEvents,
       clickedMicroCard,
+      user,
       PORT,
-      path
+      path,
+      openModal
     } = this.state;
     return (
       <Router>
@@ -427,12 +447,13 @@ export default class App extends Component {
             exact
             render={() => (
               <MainView
+                name={user}
                 loaded={loaded}
                 events={eventsAll}
                 eventsToday={eventsToday}
                 eventsTomorrow={eventsTomorrow}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
-                handleAddToCalClick={this.handleAddToCalClick}
+                handleCardActionClick={this.handleCardActionClick}
               />
             )}
           />
@@ -449,6 +470,9 @@ export default class App extends Component {
                 changeDetailsDay={this.changeDetailsDay}
                 handleMicroCardClick={this.handleMicroCardClick}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+                closeModal={this.closeModal}
+                openModal={openModal}
+                handleCardActionClick={this.handleCardActionClick}
               />
             )}
           />
