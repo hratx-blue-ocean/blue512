@@ -1,13 +1,6 @@
 import React from 'react';
 import Preference from './Preference';
 import { List } from '@material-ui/core/';
-import { makeStyles } from '@material-ui/core/styles';
-
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     width: '30%'
-//   }
-// }));
 
 export default function PreferencesContainer({
   categories,
@@ -15,7 +8,6 @@ export default function PreferencesContainer({
   handleChange,
   userToken
 }) {
-  // const classes = useStyles();
   return (
     <>
       <List>
@@ -23,12 +15,15 @@ export default function PreferencesContainer({
           .filter(cat => cat !== 'undefined')
           .map(cat => (
             <Preference
+              key={}
               cat={cat}
               handleChange={handleChange}
               userToken={userToken}
-              userPreference={userPreferences.find(
-                pref => pref['name'] === cat
-              )}
+              userPreference={
+                userPreferences
+                  ? userPreferences.find(pref => pref['name'] === cat)
+                  : ''
+              }
             />
           ))}
       </List>
