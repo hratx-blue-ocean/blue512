@@ -1,6 +1,7 @@
 import React from 'react';
 import Preference from './Preference';
 import { List } from '@material-ui/core/';
+import Title from './Title.js';
 
 export default function PreferencesContainer({
   categories,
@@ -10,6 +11,7 @@ export default function PreferencesContainer({
 }) {
   return (
     <>
+      <Title>What are you into?</Title>
       <List>
         {categories
           .filter(cat => cat !== 'undefined')
