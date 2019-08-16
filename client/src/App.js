@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MainView from './components/MainView.js';
 import DetailedView from './components/DetailedView.js';
 import Navbar from './components/Navbar';
+import Search from './components/SearchView';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 // import fetch from 'node-fetch';
@@ -229,8 +230,7 @@ export default class App extends Component {
           description: null
         }
       ],
-      clickedMicroCard:
-      {
+      clickedMicroCard: {
         source_API: 'TicketMaster',
         name: 'Hadley Crowl',
         url:
@@ -281,11 +281,10 @@ export default class App extends Component {
     if (event.target.textContent === 'Today') {
       this.setState({ selectedDaysEvents: this.state.eventsToday });
     }
-    if (event.target.textContent === "Tomorrow") {
-      this.setState({ selectedDaysEvents: this.state.eventsTomorrow })
+    if (event.target.textContent === 'Tomorrow') {
+      this.setState({ selectedDaysEvents: this.state.eventsTomorrow });
     } else {
-      this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus })
-
+      this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus });
     }
   }
 
@@ -372,7 +371,7 @@ export default class App extends Component {
     if (item.time_end) {
       eventEnd = new Date(item.time_end);
     } else {
-      eventEnd = new Date(eventStart)
+      eventEnd = new Date(eventStart);
       eventEnd.setHours(eventEnd.getHours() + 2);
     }
     const gCalEvent = {
@@ -389,8 +388,8 @@ export default class App extends Component {
       calendarId: 'primary',
       resource: gCalEvent
     });
-    request.execute(function (event) {
-      console.log('event successfully added')
+    request.execute(function(event) {
+      console.log('event successfully added');
       //Add notification or toast
       // console.log(event.htmlLink);
     });
@@ -438,6 +437,22 @@ export default class App extends Component {
             exact
             render={() => (
               <DetailedView
+                clickedMicroCard={clickedMicroCard}
+                events={eventsAll}
+                eventsToday={eventsToday}
+                eventsTomorrow={eventsTomorrow}
+                selectedDaysEvents={selectedDaysEvents}
+                changeDetailsDay={this.changeDetailsDay}
+                handleMicroCardClick={this.handleMicroCardClick}
+                eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+              />
+            )}
+          />
+          <Route
+            path="/search"
+            exact
+            render={() => (
+              <Search
                 clickedMicroCard={clickedMicroCard}
                 events={eventsAll}
                 eventsToday={eventsToday}
