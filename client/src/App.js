@@ -8,12 +8,14 @@ import axios from 'axios';
 import SettingsView from './components/SettingsView';
 // import './App.css';
 
+
+
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.handleLoadEvents = this.handleLoadEvents.bind(this);
     this.state = {
-      path: '/',
+      path: window.location.pathname,
       isSignedIn: null,
       PORT: 9000,
       userToken: '',
