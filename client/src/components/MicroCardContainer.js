@@ -42,6 +42,14 @@ export default function MicroCardContainer({
     setValue(newValue);
   }
 
+  let animationTimeout = 0;
+  const animationTimeouts = [];
+
+  for (let event = 0; event < selectedDaysEvents.length; event++) {
+      animationTimeout += 300;
+      animationTimeouts.push(animationTimeout);
+  }
+
   return (
 
     <Grid item xs={4}>
@@ -62,7 +70,7 @@ export default function MicroCardContainer({
 
         <Paper className={classes.ListPaper}>
           <List className={classes.root}>
-            {selectedDaysEvents.map(event => <MicroCardMaker key={event.experience_api_id} event={event} handleMicroCardClick={handleMicroCardClick} />)}
+            {selectedDaysEvents.map( (event, index) => <MicroCardMaker key={event.experience_api_id} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
           </List>
         </Paper>
       </Paper>
