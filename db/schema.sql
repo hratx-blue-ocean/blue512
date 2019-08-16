@@ -16,6 +16,8 @@ CREATE TABLE unavailable
   time_start varchar,
   time_end varchar,
   user_id VARCHAR,
+  name VARCHAR,
+  recurring boolean,
   CONSTRAINT pk_unavailable PRIMARY KEY (
     id
    )
@@ -107,3 +109,41 @@ REFERENCES users (id);
 
 ALTER TABLE users_categories ADD CONSTRAINT fk_users_categories_category_id FOREIGN KEY(category_id)
 REFERENCES categories (id);
+
+CREATE OR REPLACE FUNCTION delete_old_unavailable
+()
+  RETURNS trigger
+  LANGUAGE plpgsql
+  AS $OLDUNAVAILABLE$
+BEGIN
+  DELETE FROM unavailable WHERE time_start < NOW();
+  RETURN NULL;
+END;
+$OLDUNAVAILABLE$;
+
+
+CREATE OR REPLACE TRIGGER trigger_delete_old_rows_from_unavailable
+    AFTER
+INSERT ON
+unavailable
+EXECUTE PROCEDURE delete_old_unavailable
+();
+
+
+CREATE OR REPLACE FUNCTION delete_old_experiences
+()
+  RETURNS trigger
+  LANGUAGE plpgsql
+  AS $OLDEXPERIENCES$
+BEGIN
+  DELETE FROM experiences WHERE time_start < NOW();
+  RETURN NULL;
+END;
+$OLDEXPERIENCES$;
+
+CREATE TRIGGER trigger_delete_old_rows_from_unavailable
+    AFTER
+INSERT ON
+experiences
+EXECUTE PROCEDURE delete_old_experiences
+();

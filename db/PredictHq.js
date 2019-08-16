@@ -1,12 +1,10 @@
 const axios = require("axios");
-const Helpers = require("./helpers.js");
-const getZipCode = require("latlng-to-zip"); //here for scaling
-const zipToCity = require("zipcodes");
 const googleImages = require('google-images');
 const google = require('google-parser');
+const { _getDate, _categorize } = require("./helpers.js");
 
 const callAPI = () => {
-    let dates = Helpers._getDate();
+    let dates = _getDate();
 
     return axios
         .get(`https://api.predicthq.com/v1/events?active.gte=${dates.currentDateStr}&active.lte=${dates.futureDateStr}&within=10mi@30.267153,-97.7430608`, { headers: { "Authorization": process.env.API_KEY_PREDICTHQ } })
@@ -74,9 +72,9 @@ const restructureData = data => {
             if (event.end) {
                 restructured.time_end = event.end;
             }
-            restructured.category = "undefined";
+            restructured.category = "Other";
             if (event.category) {
-                restructured.category = event.category;
+                restructured.category = _categorize(event.category);
             }
 
             restructured.venue = null;
@@ -90,7 +88,7 @@ const restructureData = data => {
             if (event.description !== "") {
                 restructured.description = event.description;
             }
-            restructured.image = null;
+
             const result = await findImage(restructured.name, restructured.category, restructured.location, restructured.venue);
             restructured.image = result;
 
@@ -105,8 +103,10 @@ const restructureData = data => {
 }
 
 const getData = () => {
-    return callAPI().then(data => restructureData(data));
+    return callAPI().then(data => restructureData(data)).then(console.log);
 };
 
 getData();
 module.exports = { getData };
+
+

@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core/';
 
 describe('CardMaker component', () => {
   let wrapper;
-  let event = {
+  let event = [{
     source_API: 'TicketMaster',
     name: 'Hayes Carll',
     url:
@@ -21,7 +21,7 @@ describe('CardMaker component', () => {
     price_min: null,
     price_max: null,
     description: null
-  };
+  }];
 
   beforeAll(() => {
     wrapper = shallow(<Details event={event} />);
