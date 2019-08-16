@@ -12,7 +12,7 @@ import ShowMoreText from 'react-show-more-text';
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(7, 5),
-    height: '90vh'
+    height: '93vh'
   },
   pad: {
     padding: "11px",
