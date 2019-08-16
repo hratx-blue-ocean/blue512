@@ -289,6 +289,7 @@ export default class App extends Component {
 
   seperateEventsByDate(allEvents) {
 
+
     // console.log(events || `testing and didn't get events`);
     // '2019-08-16T00:00:00.000Z'
     const todayArr = [],
@@ -296,9 +297,9 @@ export default class App extends Component {
       tomorrowPlusPlusArr = [];
 
     allEvents.forEach(event => {
-      let parsedTimeStart = Number(
-        event.time_start.split('T')[0].split('-')[2]
-      );
+      // event.time_start = event.time_start.substr(0, event.time_start.length - 1);
+      // console.log(event.time_start)
+      let parsedTimeStart = new Date(event.time_start).getDate();
 
       if (parsedTimeStart === this.state.today) {
         // make sure to remove the minus 2 for development
