@@ -101,9 +101,9 @@ const useStyles = makeStyles(theme => ({
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
 
-  const signOut = function() {
+  const signOut = function () {
     var auth2 = window.gapi.auth2.getAuthInstance();
-    auth2.signOut().then(() => {});
+    auth2.signOut().then(() => { });
   };
 
   window.getCalData = id_token => {
@@ -188,25 +188,12 @@ export default function PrimarySearchAppBar(props) {
           >
             More Events
           </Button>
-          <Button
+          <Typography
+            className={classes.title}
             component={RouterLink}
-            to="/search"
-            className={classes.button}
-          >
-            Search
-          </Button>
-
-          <Typography className={classes.title}>
-            <a href="http://cityscout.io">
-              <img
-                src="./logo.png"
-                style={{
-                  maxHeight: '75px',
-                  marginTop: '-10px',
-                  marginBottom: '-20px'
-                }}
-              />
-            </a>
+            to="/"
+            onClick={() => { props.handlePageClick('/') }}>
+            <img src="./logo.png" style={{ "maxHeight": "75px", "marginTop": "-10px", "marginBottom": "-20px" }}></img>
           </Typography>
           {/* <div className={classes.grow} /> */}
           <div className={classes.sectionDesktop}>
@@ -220,8 +207,8 @@ export default function PrimarySearchAppBar(props) {
                 Sign Out
               </Button>
             ) : (
-              <></>
-            )}
+                <></>
+              )}
           </div>
           {generateSettingsIcon()}
           <div className={classes.sectionMobile} />
