@@ -96,7 +96,7 @@ export default class SettingsView extends React.Component {
           <Grid container>
 
             {/* UnavailableTime column (Will take up half screen space on "medium+" sizes, and full screen space on anything smaller*/}
-            <Grid item sm={12} md={6}>
+            <Grid item xs={12} sm={12} md={6}>
               <Slide in={true} timeout={400} direction="right">
                 <Paper style={{
                   padding: 20,
@@ -111,7 +111,7 @@ export default class SettingsView extends React.Component {
             </Grid>
 
             {/* UnavailableTime column (Will take up half screen space on "medium+" sizes, and full screen space on anything smaller*/}
-            <Grid item sm={12} md={6}>
+            <Grid item xs={12} sm={12} md={6}>
               <Slide in={true} timeout={400} direction="left">
                 <Paper style={{
                   padding: 20,
