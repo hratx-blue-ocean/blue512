@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Fab, Modal, Hidden } from '@material-ui/core/';
+import { Grid, Fab, Modal, Hidden, Slide } from '@material-ui/core/';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -34,6 +34,8 @@ export default function Details({ event, openModal, closeModal, handleCardAction
 
   return (<>
     <Hidden only="xs">
+    <Slide in={true} timeout={400} direction="left">
+
       <Grid item sm={8} xs={false} style={{ height: '90vh' }} >
         <div>
           <Paper className={classes.root} style={{ maxHeight: '100vh', overflow: 'auto' }} >
@@ -86,6 +88,7 @@ export default function Details({ event, openModal, closeModal, handleCardAction
           </Paper>
         </div>
       </Grid>
+      </Slide>
     </Hidden>
 
     <Hidden smUp={true}>
