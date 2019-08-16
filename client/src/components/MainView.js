@@ -23,17 +23,38 @@ export default function MainView({
       {loaded ? (
         <div>
           <Container maxWidth="lg" align="center">
-            <Grow in={true} timeout={400}>
-              <Typography
-                variant="h3"
-                color="textSecondary"
-                style={{ marginTop: 125, marginBottom: 50 }}
-              >
-                {name
-                  ? `Hello ${name.first_name}, here are your top picks`
-                  : `Top Picks For You`}
-              </Typography>
-            </Grow>
+              { name 
+                ? <>
+                    <Grow in={true} timeout={500}>
+                      <Typography
+                        variant="h3"
+                        color="textSecondary"
+                        style={{ marginTop: 100 }}
+                      >
+                      {`Hello, ${name.first_name}`}
+                      </Typography>
+                    </Grow>
+                    <Grow in={true} timeout={800}>
+                      <Typography
+                        variant="h3"
+                        color="textSecondary"
+                        style={{ marginTop: 20, marginBottom: 10 }}
+                      >
+                        Here are your Top Picks
+                      </Typography>
+                    </Grow>
+                  </>
+                : <Grow in={true} timeout={400}>
+                    <Typography
+                      variant="h3"
+                      color="textSecondary"
+                      style={{ marginTop: 125, marginBottom: 50 }}
+                    >
+                      Here are your Top Picks
+                    </Typography>
+                  </Grow>
+              }
+            
             <Grid container>
               <CardContainer
                 event={eventsToday.length ? eventsToday[0] : ''}
