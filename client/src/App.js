@@ -413,6 +413,7 @@ export default class App extends Component {
       eventsTomorrowPlusPlus,
       selectedDaysEvents,
       clickedMicroCard,
+      user,
       PORT,
       path
     } = this.state;
@@ -431,6 +432,7 @@ export default class App extends Component {
             exact
             render={() => (
               <MainView
+                name={user}
                 loaded={loaded}
                 events={eventsAll}
                 eventsToday={eventsToday}
