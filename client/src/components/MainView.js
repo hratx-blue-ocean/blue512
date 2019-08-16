@@ -17,7 +17,7 @@ import { Paper, Typography, Grid, Container } from '@material-ui/core/';
 const tomorrowPlusPlus = moment().add(2, 'days').format('dddd')
 
 
-export default function MainView({ loaded, events, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, handleAddToCalClick }) {
+export default function MainView({ loaded, events, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, handleCardActionClick }) {
   // const classes = useStyles();
 
   return (
@@ -30,9 +30,9 @@ export default function MainView({ loaded, events, eventsToday, eventsTomorrow, 
               Top Picks For You
             </Typography>
             <Grid container>
-              <CardContainer event={events[0]} day={'Today'} animationTime={400} handleAddToCalClick={handleAddToCalClick} />
-              <CardContainer event={events[1]} day={'Tomorrow'} animationTime={600} handleAddToCalClick={handleAddToCalClick} />
-              <CardContainer event={events[2]} day={tomorrowPlusPlus} animationTime={800} handleAddToCalClick={handleAddToCalClick} />
+              <CardContainer event={events[0]} day={'Today'} animationTime={400} handleCardActionClick={handleCardActionClick} />
+              <CardContainer event={events[1]} day={'Tomorrow'} animationTime={600} handleCardActionClick={handleCardActionClick} />
+              <CardContainer event={events[2]} day={tomorrowPlusPlus} animationTime={800} handleCardActionClick={handleCardActionClick} />
             </Grid>
           </Container>
         </div>
