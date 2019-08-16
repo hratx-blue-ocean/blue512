@@ -157,12 +157,12 @@ WHERE e.category_id!= ALL(SELECT id
   WHERE id= 
     ANY(SELECT category_id
   FROM users_categories
-  WHERE user_id='113599564300936508035' AND preferred=false))
+  WHERE user_id=$1 AND preferred=false))
   AND not exists 
     (select *
   from unavailable u
   where u.time_start <= e.time_start
-    AND u.time_end >= e.time_start AND user_id='113599564300936508035')
+    AND u.time_end >= e.time_start AND user_id=$1)
 ORDER BY e.category_id
 = ANY
 (SELECT id
@@ -170,5 +170,5 @@ FROM categories
 WHERE id= 
     ANY(SELECT category_id
 FROM users_categories
-WHERE user_id='113599564300936508035' AND preferred=true))
+WHERE user_id=$1 AND preferred=true))
 DESC;
