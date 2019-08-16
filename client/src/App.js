@@ -250,13 +250,15 @@ export default class App extends Component {
       ],
       today: '',
       loaded: false,
-      selectedDaysEvents: []
+      selectedDaysEvents: [],
+      openModal: false,
     };
     this.api = `http://localhost:8000/api/example`;
     this.seperateEventsByDate = this.seperateEventsByDate.bind(this);
     this.handleMicroCardClick = this.handleMicroCardClick.bind(this);
     this.changeDetailsDay = this.changeDetailsDay.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount() {
@@ -292,7 +294,23 @@ export default class App extends Component {
 
   handleMicroCardClick(event) {
     this.setState({ clickedMicroCard: [event] })
+
+    //const [open, setOpen] = React.useState(false);
+
+
+    this.setState({ openModal: true }) 
+
+    console.log('clicked')
+    
   }
+
+
+  closeModal() {
+    this.setState({ openModal: false })
+    console.log('close clicked') 
+  };
+
+
   seperateEventsByDate(alsoEvents) {
     // console.log(events || `testing and didn't get events`);
     // '2019-08-16T00:00:00.000Z'
@@ -364,7 +382,8 @@ export default class App extends Component {
       selectedDaysEvents,
       clickedMicroCard,
       PORT,
-      path
+      path,
+      openModal
     } = this.state;
     return (
       <Router>
@@ -402,6 +421,8 @@ export default class App extends Component {
                 changeDetailsDay={this.changeDetailsDay}
                 handleMicroCardClick={this.handleMicroCardClick}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+                closeModal={this.closeModal}
+                openModal={openModal}
               />
             )}
           />

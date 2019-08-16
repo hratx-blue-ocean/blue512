@@ -36,7 +36,7 @@ export default function MicroCardContainer({ eventsToday, eventsTomorrow, events
 
   return (
 
-    <Grid item xs={4}>
+    <Grid item xs={12} sm={4}>
       <Paper className={classes.root}>
         <Tabs
           value={value}
