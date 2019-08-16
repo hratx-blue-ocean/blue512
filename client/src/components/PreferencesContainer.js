@@ -13,9 +13,9 @@ export default function PreferencesContainer({
       <List>
         {categories
           .filter(cat => cat !== 'undefined')
-          .map(cat => (
+          .map((cat, ind) => (
             <Preference
-              key={}
+              key={ind}
               cat={cat}
               handleChange={handleChange}
               userToken={userToken}
