@@ -11,23 +11,25 @@ const useStyles = makeStyles({
   card: {
     maxWidth: '100%',
     minWidth: '100%',
-    boxShadow: '0px 3px 7px'
   },
   media: {
     height: '130px',
   },
   content: {
-    height: '40px',
+    height: '50px',
+  },
+  listitem: {
+    square: true,
   }
 });
 
 export default function MicroCardMaker({ event, handleMicroCardClick }) {
   const classes = useStyles();
   const eventStart = Date(event.time_start)
-  
+
 
   return (
-    <ListItem alignItems='flex-start' onClick={()=>(handleMicroCardClick(event))}>
+    <ListItem className={classes.listitem} alignItems='flex-start' onClick={() => (handleMicroCardClick(event))}>
       <Card className={classes.card}>
         <CardActionArea>
           <CardMedia
@@ -39,8 +41,8 @@ export default function MicroCardMaker({ event, handleMicroCardClick }) {
             <Typography gutterBottom variant='h5' component='h4'>
               {
                 event.name.length < 45 ?
-                event.name :
-                ((event.name).substring(0, 45)+'...')
+                  event.name :
+                  ((event.name).substring(0, 45) + '...')
               }
             </Typography>
             {/* <Typography variant='body2' color='textSecondary' component='p'>

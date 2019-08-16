@@ -4,7 +4,11 @@ const logger = require('morgan');
 const express = require('express');
 const app = express();
 const query = require('../db/query.js');
+
+// const cronOperations = require('../db/cron.js');
+
 const cronOperations = require('../db/cron.js');
+
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -56,6 +60,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
 
   // render the error page
   res.status(err.status || 500);

@@ -101,9 +101,9 @@ const useStyles = makeStyles(theme => ({
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
 
-  const signOut = function() {
+  const signOut = function () {
     var auth2 = window.gapi.auth2.getAuthInstance();
-    auth2.signOut().then(() => {});
+    auth2.signOut().then(() => { });
   };
 
   window.getCalData = id_token => {
@@ -207,8 +207,8 @@ export default function PrimarySearchAppBar(props) {
                 Sign Out
               </Button>
             ) : (
-              <></>
-            )}
+                <></>
+              )}
           </div>
           {generateSettingsIcon()}
           <div className={classes.sectionMobile} />
