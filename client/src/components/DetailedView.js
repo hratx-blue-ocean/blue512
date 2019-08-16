@@ -1,7 +1,8 @@
 import React from 'react';
 import MicroCardContainer from './MicroCardContainer.js'
 import Details from './Details.js'
-import { Grid, Container } from '@material-ui/core/';
+import { Grid } from '@material-ui/core/';
+
 
 export default function DetailedView({ clickedMicroCard, events, eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, selectedDaysEvents, handleMicroCardClick, changeDetailsDay, handleCardActionClick }) {
   return (
