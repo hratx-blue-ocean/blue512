@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   },
   ListPaper: {
-    maxHeight: '100vh',
+    maxHeight: '89vh',
     overflow: 'auto'
   }
 }));

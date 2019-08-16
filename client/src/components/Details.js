@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Fab, Modal, Hidden, Slide } from '@material-ui/core/';
+import { Grid, Fab, Modal, Hidden, Slide, Fade } from '@material-ui/core/';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -12,7 +12,7 @@ import ShowMoreText from 'react-show-more-text';
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(7, 5),
-    height: '90vh'
+    height: '93vh'
   },
   pad: {
     padding: "11px",
@@ -38,8 +38,8 @@ export default function Details({ event, openModal, closeModal, handleCardAction
 
       <Grid item sm={8} xs={false} style={{ height: '90vh' }} >
         <div>
-          <Paper className={classes.root} style={{ maxHeight: '100vh', overflow: 'auto' }} >
 
+          <Paper className={classes.root} style={{ maxHeight: '100vh', overflow: 'auto' }} >
 
             <Grid container justify="center">
 
