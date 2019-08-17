@@ -5,7 +5,7 @@ import { Grid, Typography, Fab, TextField } from '@material-ui/core/';
 import { KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
 import UnavailableTimeContainer from '../components/UnavailableTimeContainer';
 
-describe('Settings View component', () => {
+describe('UnavailableTime component', () => {
   let wrapper;
   beforeAll(() => {
     wrapper = shallow(<UnavailableTime userToken="foo" />);
