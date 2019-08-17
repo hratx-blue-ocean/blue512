@@ -190,7 +190,7 @@ export default function Details({ event, openModal, closeModal, handleCardAction
         <SnackbarContent
           onClose={closeSnackBar}
           variant="success"
-          message="Error: Please sign in to add events to your Google calendar"
+          message="Please sign in to add events to your Google calendar"
         />
       }
     </Snackbar>
