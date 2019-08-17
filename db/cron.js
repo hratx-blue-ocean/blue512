@@ -64,6 +64,18 @@ const everyTenMinutes = new CronJob('0 */10 * * * *', () => {
     .catch(console.log);
 });
 
+saveTicketMasterData()
+.then(console.log)
+.catch(console.log);
+
+saveEventBriteData()
+.then(console.log)
+.catch(console.log);
+
+savePredictHQData()
+.then(console.log)
+.catch(console.log);
+
 module.exports = {
   atMidnightEveryDay,
   everyTenMinutes
