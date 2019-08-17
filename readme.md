@@ -1,25 +1,8 @@
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-	.markdown-body {
-		box-sizing: border-box;
-		min-width: 200px;
-		max-width: 980px;
-		margin: 0 auto;
-		padding: 45px;
-  }
-  td.tech{
-    font-Size: 11px;
-    padding-left: 15px
-  }
-  td.subheading {
-    font-Size: 18px;
-  }
-</style>
+# ![GIF OF DEMO](https://i.imgur.com/J2iznmk.png)
 
-
-
-# CityScout.io
-![LOGO HERE](https://github.com/hratx-blue-ocean/hratx41-lost-and-hound/blob/feature/readme/documentation/lostandhound_frontpage.png)
+# <p align="center">
+  <img width="800" height="500" src="https://i.imgur.com/hlvkYVt.png">
+</p>
 
 ## About
 
@@ -137,7 +120,9 @@ Our team developed the following user stories to track deliverables and meet the
 The MVP of the app retrieves events from multiple APIs, and displays events which fit users' free time availability and category selection preferences. Users can choose to add an event to their calendar, to reject an event from the list, and to modify their categories in settings.
 
 ### How the App Works:
-![GIF OF DEMO](https://github.com/hratx-blue-ocean/hratx41-lost-and-hound/blob/feature/readme/documentation/screenrecoring.gif)
+![GIF OF DEMO](https://media.giphy.com/media/Yq8XBJUsoPTHaFkc7p/giphy.gif)
+
+![IMG OF SCHEMA](https://raw.githubusercontent.com/hratx-blue-ocean/blue512/development/db/Schema.png)
 
 
 ### Development Workflow
