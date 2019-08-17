@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function CardContainer({ event, day, animationTime, handleCardActionClick }) {
+export default function CardContainer({ event, day, animationTime, handleCardActionClick, path, handlePageClick, handleMicroCardClick }) {
   const classes = useStyles();
 
   return (
@@ -21,7 +21,10 @@ export default function CardContainer({ event, day, animationTime, handleCardAct
         <CardMaker
           event={event}
           animationTime={animationTime}
-          handleCardActionClick={handleCardActionClick} />
+          handleCardActionClick={handleCardActionClick}
+          path={path}
+          handlePageClick={handlePageClick}
+          handleMicroCardClick={handleMicroCardClick} />
       </Grid>
     </>
   );
