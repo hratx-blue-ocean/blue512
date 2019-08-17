@@ -5,9 +5,9 @@ import Navbar from './components/Navbar';
 import Search from './components/SearchView';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
-// import fetch from 'node-fetch';
+//import fetch from 'node-fetch';
 import SettingsView from './components/SettingsView';
-// import './App.css';
+import './App.css';
 
 export default class App extends Component {
   constructor(props) {
@@ -139,7 +139,8 @@ export default class App extends Component {
           isSignedIn: isSignedIn,
           loaded: true,
           userToken: null,
-          user: null
+          user: null,
+          clickedMicroCard: data.data.events[0],
         });
       })
       .catch();
