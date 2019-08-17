@@ -2,8 +2,14 @@
 
 
 
-# ![CityScout.io](https://i.imgur.com/J2iznmk.png)
-![LOGO HERE](https://github.com/hratx-blue-ocean/hratx41-lost-and-hound/blob/feature/readme/documentation/lostandhound_frontpage.png)
+<p align="center">
+  <img width="460" height="300" src="https://i.imgur.com/hlvkYVt.png
+">
+</p>
+<p align="center">
+  <img width="460" height="300" src="https://i.imgur.com/J2iznmk.png
+">
+</p>
 
 ## About
 
