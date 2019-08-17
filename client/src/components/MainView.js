@@ -16,7 +16,10 @@ export default function MainView({
   eventsToday,
   eventsTomorrow,
   eventsTomorrowPlusPlus,
-  handleCardActionClick
+  handleCardActionClick,
+  path,
+  handlePageClick,
+  handleMicroCardClick
 }) {
   return (
     <>
@@ -72,12 +75,18 @@ export default function MainView({
                 day={'Today'}
                 animationTime={400}
                 handleCardActionClick={handleCardActionClick}
+                path={path}
+                handlePageClick={handlePageClick}
+                handleMicroCardClick={handleMicroCardClick}
               />
               <CardContainer
                 event={eventsTomorrow.length ? eventsTomorrow[0] : ''}
                 day={'Tomorrow'}
                 animationTime={600}
                 handleCardActionClick={handleCardActionClick}
+                path={path}
+                handlePageClick={handlePageClick}
+                handleMicroCardClick={handleMicroCardClick}
               />
               <CardContainer
                 event={
@@ -86,6 +95,9 @@ export default function MainView({
                 day={tomorrowPlusPlus}
                 animationTime={800}
                 handleCardActionClick={handleCardActionClick}
+                path={path}
+                handlePageClick={handlePageClick}
+                handleMicroCardClick={handleMicroCardClick}
               />
             </Grid>
           </Container>

@@ -71,6 +71,7 @@ export default class App extends Component {
     this.setState({ clickedMicroCard: event, openModal: true });
   }
 
+
   closeModal() {
     this.setState({ openModal: false });
   }
@@ -243,6 +244,9 @@ export default class App extends Component {
                 eventsTomorrow={eventsTomorrow}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
                 handleCardActionClick={this.handleCardActionClick}
+                path={path}
+                handlePageClick={this.handlePageClick}
+                handleMicroCardClick={this.handleMicroCardClick}
               />
             )}
           />
@@ -278,6 +282,9 @@ export default class App extends Component {
                 changeDetailsDay={this.changeDetailsDay}
                 handleCardActionClick={this.handleCardActionClick}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+                path={path}
+                handlePageClick={this.handlePageClick}
+                handleMicroCardClick={this.handleMicroCardClick}
               />
             )}
           />

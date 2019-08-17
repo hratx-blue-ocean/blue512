@@ -133,6 +133,9 @@ const SearchView = function (props) {
           day={''}
           animationTime={(j % 15) * 400}
           handleCardActionClick={props.handleCardActionClick}
+          path={props.path}
+          handlePageClick={props.handlePageClick}
+          handleMicroCardClick={props.handleMicroCardClick}
         />
       );
     }

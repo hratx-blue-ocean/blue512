@@ -25,6 +25,7 @@ import Button from '@material-ui/core/Button';
 import { Grow, Fab, Snackbar, SnackbarContent } from '@material-ui/core/';
 import moment from 'moment';
 import Link from '@material-ui/core/Link';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -57,7 +58,11 @@ const useStyles = makeStyles(theme => ({
 export default function CardMaker({
   event,
   animationTime,
-  handleCardActionClick
+  handleCardActionClick,
+  path,
+  handlePageClick,
+  handleMicroCardClick,
+  
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -78,6 +83,11 @@ export default function CardMaker({
 
   function renderSnackBar() {
     setOpen(true);
+  }
+
+  function clickToDetail() {
+    handlePageClick("/detailed");
+    handleMicroCardClick(event);
   }
 
   function closeSnackBar(event, reason) {
@@ -135,9 +145,11 @@ export default function CardMaker({
         Even on cards where event titles wrap to the next line */}
         <CardContent style={{ minHeight: 140 }}>
           <Typography variant="h6">
-            <Link href={event.url} color="textPrimary">
+
+            <Link color="textPrimary" onClick={clickToDetail} to="/detailed" component={RouterLink} >
               {event.name}
             </Link>
+
           </Typography>
           <Typography variant="body2" color="textSecondary">
             {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
