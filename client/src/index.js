@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App.js';
-
+import './index.css';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { yellow, red, blue, purple, deepPurple } from '@material-ui/core/colors';
