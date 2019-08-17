@@ -4,7 +4,8 @@ html {
 body {
   background-image: url('../public/bigBlueSuperhero.png') !important;
   background-repeat: no-repeat;
-  background-position-y: 58vh;
+  background-size: contain;
+  background-position-y: 60vh;
   background-attachment: fixed;
   min-height: 100%;
   margin: 0;
