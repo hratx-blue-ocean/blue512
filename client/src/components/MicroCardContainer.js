@@ -50,31 +50,28 @@ export default function MicroCardContainer({
   }
 
   return (
+    <>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        onClick={() => (changeDetailsDay(event))}
+        indicatorColor='primary'
+        textColor='primary'
+        variant='fullWidth'
+        centered
+      >
+        <Tab label='Today' />
+        <Tab label='Tomorrow' />
+        <Tab label={overmorrow} />
+      </Tabs>
 
-    <Fade in={true} timeout={1000}>
-      <Grid item xs={12} sm={4}>
-        <Paper className={classes.root}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            onClick={() => (changeDetailsDay(event))}
-            indicatorColor='primary'
-            textColor='primary'
-            variant='fullWidth'
-            centered
-          >
-            <Tab label='Today' />
-            <Tab label='Tomorrow' />
-            <Tab label={overmorrow} />
-          </Tabs>
-
-          <Paper className={classes.ListPaper}>
-            <List className={classes.root}>
-              {selectedDaysEvents.map((event, index) => <MicroCardMaker key={event.experience_api_id} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
-            </List>
-          </Paper>
-        </Paper>
-      </Grid>
-    </Fade>
+      <Paper className={classes.root}>
+        <Fade in={true} timeout={1000}>
+          <List className={classes.root}>
+            {selectedDaysEvents.map((event, index) => <MicroCardMaker key={event.experience_api_id} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
+          </List>
+        </Fade>
+      </Paper>
+    </>
   );
 }
