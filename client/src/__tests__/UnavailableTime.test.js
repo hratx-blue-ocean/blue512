@@ -7,8 +7,11 @@ import UnavailableTimeContainer from '../components/UnavailableTimeContainer';
 
 describe('UnavailableTime component', () => {
   let wrapper;
+  // const getUnavailableTimes = jest.fn();
   beforeAll(() => {
-    wrapper = shallow(<UnavailableTime userToken="foo" />);
+    wrapper = shallow(<UnavailableTime userToken="foo" />, {
+      lifecycleExperimental: true
+    });
   });
   test('it renders without crashing', () => {
     expect(wrapper).toMatchSnapshot();
@@ -22,4 +25,9 @@ describe('UnavailableTime component', () => {
     expect(wrapper.find(KeyboardDatePicker).length).toBe(1); // only 1 DatePicker
     expect(wrapper.find(KeyboardTimePicker).length).toBe(2); // 2 TimePickers should render
   });
+  // test('it calls getUnavailableTimes when props change', () => {
+  //   wrapper.getUnavailableTimes = jest.fn();
+  //   wrapper.setProps({ userToken: 'bar' });
+  //   expect(wrapper.instance().getUnavailableTimes).toBeCalled();
+  // });
 });
