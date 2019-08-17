@@ -252,7 +252,6 @@ const deleteOldExperiences = () => {
   };
 
   return db.query(query);
-  x;
 };
 
 const deleteOldUnavailable = () => {
