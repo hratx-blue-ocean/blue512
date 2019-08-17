@@ -258,7 +258,8 @@ const deleteOldExperiences = () => {
 const deleteOldUnavailable = () => {
   const query = {
     name: 'deleteOldUnavailable',
-    text: 'DELETE FROM unavailable WHERE time_start < NOW()',
+    text:
+      'DELETE FROM unavailable WHERE time_start < NOW() AND recurring IS NULL',
     values: []
   };
 
