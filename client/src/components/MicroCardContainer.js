@@ -51,7 +51,7 @@ export default function MicroCardContainer({
 
   return (
     <>
-      <div style={{ height: 900 }}>
+      <div style={{ height: 800 }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -72,7 +72,7 @@ export default function MicroCardContainer({
 
         {/* <Paper className={classes.root}> */}
         <Fade in={true} timeout={1000}>
-          <List className={classes.root} style={{ maxHeight: '100%', overflow: 'scroll' }}>
+          <List className={classes.root} style={{ maxHeight: '95%', overflow: 'scroll' }}>
 
             {selectedDaysEvents.map((event, index) => <MicroCardMaker key={event.experience_api_id} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
           </List>
