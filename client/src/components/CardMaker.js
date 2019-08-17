@@ -73,6 +73,15 @@ export default function CardMaker({
   const [expanded, setExpanded] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
+  const imageFallbacks = [
+    'https://img.freepik.com/free-photo/smooth-dark-blue-with-black-vignette-studio-well-use-as-background-business-report-digital-website-template_1258-748.jpg?size=626&ext=jpg',
+    'https://wallpapercave.com/wp/AdQaK85.jpg',
+    'https://img.freepik.com/free-vector/white-textured-paper_53876-86282.jpg?size=626&ext=jpg',
+    'https://i.pinimg.com/originals/d3/32/28/d33228dd741723a0c66b221e36f2aaaf.jpg',
+    'https://images.clipartlogo.com/files/istock/previews/1012/101248891-dark-green-abstract-background.jpg',
+    'https://cdn.pixabay.com/photo/2015/03/26/09/48/landscape-690345_960_720.jpg'
+  ];
+
   function handleExpandClick() {
     setExpanded(!expanded);
   }
@@ -124,7 +133,13 @@ export default function CardMaker({
         {/* <CardHeader
         // Stuff above the image would go here
         /> */}
-        <CardMedia className={classes.media} image={event.img} />
+        <CardMedia
+          className={classes.media}
+          image={
+            event.img ||
+            imageFallbacks[Math.floor(Math.random() * imageFallbacks.length)]
+          }
+        />
 
         {/* Adding minimum height to CardContent allows all cards to be the same size
         Even on cards where event titles wrap to the next line */}

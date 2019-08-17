@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import MainView from './components/MainView.js';
 import DetailedView from './components/DetailedView.js';
 import Navbar from './components/Navbar';
+import Search from './components/SearchView';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 // import fetch from 'node-fetch';
 import SettingsView from './components/SettingsView';
 // import './App.css';
-
-
 
 export default class App extends Component {
   constructor(props) {
@@ -235,7 +234,7 @@ export default class App extends Component {
       today: '',
       loaded: false,
       selectedDaysEvents: [],
-      openModal: false,
+      openModal: false
     };
     this.api = `http://localhost:8000/api/example`;
     this.seperateEventsByDate = this.seperateEventsByDate.bind(this);
@@ -266,30 +265,25 @@ export default class App extends Component {
   }
 
   changeDetailsDay(event) {
-    console.log('changeDetailsDay:', event.target.textContent)
+    console.log('changeDetailsDay:', event.target.textContent);
     if (event.target.textContent === 'Today') {
       this.setState({ selectedDaysEvents: this.state.eventsToday });
-    }
-    else if (event.target.textContent === "Tomorrow") {
-      this.setState({ selectedDaysEvents: this.state.eventsTomorrow })
-    }
-    else {
-      this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus })
-
+    } else if (event.target.textContent === 'Tomorrow') {
+      this.setState({ selectedDaysEvents: this.state.eventsTomorrow });
+    } else {
+      this.setState({ selectedDaysEvents: this.state.eventsTomorrowPlusPlus });
     }
   }
 
   handleMicroCardClick(event) {
-    this.setState({ clickedMicroCard: event, openModal: true })
+    this.setState({ clickedMicroCard: event, openModal: true });
   }
 
   closeModal() {
-    this.setState({ openModal: false })
-  };
+    this.setState({ openModal: false });
+  }
 
   seperateEventsByDate(allEvents) {
-
-
     // console.log(events || `testing and didn't get events`);
     // '2019-08-16T00:00:00.000Z'
     const todayArr = [],
@@ -366,7 +360,8 @@ export default class App extends Component {
     if (add === true) {
       this.addToCalendar(item);
     } else if (this.state.userToken !== '') {
-      axios.post(`/api/user_event/${item.id}`, { token: this.state.userToken })
+      axios
+        .post(`/api/user_event/${item.id}`, { token: this.state.userToken })
         .then(this.removeEvent(item));
     } else {
       this.removeEvent(item);
@@ -379,7 +374,7 @@ export default class App extends Component {
     if (item.time_end) {
       eventEnd = new Date(item.time_end);
     } else {
-      eventEnd = new Date(eventStart)
+      eventEnd = new Date(eventStart);
       eventEnd.setHours(eventEnd.getHours() + 2);
     }
     const gCalEvent = {
@@ -396,9 +391,9 @@ export default class App extends Component {
       calendarId: 'primary',
       resource: gCalEvent
     });
-    let context = this
-    request.execute(function (event) {
-      console.log('event successfully added')
+    let context = this;
+    request.execute(function(event) {
+      console.log('event successfully added');
       context.removeEvent(item);
       //Add notification or toast
       // console.log(event.htmlLink);
@@ -410,11 +405,11 @@ export default class App extends Component {
     const allEvents = [...this.state.eventsAll];
     for (let i = 0; i < allEvents.length; i++) {
       if (allEvents[i].experience_api_id === item.experience_api_id) {
-        allEvents.splice(i, 1)
+        allEvents.splice(i, 1);
         break;
       }
     }
-    this.seperateEventsByDate(allEvents)
+    this.seperateEventsByDate(allEvents);
   }
 
   render() {
@@ -473,6 +468,22 @@ export default class App extends Component {
                 closeModal={this.closeModal}
                 openModal={openModal}
                 handleCardActionClick={this.handleCardActionClick}
+              />
+            )}
+          />
+          <Route
+            path="/search"
+            exact
+            render={() => (
+              <Search
+                clickedMicroCard={clickedMicroCard}
+                events={eventsAll}
+                eventsToday={eventsToday}
+                eventsTomorrow={eventsTomorrow}
+                selectedDaysEvents={selectedDaysEvents}
+                changeDetailsDay={this.changeDetailsDay}
+                handleMicroCardClick={this.handleMicroCardClick}
+                eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
               />
             )}
           />
