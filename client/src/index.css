@@ -2,10 +2,9 @@ html {
   min-height: 100%;
 }
 body {
-  background-image: url('../public/blue.png') !important;
+  background-image: url('../public/bigBlue.png') !important;
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position-y: 32vh;
+  background-position-y: 58vh;
   background-attachment: fixed;
   min-height: 100%;
   margin: 0;
