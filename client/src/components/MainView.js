@@ -17,7 +17,10 @@ export default function MainView({
   eventsTomorrow,
   eventsTomorrowPlusPlus,
   handleCardActionClick,
-  isSignedIn
+  isSignedIn,
+  path,
+  handlePageClick,
+  handleMicroCardClick
 }) {
   return (
     <>
@@ -74,6 +77,9 @@ export default function MainView({
                 animationTime={400}
                 handleCardActionClick={handleCardActionClick}
                 isSignedIn={isSignedIn}
+                path={path}
+                handlePageClick={handlePageClick}
+                handleMicroCardClick={handleMicroCardClick}
               />
               <CardContainer
                 event={eventsTomorrow.length ? eventsTomorrow[0] : ''}
@@ -81,6 +87,9 @@ export default function MainView({
                 animationTime={600}
                 handleCardActionClick={handleCardActionClick}
                 isSignedIn={isSignedIn}
+                path={path}
+                handlePageClick={handlePageClick}
+                handleMicroCardClick={handleMicroCardClick}
               />
               <CardContainer
                 event={eventsTomorrowPlusPlus.length ? eventsTomorrowPlusPlus[0] : ''}
@@ -88,6 +97,9 @@ export default function MainView({
                 animationTime={800}
                 handleCardActionClick={handleCardActionClick}
                 isSignedIn={isSignedIn}
+                path={path}
+                handlePageClick={handlePageClick}
+                handleMicroCardClick={handleMicroCardClick}
               />
             </Grid>
           </Container>
