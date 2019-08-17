@@ -1,7 +1,7 @@
 import React from 'react';
 import MicroCardMaker from './MicroCardMaker.js'
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Fade } from '@material-ui/core/';
+import { Divider, Grid, Fade } from '@material-ui/core/';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -59,19 +59,23 @@ export default function MicroCardContainer({
         textColor='primary'
         // variant='fullWidth'
         centered
+      // style={{ marginBottom: 50 }}
       >
         <Tab label='Today' />
         <Tab label='Tomorrow' />
         <Tab label={overmorrow} />
       </Tabs>
+      <Divider />
 
-      <Paper className={classes.root}>
-        <Fade in={true} timeout={1000}>
-          <List className={classes.root}>
-            {selectedDaysEvents.map((event, index) => <MicroCardMaker key={event.experience_api_id} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
-          </List>
-        </Fade>
-      </Paper>
+
+      {/* <Paper className={classes.root}> */}
+      <Fade in={true} timeout={1000}>
+        <List className={classes.root}>
+
+          {selectedDaysEvents.map((event, index) => <MicroCardMaker key={event.experience_api_id} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
+        </List>
+      </Fade>
+      {/* </Paper> */}
     </>
   );
 }
