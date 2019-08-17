@@ -70,7 +70,15 @@ export default class UnavailableTime extends React.Component {
       .delete(
         `/api/unavailable?token=${this.props.userToken}&item_id=${item_id}`
       )
-      .then(_ => this.getUnavailableTimes())
+      .then(_ => {
+        this.setState(state => {
+          return {
+            unavailableTimes: state.unavailableTimes.filter(
+              time => time.item_id !== item_id
+            )
+          };
+        });
+      })
       .catch();
   }
 
