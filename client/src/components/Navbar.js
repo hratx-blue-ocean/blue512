@@ -31,7 +31,8 @@ const useStyles = makeStyles(theme => ({
   button: {
     margin: theme.spacing(1),
     color: 'white',
-    fontSize: 13
+    fontSize: 13,
+    paddingTop: '4px'
   },
   selectedButton: {
     margin: theme.spacing(1),
@@ -86,6 +87,7 @@ const useStyles = makeStyles(theme => ({
   },
   sectionDesktop: {
     display: 'none',
+    float: 'right',
     [theme.breakpoints.up('md')]: {
       display: 'flex'
     }
@@ -149,19 +151,6 @@ export default function PrimarySearchAppBar(props) {
     >
       <AppBar position="fixed">
         <Toolbar>
-          {/* <div className={classes.search}>
-            <div className={classes.searchIcon}>
-            <SearchIcon />
-            </div>
-            <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-            />
-          </div> */}
           <Button
             component={RouterLink}
             to="/"
@@ -218,23 +207,25 @@ export default function PrimarySearchAppBar(props) {
             />
           </Typography>
           {/* <div className={classes.grow} /> */}
-          <div className={classes.sectionDesktop}>
-            <div
-              className={classes.button}
-              id="my-signin2"
-              data-onsuccess="onSignIn"
-            />
-            {props.isSignedIn ? (
-              <Button className={classes.button} onClick={signOut}>
-                Sign Out
-              </Button>
-            ) : (
-              <></>
-            )}
+          <div style={{ minWidth: '20%' }}>
+            <div className={classes.sectionDesktop}>
+              <div
+                className={classes.button}
+                id="my-signin2"
+                data-onsuccess="onSignIn"
+              />
+              {props.isSignedIn ? (
+                <Button className={classes.button} onClick={signOut}>
+                  Sign Out
+                </Button>
+              ) : (
+                <></>
+              )}
+              {generateSettingsIcon()}
+            </div>
+            <div className={classes.sectionMobile} />
+            <div className={classes.sectionMobile} />
           </div>
-          {generateSettingsIcon()}
-          <div className={classes.sectionMobile} />
-          <div className={classes.sectionMobile} />
         </Toolbar>
       </AppBar>
     </div>
