@@ -54,16 +54,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const theme = createMuiTheme({
-  palette: {
-    // primary: {
-    //   // main: "#00c853",
-    // },
-    secondary: {
-      main: '#f44336'
-    }
-  }
-});
 
 export default function CardMaker({
   event,
@@ -183,17 +173,17 @@ export default function CardMaker({
 
           {/* This themeprovider overrides the default theme colors at this component level
           Using it to get the red color without using that color at the global level */}
-          <ThemeProvider theme={theme}>
-            <Fab
-              color="secondary"
-              aria-label="add"
-              onClick={() => {
-                handleCardActionClick(event, false);
-              }}
-            >
-              <CloseIcon />
-            </Fab>
-          </ThemeProvider>
+
+          <Fab
+            color="secondary"
+            aria-label="add"
+            onClick={() => {
+              handleCardActionClick(event, false);
+            }}
+          >
+            <CloseIcon />
+          </Fab>
+
 
           <IconButton
             className={clsx(classes.expand, {
