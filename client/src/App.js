@@ -392,7 +392,7 @@ export default class App extends Component {
       resource: gCalEvent
     });
     let context = this;
-    request.execute(function(event) {
+    request.execute(function (event) {
       console.log('event successfully added');
       context.removeEvent(item);
       //Add notification or toast
@@ -482,7 +482,7 @@ export default class App extends Component {
                 eventsTomorrow={eventsTomorrow}
                 selectedDaysEvents={selectedDaysEvents}
                 changeDetailsDay={this.changeDetailsDay}
-                handleMicroCardClick={this.handleMicroCardClick}
+                handleCardActionClick={this.handleCardActionClick}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
               />
             )}
