@@ -57,7 +57,6 @@ export default class App extends Component {
   }
 
   changeDetailsDay(event) {
-    console.log('changeDetailsDay:', event.target.textContent);
     if (event.target.textContent === 'Today') {
       this.setState({ selectedDaysEvents: this.state.eventsToday });
     } else if (event.target.textContent === 'Tomorrow') {
@@ -77,19 +76,14 @@ export default class App extends Component {
   }
 
   seperateEventsByDate(allEvents) {
-    // console.log(events || `testing and didn't get events`);
-    // '2019-08-16T00:00:00.000Z'
     const todayArr = [],
       tomorrowArr = [],
       tomorrowPlusPlusArr = [];
 
     allEvents.forEach(event => {
-      // event.time_start = event.time_start.substr(0, event.time_start.length - 1);
-      // console.log(event.time_start)
       let parsedTimeStart = new Date(event.time_start).getDate();
 
       if (parsedTimeStart === this.state.today) {
-        // make sure to remove the minus 2 for development
         todayArr.push(event);
       }
       if (parsedTimeStart === this.state.today + 1) {
@@ -183,22 +177,17 @@ export default class App extends Component {
         dateTime: eventEnd
       }
     };
-    // console.log(gCalEvent)
     let request = window.gapi.client.calendar.events.insert({
       calendarId: 'primary',
       resource: gCalEvent
     });
     let context = this;
     request.execute(function (event) {
-      console.log('event successfully added');
       context.removeEvent(item);
-      //Add notification or toast
-      // console.log(event.htmlLink);
     });
   }
 
   removeEvent(item) {
-    console.log(item);
     const allEvents = [...this.state.eventsAll];
     for (let i = 0; i < allEvents.length; i++) {
       if (allEvents[i].experience_api_id === item.experience_api_id) {
