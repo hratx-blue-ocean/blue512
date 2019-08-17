@@ -29,6 +29,8 @@ export default class UnavailableTime extends React.Component {
       timeEnd: moment().format('HH:mm:00'),
       eventName: '',
       daySelected: '',
+      datepickerStart: new Date(),
+      datepickerEnd: new Date(),
       unavailableTimes: []
     };
     this.handleTimeStartChange = this.handleTimeStartChange.bind(this);
@@ -42,12 +44,12 @@ export default class UnavailableTime extends React.Component {
 
   handleTimeStartChange(_, value) {
     const timeStart = moment(value, 'HH:mm a').format('HH:mm:00');
-    this.setState({ timeStart });
+    this.setState({ timeStart, datepickerStart: _ });
   }
 
   handleTimeEndChange(_, value) {
     const timeEnd = moment(value, 'HH:mm a').format('HH:mm:00');
-    this.setState({ timeEnd });
+    this.setState({ timeEnd, datepickerEnd: _ });
   }
 
   handleDayOfWeekChange(e) {
