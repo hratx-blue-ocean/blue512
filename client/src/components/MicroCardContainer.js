@@ -1,11 +1,12 @@
 import React from 'react';
 import MicroCardMaker from './MicroCardMaker.js'
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core/';
+import { Divider, Grid, Fade } from '@material-ui/core/';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import List from '@material-ui/core/List';
+import moment from 'moment';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,10 +18,22 @@ const useStyles = makeStyles(theme => ({
   Tab: {
     flexGrow: 1,
     width: '100%'
+  },
+  ListPaper: {
+    maxHeight: '89vh',
+    overflow: 'auto'
   }
 }));
 
-export default function MicroCardContainer({ eventsToday, eventsTomorrow, eventsTomorrowPlusPlus, selectedDaysEvents, handleMicroCardClick, changeDetailsDay }) {
+const overmorrow = moment().add(2, 'days').format('dddd')
+
+export default function MicroCardContainer({
+  eventsToday,
+  eventsTomorrow,
+  eventsTomorrowPlusPlus,
+  selectedDaysEvents,
+  handleMicroCardClick,
+  changeDetailsDay }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -28,28 +41,44 @@ export default function MicroCardContainer({ eventsToday, eventsTomorrow, events
     setValue(newValue);
   }
 
-  return (
+  let animationTimeout = 0;
+  const animationTimeouts = [];
 
-    <Grid item xs={4}>
-      <Paper className={classes.root}>
+  for (let event = 0; event < selectedDaysEvents.length; event++) {
+    animationTimeout += 300;
+    animationTimeouts.push(animationTimeout);
+  }
+
+  return (
+    <>
+      <div style={{ height: 800 }}>
         <Tabs
           value={value}
           onChange={handleChange}
           onClick={() => (changeDetailsDay(event))}
           indicatorColor='primary'
           textColor='primary'
-          variant='fullWidth'
+          variant='standard'
           centered
+
         >
           <Tab label='Today' />
           <Tab label='Tomorrow' />
-          <Tab label='Overmorrow' />
+          <Tab label={overmorrow} />
         </Tabs>
-      </Paper>
+        <Divider />
 
-      <List className={classes.root}>
-        {selectedDaysEvents.map(event => <MicroCardMaker key={event.name} event={event} handleMicroCardClick={handleMicroCardClick} />)}
-      </List>
-    </Grid>
+
+
+        {/* <Paper className={classes.root}> */}
+        <Fade in={true} timeout={1000}>
+          <List className={classes.root} style={{ maxHeight: '95%', 'overflow-y': 'scroll' }}>
+
+            {selectedDaysEvents.map((event, index) => <MicroCardMaker key={event.experience_api_id} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
+          </List>
+        </Fade>
+        {/* </Paper> */}
+      </div>
+    </>
   );
 }

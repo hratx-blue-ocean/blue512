@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { _getDate, _categorize } = require('./helpers.js');
+const { _getDate, _categorize, _findImage } = require('./helpers.js');
 
 //example query string: https://www.eventbriteapi.com/v3/events/search/?token=${process.env.API_KEY_EVENTBRITE}&location.latitude=30.2671530&location.longitude=-97.7430608&start_date.range_end=2019-08-15T00:00:00Z&expand=ticket_classes,category,venue
 
@@ -76,15 +76,15 @@ const restructureData = data => {
   let events = [];
 
   for (let i = 0; i < data.length; i++) {
-    data[i].forEach(event => {
+    data[i].forEach(async event => {
       let restructured = {};
       restructured.source_API = 'Eventbrite';
       const { url, id } = event;
       restructured.name = event.name.text || null;
       restructured.url = url || null;
       restructured.event_id = id;
-      restructured.time_start = event.start.local;
-      restructured.time_end = event.end.local;
+      restructured.time_start = event.start.utc;
+      restructured.time_end = event.end.utc;
       restructured.category = 'Other';
       if (event.category_id) {
         restructured.category = _categorize(event.category.short_name);
@@ -92,6 +92,13 @@ const restructureData = data => {
       restructured.image = null;
       if (event.logo) {
         restructured.image = event.logo.original.url;
+      } else {
+        restructured.image = await _findImage(
+          restructured.name,
+          restructured.category,
+          restructured.location,
+          restructured.venue
+        );
       }
       restructured.venue = event.venue.name;
       restructured.location = event.venue.address.city;
@@ -105,6 +112,8 @@ const restructureData = data => {
       events.push(restructured);
     });
   }
+
+  Promise.all(events);
 
   return events;
 };
