@@ -59,10 +59,10 @@ export default function CardMaker({
   event,
   animationTime,
   handleCardActionClick,
+  isSignedIn,
   path,
   handlePageClick,
   handleMicroCardClick,
-  
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -214,11 +214,18 @@ export default function CardMaker({
           onClose={closeSnackBar}
           color="primary"
         >
-          <SnackbarContent
-            onClose={closeSnackBar}
-            variant="success"
-            message="Event successfully added to your Google calendar!"
-          />
+          {isSignedIn ?
+            <SnackbarContent
+              onClose={closeSnackBar}
+              variant="success"
+              message="Event successfully added to your Google calendar!"
+            /> :
+            <SnackbarContent
+              onClose={closeSnackBar}
+              variant="success"
+              message="Error: Please sign in to add events to your Google calendar"
+            />
+          }
         </Snackbar>
       </Card>
     </Grow>

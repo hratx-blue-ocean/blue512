@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Fab, Modal, Hidden, Slide, Fade } from '@material-ui/core/';
+import { Grid, Fab, Modal, Hidden, Slide, Snackbar, SnackbarContent, Fade } from '@material-ui/core/';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -29,8 +29,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Details({ event, openModal, closeModal, handleCardActionClick }) {
+export default function Details({ event, openModal, closeModal, handleCardActionClick, isSignedIn }) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  function renderSnackBar() {
+    setOpen(true);
+  }
+
+  function closeSnackBar(event, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  }
 
   return (<>
 
@@ -54,8 +67,6 @@ export default function Details({ event, openModal, closeModal, handleCardAction
             <Grid item xs={12} align="center">
               <img src={event.img} className={classes.media} />
             </Grid>
-
-
           </Grid>
 
           <Typography variant='h5' component='h5' className={classes.pad}>
@@ -63,7 +74,10 @@ export default function Details({ event, openModal, closeModal, handleCardAction
             <Fab className={classes.fab}
               color="primary"
               aria-label="add"
-              onClick={() => { handleCardActionClick(event, true) }}>
+              onClick={() => {
+                handleCardActionClick(event, true)
+                renderSnackBar()
+              }}>
               <CalendarIcon />
             </Fab>
           </Typography>
@@ -89,7 +103,6 @@ export default function Details({ event, openModal, closeModal, handleCardAction
 
           {/* </Paper> */}
         </div>
-        {/* </Grid> */}
       </Slide>
     </Hidden>
 
@@ -158,6 +171,29 @@ export default function Details({ event, openModal, closeModal, handleCardAction
         </div>
       </Modal>
     </Hidden>
+    <Snackbar
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center'
+      }}
+      open={open}
+      autoHideDuration={4000}
+      onClose={closeSnackBar}
+      color="primary"
+    >
+      {isSignedIn ?
+        <SnackbarContent
+          onClose={closeSnackBar}
+          variant="success"
+          message="Event successfully added to your Google calendar!"
+        /> :
+        <SnackbarContent
+          onClose={closeSnackBar}
+          variant="success"
+          message="Error: Please sign in to add events to your Google calendar"
+        />
+      }
+    </Snackbar>
   </>
   )
 

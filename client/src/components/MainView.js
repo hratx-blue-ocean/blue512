@@ -17,6 +17,7 @@ export default function MainView({
   eventsTomorrow,
   eventsTomorrowPlusPlus,
   handleCardActionClick,
+  isSignedIn,
   path,
   handlePageClick,
   handleMicroCardClick
@@ -75,6 +76,7 @@ export default function MainView({
                 day={'Today'}
                 animationTime={400}
                 handleCardActionClick={handleCardActionClick}
+                isSignedIn={isSignedIn}
                 path={path}
                 handlePageClick={handlePageClick}
                 handleMicroCardClick={handleMicroCardClick}
@@ -84,17 +86,17 @@ export default function MainView({
                 day={'Tomorrow'}
                 animationTime={600}
                 handleCardActionClick={handleCardActionClick}
+                isSignedIn={isSignedIn}
                 path={path}
                 handlePageClick={handlePageClick}
                 handleMicroCardClick={handleMicroCardClick}
               />
               <CardContainer
-                event={
-                  eventsTomorrowPlusPlus.length ? eventsTomorrowPlusPlus[0] : ''
-                }
+                event={eventsTomorrowPlusPlus.length ? eventsTomorrowPlusPlus[0] : ''}
                 day={tomorrowPlusPlus}
                 animationTime={800}
                 handleCardActionClick={handleCardActionClick}
+                isSignedIn={isSignedIn}
                 path={path}
                 handlePageClick={handlePageClick}
                 handleMicroCardClick={handleMicroCardClick}

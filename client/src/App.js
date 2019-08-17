@@ -153,7 +153,9 @@ export default class App extends Component {
 
   handleCardActionClick(item, add) {
     if (add === true) {
-      this.addToCalendar(item);
+      if (this.state.isSignedIn) {
+        this.addToCalendar(item);
+      }
     } else if (this.state.userToken !== '') {
       axios
         .post(`/api/user_event/${item.id}`, { token: this.state.userToken })
@@ -244,6 +246,7 @@ export default class App extends Component {
                 eventsTomorrow={eventsTomorrow}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
                 handleCardActionClick={this.handleCardActionClick}
+                isSignedIn={isSignedIn}
                 path={path}
                 handlePageClick={this.handlePageClick}
                 handleMicroCardClick={this.handleMicroCardClick}
@@ -266,6 +269,7 @@ export default class App extends Component {
                 closeModal={this.closeModal}
                 openModal={openModal}
                 handleCardActionClick={this.handleCardActionClick}
+                isSignedIn={isSignedIn}
               />
             )}
           />
@@ -282,6 +286,7 @@ export default class App extends Component {
                 changeDetailsDay={this.changeDetailsDay}
                 handleCardActionClick={this.handleCardActionClick}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+                isSignedIn={isSignedIn}
                 path={path}
                 handlePageClick={this.handlePageClick}
                 handleMicroCardClick={this.handleMicroCardClick}
