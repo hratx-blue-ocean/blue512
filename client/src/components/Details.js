@@ -46,67 +46,67 @@ export default function Details({ event, openModal, closeModal, handleCardAction
   }
 
   return (<>
+
+    {/* //Normal view  */}
     <Hidden only="xs">
       <Slide in={true} timeout={400} direction="left">
 
-        <Grid item sm={8} xs={false} style={{ height: '90vh' }} >
-          <div>
+        {/* <Grid item sm={8} xs={false} style={{ height: '90vh' }} > */}
+        <div>
 
-            <Paper className={classes.root} style={{ maxHeight: '100vh', overflow: 'auto' }} >
+          {/* <Paper className={classes.root} style={{ maxHeight: '100vh', overflow: 'auto' }} > */}
 
-              <Grid container justify="center">
+          <Grid container justify="center">
 
-                <Grid item xs={12} align="center">
-                  <Typography variant='h4' component='h2' className={classes.pad}>
-                    {event.name}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={12} align="center">
-                  <img src={event.img} className={classes.media} />
-                </Grid>
-
-
-              </Grid>
-
-              <Typography variant='h5' component='h5' className={classes.pad}>
-                {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
-                <Fab className={classes.fab}
-                  color="primary"
-                  aria-label="add"
-                  onClick={() => {
-                    handleCardActionClick(event, true);
-                    renderSnackBar();
-                  }}>
-                  <CalendarIcon />
-                </Fab>
+            <Grid item xs={12} align="center">
+              <Typography variant='h4' component='h2' className={classes.pad}>
+                {event.name}
               </Typography>
+            </Grid>
 
-              <Typography variant='h5' component='h5' className={classes.pad} >
-                @ {event.venue}  {event.location}
-              </Typography>
+            <Grid item xs={12} align="center">
+              <img src={event.img} className={classes.media} />
+            </Grid>
+          </Grid>
 
-              <Typography variant='h6' component='h5' className={classes.pad}>
-                <ShowMoreText
-                  lines={4}
-                  more='Show more'
-                  less='Show less'
-                  anchorClass=''
-                  expanded={false}
-                >
-                  {event.description}
-                </ShowMoreText>
+          <Typography variant='h5' component='h5' className={classes.pad}>
+            {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
+            <Fab className={classes.fab}
+              color="primary"
+              aria-label="add"
+              onClick={() => {
+                handleCardActionClick(event, true)
+                renderSnackBar()
+              }}>
+              <CalendarIcon />
+            </Fab>
+          </Typography>
 
-              </Typography>
+          <Typography variant='h5' component='h5' className={classes.pad} >
+            @ {event.venue}  {event.location}
+          </Typography>
 
-              <Button href={event.url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
+          <Typography variant='h6' component='h5' className={classes.pad}>
+            <ShowMoreText
+              lines={4}
+              more='Show more'
+              less='Show less'
+              anchorClass=''
+              expanded={false}
+            >
+              {event.description}
+            </ShowMoreText>
 
-            </Paper>
-          </div>
-        </Grid>
+          </Typography>
+
+          <Button href={event.url} variant='outlined' className={classes.pad} target="_blank">Visit partner site</Button>
+
+          {/* </Paper> */}
+        </div>
       </Slide>
     </Hidden>
 
+    {/* //Modal view */}
     <Hidden smUp={true}>
       <Modal
         aria-labelledby="simple-modal-title"
