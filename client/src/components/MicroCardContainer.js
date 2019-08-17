@@ -57,15 +57,16 @@ export default function MicroCardContainer({
         onClick={() => (changeDetailsDay(event))}
         indicatorColor='primary'
         textColor='primary'
-        // variant='fullWidth'
+        variant='standard'
         centered
-      // style={{ marginBottom: 50 }}
+
       >
         <Tab label='Today' />
         <Tab label='Tomorrow' />
         <Tab label={overmorrow} />
       </Tabs>
       <Divider />
+
 
 
       {/* <Paper className={classes.root}> */}
