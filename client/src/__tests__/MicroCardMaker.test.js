@@ -39,7 +39,8 @@ describe('CardMaker component', () => {
   });
 
   test('it renders the correct child components', () => {
-    expect(wrapper.find(Card).length).toBe(1); // should hold only 1 card
+    //We are no longer using card components
+    // expect(wrapper.find(Card).length).toBe(1); // should hold only 1 card
     expect(wrapper.find(Typography).length).toBeGreaterThan(0);
     expect(wrapper.find(CardActionArea).length).toBeGreaterThan(0);
     expect(wrapper.find(CardMedia).length).toBeGreaterThan(0);
