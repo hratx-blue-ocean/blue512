@@ -1,9 +1,4 @@
 function onSuccess(googleUser) {}
-//   // const id_token = googleUser.getAuthResponse().id_token;
-//   // setTimeout(() => {
-//   //   window.getCalData(id_token);
-//   // }, 1000);
-// }
 
 function onFailure(error) {
   console.log(error);
@@ -25,6 +20,16 @@ function handleClientLoad() {
   window.gapi.load('client:auth2', initClient);
 }
 
+function callGetCalDataOrWait() {
+  if (!window.gapi.client.calendar) {
+    setTimeout(() => {
+      callGetCalDataOrWait();
+    }, 100);
+  } else {
+    window.getCalData(gapi.auth2.getAuthInstance().currentUser.Ab.Zi.id_token);
+  }
+}
+
 function initClient() {
   const init = window.gapi.client.init({
     apiKey: 'AIzaSyDmu5hSQp6rUq7TY-iAmNpndsF0Sjh4C9o',
@@ -37,9 +42,8 @@ function initClient() {
   });
   window.gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => {
     if (window.gapi.auth2.getAuthInstance().isSignedIn.Ab) {
-      window.getCalData(
-        gapi.auth2.getAuthInstance().currentUser.Ab.Zi.id_token
-      );
+      console.log('in the listen', window.gapi.client.calendar);
+      callGetCalDataOrWait();
     }
     window.dispatchEvent(
       new CustomEvent('GoogleAuthChange', { detail: { isSignedIn } })
@@ -47,6 +51,7 @@ function initClient() {
   });
   init.then(_ => {
     if (window.gapi.auth2.getAuthInstance().isSignedIn.Ab) {
+      console.log('in the init', window.gapi.client.calendar);
       window.getCalData(
         gapi.auth2.getAuthInstance().currentUser.Ab.Zi.id_token
       );

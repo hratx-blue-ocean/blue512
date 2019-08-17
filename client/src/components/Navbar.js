@@ -22,12 +22,24 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block'
-    }
+    },
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    fontSize: 18
+    // maxHeight: '200px'
   },
   button: {
     margin: theme.spacing(1),
     color: 'white',
     fontSize: 13
+  },
+  selectedButton: {
+    margin: theme.spacing(1),
+    color: 'white',
+    fontSize: 13,
+    'border-bottom': '1px solid white',
+    'border-radius': '0px',
+    'margin-bottom': '7px'
   },
   Signupbutton: {
     margin: theme.spacing(1),
@@ -89,24 +101,10 @@ const useStyles = makeStyles(theme => ({
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
 
-  const getData = function (id_token, calendar_items) {
-    axios
-      .post(
-        `/api/events`,
-        {
-          token: id_token,
-          calendar_items,
-          limit: null,
-          day: null
-        }
-      )
-      .then(res => props.loadEvents({ id_token, ...res.data }))
-      .catch();
-  };
-
-  const signOut = function () {
+  const signOut = function (handlePageClick) {
     var auth2 = window.gapi.auth2.getAuthInstance();
-    auth2.signOut().then(() => { });
+    auth2.signOut().then(() => { handlePageClick('/') });
+
   };
 
   window.getCalData = id_token => {
@@ -120,7 +118,7 @@ export default function PrimarySearchAppBar(props) {
         orderBy: 'startTime'
       })
       .then(data => {
-        getData(id_token, data.result.items);
+        props.loadEvents(id_token, data.result.items);
       });
   };
 
@@ -128,44 +126,99 @@ export default function PrimarySearchAppBar(props) {
     if (props.isSignedIn) {
       return (
         <MenuItem>
-          <IconButton component={RouterLink} to="/settings" color="inherit">
+          <IconButton
+            component={RouterLink}
+            to="/settings"
+            color="inherit"
+            onClick={() => {
+              props.handlePageClick('/settings');
+            }}
+          >
             <SettingsIcon />
           </IconButton>
-        </MenuItem>)
+        </MenuItem>
+      );
     }
-  }
+  };
 
   return (
-    <div className={classes.grow} style={{
-      marginBottom: 64
-    }}>
+    <div
+      className={classes.grow}
+      style={{
+        marginBottom: 64
+      }}
+    >
       <AppBar position="fixed">
         <Toolbar>
-          <Typography className={classes.title}>CityScout</Typography>
-          <div className={classes.search}>
+          {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <SearchIcon />
+            <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ 'aria-label': 'search' }}
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput
+            }}
+            inputProps={{ 'aria-label': 'search' }}
             />
-          </div>
-          <Button component={RouterLink} to="/" className={classes.button}>
+          </div> */}
+          <Button
+            component={RouterLink}
+            to="/"
+            onClick={() => {
+              props.handlePageClick('/');
+            }}
+            className={
+              props.path === '/' ? classes.selectedButton : classes.button
+            }
+          >
             Some Events
           </Button>
           <Button
             component={RouterLink}
             to="/detailed"
-            className={classes.button}
+            onClick={() => {
+              props.handlePageClick('/detailed');
+            }}
+            className={
+              props.path === '/detailed'
+                ? classes.selectedButton
+                : classes.button
+            }
           >
             More Events
           </Button>
-          <div className={classes.grow} />
+          <Button
+            component={RouterLink}
+            to="/search"
+            onClick={() => {
+              props.handlePageClick('/search');
+            }}
+            className={
+              props.path === '/search' ? classes.selectedButton : classes.button
+            }
+          >
+            All Events
+          </Button>
+          <Typography
+            className={classes.title}
+            component={RouterLink}
+            to="/"
+            onClick={() => {
+              props.handlePageClick('/');
+            }}
+          >
+            <img
+              src="./logo.png"
+              style={{
+                maxHeight: '75px',
+                marginTop: '-10px',
+                marginBottom: '-20px'
+              }}
+            />
+          </Typography>
+          {/* <div className={classes.grow} /> */}
           <div className={classes.sectionDesktop}>
             <div
               className={classes.button}
@@ -173,7 +226,9 @@ export default function PrimarySearchAppBar(props) {
               data-onsuccess="onSignIn"
             />
             {props.isSignedIn ? (
-              <Button className={classes.button} onClick={signOut}>
+              <Button className={classes.button}
+                component={RouterLink}
+                to="/" onClick={() => { signOut(props.handlePageClick) }}>
                 Sign Out
               </Button>
             ) : (
@@ -181,11 +236,10 @@ export default function PrimarySearchAppBar(props) {
               )}
           </div>
           {generateSettingsIcon()}
-          <div className={classes.sectionMobile}>
-          </div>
+          <div className={classes.sectionMobile} />
           <div className={classes.sectionMobile} />
         </Toolbar>
       </AppBar>
-    </div >
+    </div>
   );
 }

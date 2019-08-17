@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { _getDate, _categorize } = require('./helpers.js');
+const { _getDate, _categorize, _findImage } = require('./helpers.js');
 
 const callAPI = () => {
   let dates = _getDate();
@@ -22,7 +22,7 @@ const callAPI = () => {
 
 const restructureData = data => {
   let events = [];
-  data.forEach(event => {
+  data.forEach(async event => {
     let restructured = {};
     restructured.source_API = 'TicketMaster';
     const { name, url } = event;
@@ -40,7 +40,16 @@ const restructureData = data => {
         event.classifications[0].segment.name
       );
     }
-    restructured.image = event.images[0].url;
+    if (event.images[0].url) {
+      restructured.image = event.images[0].url;
+    } else {
+      restructured.image = await _findImage(
+        restructured.name,
+        restructured.category,
+        restructured.location,
+        restructured.venue
+      );
+    }
     restructured.venue = event._embedded.venues[0].name;
     restructured.location = event._embedded.venues[0].city.name;
     restructured.price_min = null;

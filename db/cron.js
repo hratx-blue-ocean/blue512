@@ -54,7 +54,7 @@ const atMidnightEveryDay = new CronJob('0 0 0 * * *', () => {
     .catch(console.log);
 });
 
-const everyTenMinutes = new CronJob('*/10 * * * * *', () => {
+const everyTenMinutes = new CronJob('0 */10 * * * *', () => {
   deleteOldExperiences()
     .then(console.log)
     .catch(console.log);
@@ -64,7 +64,7 @@ const everyTenMinutes = new CronJob('*/10 * * * * *', () => {
     .catch(console.log);
 });
 
-module.export = {
+module.exports = {
   atMidnightEveryDay,
   everyTenMinutes
 };
