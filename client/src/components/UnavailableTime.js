@@ -159,19 +159,6 @@ export default class UnavailableTime extends React.Component {
           </Grid>
 
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            {/* <Grid item xs={12}>
-              <KeyboardDatePicker
-                margin="normal"
-                id="date-picker-dialog"
-                label="Date"
-                format="MM/dd/yyyy"
-                value={this.state.datepickerDate}
-                onChange={this.handleDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date'
-                }}
-              />
-            </Grid> */}
             <Grid item xs={12} sm={6}>
               <KeyboardTimePicker
                 margin="normal"
