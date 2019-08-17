@@ -104,7 +104,6 @@ export default class App extends Component {
       eventsTomorrowPlusPlus: tomorrowPlusPlusArr,
       selectedDaysEvents: todayArr,
       eventsAll: allEvents,
-      clickedMicroCard: todayArr[0],
     });
   }
 
@@ -123,7 +122,8 @@ export default class App extends Component {
           user: data.userInfo,
           isSignedIn: true,
           userToken: token,
-          loaded: true
+          loaded: true,
+          clickedMicroCard: data.events[0],
         });
       })
       .catch(console.log);
