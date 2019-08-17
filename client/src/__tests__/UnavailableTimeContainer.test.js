@@ -6,7 +6,7 @@ import { List } from '@material-ui/core/';
 
 const handleDelete = jest.fn();
 
-describe('Settings View component', () => {
+describe('Unavailable Time Container component', () => {
   let wrapper;
   beforeAll(() => {
     wrapper = shallow(
