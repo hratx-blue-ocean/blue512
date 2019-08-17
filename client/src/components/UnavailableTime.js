@@ -16,9 +16,9 @@ export default class UnavailableTime extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: '',
-      timeStart: '',
-      timeEnd: '',
+      date: moment().format('YYYY-MM-DD'),
+      timeStart: moment().format('HH:mm:00'),
+      timeEnd: moment().format('HH:mm:00'),
       eventName: '',
       datepickerDate: new Date(),
       datepickerStart: new Date(),
@@ -54,8 +54,12 @@ export default class UnavailableTime extends React.Component {
       .post(`/api/unavailable`, {
         token: this.props.userToken,
         name: this.state.eventName,
-        time_start: `${this.state.date} ${this.state.timeStart}`,
-        time_end: `${this.state.date} ${this.state.timeEnd}`
+        time_start: moment(
+          `${this.state.date} ${this.state.timeStart}`
+        ).toISOString(),
+        time_end: moment(
+          `${this.state.date} ${this.state.timeEnd}`
+        ).toISOString()
       })
       .then(_ => this.getUnavailableTimes())
       .catch();
@@ -95,7 +99,7 @@ export default class UnavailableTime extends React.Component {
   render() {
     return (
       <>
-        <Title>When Are Busy?</Title>
+        <Title>When are you busy?</Title>
         <Typography variant="subtitle2" color="textSecondary">
           Tell us when you are unavailable. We assume these times are recurring.
           Please delete them below if they are no longer relevant!
@@ -106,6 +110,7 @@ export default class UnavailableTime extends React.Component {
             <TextField
               id="standard-name"
               label="Event Name"
+              defaultValue=""
               onChange={e => this.handleNameChange(e.target.value)}
               fullWidth={true}
             />
@@ -152,10 +157,7 @@ export default class UnavailableTime extends React.Component {
               />
             </Grid>
           </MuiPickersUtilsProvider>
-
         </Grid>
-
-
 
         <Fab color="primary" aria-label="add">
           <AddIcon onClick={() => this.handleSubmit()} />
