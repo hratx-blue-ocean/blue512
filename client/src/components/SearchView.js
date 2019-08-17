@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles} from '@material-ui/core/styles';
 import {
   MenuItem,
   AppBar,
@@ -11,7 +11,7 @@ import {
   Button,
   IconButton,
   Container,
-  Grid
+  Grid, Slide 
 } from '@material-ui/core/';
 import CardContainer from './CardContainer.js';
 
@@ -75,7 +75,6 @@ const SearchView = function (props) {
   });
 
   const filter = function (search) {
-    console.log('filter called');
     if (!search.length) {
       return props.events;
     }
@@ -84,11 +83,6 @@ const SearchView = function (props) {
       const titleArr = event.name.split(/[\s-]/);
       for (let titleSegment of titleArr) {
         for (let searchSegment of searchArr) {
-          console.log(
-            new RegExp('^' + searchSegment + '.*', 'i').test(
-              titleSegment.toLowerCase()
-            )
-          );
           if (
             new RegExp('^' + searchSegment + '.*', 'i').test(
               titleSegment.toLowerCase()
@@ -100,7 +94,6 @@ const SearchView = function (props) {
       }
       return false;
     });
-    console.log(filteredEvents);
     return filteredEvents;
   };
 
@@ -159,28 +152,29 @@ const SearchView = function (props) {
   const handleExpand = function () {
     setPageLength(pageLength + 15);
     setExpandClicked(true);
-    console.log('clicked', pageLength);
   };
 
   return (
     <>
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center', paddingTop: 20, paddingBottom: 15 }}>
         <div>
-          <div className={classes.search}>
-            <InputBase
-              onKeyPress={handleEnter}
-              onChange={handleSearchTerm}
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-            <span className={classes.searchIcon} onClick={handleClick}>
-              <SearchIcon />
-            </span>
-          </div>
+          <Slide in={true} timeout={400} direction="left">
+            <div className={classes.search}>
+              <InputBase
+                onKeyPress={handleEnter}
+                onChange={handleSearchTerm}
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+              <span className={classes.searchIcon} onClick={handleClick}>
+                <SearchIcon />
+              </span>
+            </div>
+          </Slide>
         </div>
       </div>
 
