@@ -102,7 +102,6 @@ export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
 
   const signOut = function (handlePageClick) {
-    console.log('trying to sign out')
     var auth2 = window.gapi.auth2.getAuthInstance();
     auth2.signOut().then(() => { handlePageClick('/') });
 
