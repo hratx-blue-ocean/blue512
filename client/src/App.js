@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
 //import fetch from 'node-fetch';
 import SettingsView from './components/SettingsView';
-import './App.css';
+//import './App.css';
 
 export default class App extends Component {
   constructor(props) {
