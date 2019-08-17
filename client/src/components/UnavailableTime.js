@@ -29,6 +29,8 @@ export default class UnavailableTime extends React.Component {
       timeEnd: moment().format('HH:mm:00'),
       eventName: '',
       daySelected: '',
+      datepickerStart: new Date(),
+      datepickerEnd: new Date(),
       unavailableTimes: []
     };
     this.handleTimeStartChange = this.handleTimeStartChange.bind(this);
@@ -42,12 +44,12 @@ export default class UnavailableTime extends React.Component {
 
   handleTimeStartChange(_, value) {
     const timeStart = moment(value, 'HH:mm a').format('HH:mm:00');
-    this.setState({ timeStart });
+    this.setState({ timeStart, datepickerStart: _ });
   }
 
   handleTimeEndChange(_, value) {
     const timeEnd = moment(value, 'HH:mm a').format('HH:mm:00');
-    this.setState({ timeEnd });
+    this.setState({ timeEnd, datepickerEnd: _ });
   }
 
   handleDayOfWeekChange(e) {
@@ -157,6 +159,19 @@ export default class UnavailableTime extends React.Component {
           </Grid>
 
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            {/* <Grid item xs={12}>
+              <KeyboardDatePicker
+                margin="normal"
+                id="date-picker-dialog"
+                label="Date"
+                format="MM/dd/yyyy"
+                value={this.state.datepickerDate}
+                onChange={this.handleDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date'
+                }}
+              />
+            </Grid> */}
             <Grid item xs={12} sm={6}>
               <KeyboardTimePicker
                 margin="normal"
