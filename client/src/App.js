@@ -5,9 +5,9 @@ import Navbar from './components/Navbar';
 import Search from './components/SearchView';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
-// import fetch from 'node-fetch';
+//import fetch from 'node-fetch';
 import SettingsView from './components/SettingsView';
-// import './App.css';
+//import './App.css';
 
 export default class App extends Component {
   constructor(props) {
@@ -18,218 +18,10 @@ export default class App extends Component {
       isSignedIn: null,
       PORT: 9000,
       userToken: '',
-      eventsAll: [
-        {
-          source_API: 'TicketMaster',
-          name: 'Hayes Carll',
-          url:
-            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-          event_id: 'Z7r9jZ1Aejbow',
-          time_start: '2019-08-11T02:00:00Z',
-          time_end: null,
-          category: 'Music',
-          img:
-            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-          venue: 'Gruene Hall',
-          location: 'New Braunfels',
-          price_min: null,
-          price_max: null,
-          description: null
-        },
-        {
-          source_API: 'TicketMaster',
-          name: 'Trevor Cannon',
-          url:
-            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-          event_id: 'Z7r9jZ1Aejboz',
-          time_start: '2019-08-11T02:00:00Z',
-          time_end: null,
-          category: 'Music',
-          img:
-            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-          venue: 'Gruene Hall',
-          location: 'New Braunfels',
-          price_min: null,
-          price_max: null,
-          description: null
-        },
-        {
-          source_API: 'TicketMaster',
-          name: 'Hadley Crowl',
-          url:
-            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-          event_id: 'Z7r9jZ1Aejbot',
-          time_start: '2019-08-11T02:00:00Z',
-          time_end: null,
-          category: 'Music',
-          img:
-            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-          venue: 'Gruene Hall',
-          location: 'New Braunfels',
-          price_min: null,
-          price_max: null,
-          description: null
-        }
-      ],
-      eventsToday: [
-        {
-          source_API: 'TicketMaster',
-          name: 'Hayes Carll',
-          url:
-            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-          event_id: 'Z7r9jZ1Aejbow',
-          time_start: '2019-08-11T02:00:00Z',
-          time_end: null,
-          category: 'Music',
-          img:
-            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-          venue: 'Gruene Hall',
-          location: 'New Braunfels',
-          price_min: null,
-          price_max: null,
-          description: null
-        },
-        {
-          source_API: 'TicketMaster',
-          name: 'Trevor Cannon',
-          url:
-            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-          event_id: 'Z7r9jZ1Aejboz',
-          time_start: '2019-08-11T02:00:00Z',
-          time_end: null,
-          category: 'Music',
-          img:
-            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-          venue: 'Gruene Hall',
-          location: 'New Braunfels',
-          price_min: null,
-          price_max: null,
-          description: null
-        },
-        {
-          source_API: 'TicketMaster',
-          name: 'Hadley Crowl',
-          url:
-            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-          event_id: 'Z7r9jZ1Aejbot',
-          time_start: '2019-08-11T02:00:00Z',
-          time_end: null,
-          category: 'Music',
-          img:
-            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-          venue: 'Gruene Hall',
-          location: 'New Braunfels',
-          price_min: null,
-          price_max: null,
-          description: null
-        }
-      ],
-      eventsTomorrow: [
-        {
-          source_API: 'TicketMaster',
-          name: 'Hayes Carll',
-          url:
-            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-          event_id: 'Z7r9jZ1Aejbow',
-          time_start: '2019-08-11T02:00:00Z',
-          time_end: null,
-          category: 'Music',
-          img:
-            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-          venue: 'Gruene Hall',
-          location: 'New Braunfels',
-          price_min: null,
-          price_max: null,
-          description: null
-        },
-        {
-          source_API: 'TicketMaster',
-          name: 'Trevor Cannon',
-          url:
-            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-          event_id: 'Z7r9jZ1Aejboz',
-          time_start: '2019-08-11T02:00:00Z',
-          time_end: null,
-          category: 'Music',
-          img:
-            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-          venue: 'Gruene Hall',
-          location: 'New Braunfels',
-          price_min: null,
-          price_max: null,
-          description: null
-        },
-        {
-          source_API: 'TicketMaster',
-          name: 'Hadley Crowl',
-          url:
-            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-          event_id: 'Z7r9jZ1Aejbot',
-          time_start: '2019-08-11T02:00:00Z',
-          time_end: null,
-          category: 'Music',
-          img:
-            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-          venue: 'Gruene Hall',
-          location: 'New Braunfels',
-          price_min: null,
-          price_max: null,
-          description: null
-        }
-      ],
-      eventsTomorrowPlusPlus: [
-        {
-          source_API: 'TicketMaster',
-          name: 'Hayes Carll',
-          url:
-            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-          event_id: 'Z7r9jZ1Aejbow',
-          time_start: '2019-08-11T02:00:00Z',
-          time_end: null,
-          category: 'Music',
-          img:
-            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-          venue: 'Gruene Hall',
-          location: 'New Braunfels',
-          price_min: null,
-          price_max: null,
-          description: null
-        },
-        {
-          source_API: 'TicketMaster',
-          name: 'Trevor Cannon',
-          url:
-            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-          event_id: 'Z7r9jZ1Aejboz',
-          time_start: '2019-08-11T02:00:00Z',
-          time_end: null,
-          category: 'Music',
-          img:
-            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-          venue: 'Gruene Hall',
-          location: 'New Braunfels',
-          price_min: null,
-          price_max: null,
-          description: null
-        },
-        {
-          source_API: 'TicketMaster',
-          name: 'Hadley Crowl',
-          url:
-            'http://www.ticketsnow.com/InventoryBrowse/TicketList.aspx?PID=2718472',
-          event_id: 'Z7r9jZ1Aejbot',
-          time_start: '2019-08-11T02:00:00Z',
-          time_end: null,
-          category: 'Music',
-          img:
-            'https://s1.ticketm.net/dam/a/fc1/e7affb5a-4ba1-4e6f-8aad-29c79f4a6fc1_68981_RECOMENDATION_16_9.jpg',
-          venue: 'Gruene Hall',
-          location: 'New Braunfels',
-          price_min: null,
-          price_max: null,
-          description: null
-        }
-      ],
+      eventsAll: [],
+      eventsToday: [],
+      eventsTomorrow: [],
+      eventsTomorrowPlusPlus: [],
       clickedMicroCard: {},
       today: '',
       loaded: false,
@@ -265,7 +57,6 @@ export default class App extends Component {
   }
 
   changeDetailsDay(event) {
-    console.log('changeDetailsDay:', event.target.textContent);
     if (event.target.textContent === 'Today') {
       this.setState({ selectedDaysEvents: this.state.eventsToday });
     } else if (event.target.textContent === 'Tomorrow') {
@@ -279,24 +70,20 @@ export default class App extends Component {
     this.setState({ clickedMicroCard: event, openModal: true });
   }
 
+
   closeModal() {
     this.setState({ openModal: false });
   }
 
   seperateEventsByDate(allEvents) {
-    // console.log(events || `testing and didn't get events`);
-    // '2019-08-16T00:00:00.000Z'
     const todayArr = [],
       tomorrowArr = [],
       tomorrowPlusPlusArr = [];
 
     allEvents.forEach(event => {
-      // event.time_start = event.time_start.substr(0, event.time_start.length - 1);
-      // console.log(event.time_start)
       let parsedTimeStart = new Date(event.time_start).getDate();
 
       if (parsedTimeStart === this.state.today) {
-        // make sure to remove the minus 2 for development
         todayArr.push(event);
       }
       if (parsedTimeStart === this.state.today + 1) {
@@ -311,7 +98,7 @@ export default class App extends Component {
       eventsTomorrow: tomorrowArr,
       eventsTomorrowPlusPlus: tomorrowPlusPlusArr,
       selectedDaysEvents: todayArr,
-      eventsAll: allEvents
+      eventsAll: allEvents,
     });
   }
 
@@ -330,7 +117,8 @@ export default class App extends Component {
           user: data.userInfo,
           isSignedIn: true,
           userToken: token,
-          loaded: true
+          loaded: true,
+          clickedMicroCard: data.events[0],
         });
       })
       .catch(console.log);
@@ -346,7 +134,8 @@ export default class App extends Component {
           isSignedIn: isSignedIn,
           loaded: true,
           userToken: null,
-          user: null
+          user: null,
+          clickedMicroCard: data.data.events[0],
         });
       })
       .catch();
@@ -358,7 +147,9 @@ export default class App extends Component {
 
   handleCardActionClick(item, add) {
     if (add === true) {
-      this.addToCalendar(item);
+      if (this.state.isSignedIn) {
+        this.addToCalendar(item);
+      }
     } else if (this.state.userToken !== '') {
       axios
         .post(`/api/user_event/${item.id}`, { token: this.state.userToken })
@@ -386,22 +177,17 @@ export default class App extends Component {
         dateTime: eventEnd
       }
     };
-    // console.log(gCalEvent)
     let request = window.gapi.client.calendar.events.insert({
       calendarId: 'primary',
       resource: gCalEvent
     });
     let context = this;
-    request.execute(function(event) {
-      console.log('event successfully added');
+    request.execute(function (event) {
       context.removeEvent(item);
-      //Add notification or toast
-      // console.log(event.htmlLink);
     });
   }
 
   removeEvent(item) {
-    console.log(item);
     const allEvents = [...this.state.eventsAll];
     for (let i = 0; i < allEvents.length; i++) {
       if (allEvents[i].experience_api_id === item.experience_api_id) {
@@ -449,6 +235,10 @@ export default class App extends Component {
                 eventsTomorrow={eventsTomorrow}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
                 handleCardActionClick={this.handleCardActionClick}
+                isSignedIn={isSignedIn}
+                path={path}
+                handlePageClick={this.handlePageClick}
+                handleMicroCardClick={this.handleMicroCardClick}
               />
             )}
           />
@@ -468,6 +258,7 @@ export default class App extends Component {
                 closeModal={this.closeModal}
                 openModal={openModal}
                 handleCardActionClick={this.handleCardActionClick}
+                isSignedIn={isSignedIn}
               />
             )}
           />
@@ -482,8 +273,12 @@ export default class App extends Component {
                 eventsTomorrow={eventsTomorrow}
                 selectedDaysEvents={selectedDaysEvents}
                 changeDetailsDay={this.changeDetailsDay}
-                handleMicroCardClick={this.handleMicroCardClick}
+                handleCardActionClick={this.handleCardActionClick}
                 eventsTomorrowPlusPlus={eventsTomorrowPlusPlus}
+                isSignedIn={isSignedIn}
+                path={path}
+                handlePageClick={this.handlePageClick}
+                handleMicroCardClick={this.handleMicroCardClick}
               />
             )}
           />

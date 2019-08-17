@@ -103,9 +103,10 @@ const useStyles = makeStyles(theme => ({
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
 
-  const signOut = function() {
+  const signOut = function (handlePageClick) {
     var auth2 = window.gapi.auth2.getAuthInstance();
-    auth2.signOut().then(() => {});
+    auth2.signOut().then(() => { handlePageClick('/') });
+
   };
 
   window.getCalData = id_token => {
@@ -206,7 +207,6 @@ export default function PrimarySearchAppBar(props) {
               }}
             />
           </Typography>
-          {/* <div className={classes.grow} /> */}
           <div style={{ minWidth: '20%' }}>
             <div className={classes.sectionDesktop}>
               <div
@@ -225,6 +225,7 @@ export default function PrimarySearchAppBar(props) {
             </div>
             <div className={classes.sectionMobile} />
             <div className={classes.sectionMobile} />
+
           </div>
         </Toolbar>
       </AppBar>
