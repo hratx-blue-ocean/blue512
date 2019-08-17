@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SearchView = function(props) {
+const SearchView = function (props) {
   const classes = useStyles();
 
   const [grid, setGrid] = useState(<Grid />);
@@ -74,7 +74,7 @@ const SearchView = function(props) {
     }
   });
 
-  const filter = function(search) {
+  const filter = function (search) {
     console.log('filter called');
     if (!search.length) {
       return props.events;
@@ -104,7 +104,7 @@ const SearchView = function(props) {
     return filteredEvents;
   };
 
-  const buildGrid = function(events, num = null) {
+  const buildGrid = function (events, num = null) {
     let arr = [];
     num = num || pageLength;
     for (let i = 0; i < events.length; i += 3) {
@@ -120,7 +120,7 @@ const SearchView = function(props) {
     return arr;
   };
 
-  const buildCards = function(i, events) {
+  const buildCards = function (i, events) {
     let arr = [];
     for (let j = i; j < i + 3; j++) {
       if (!events[j]) {
@@ -132,28 +132,28 @@ const SearchView = function(props) {
           event={events[j]}
           day={''}
           animationTime={(j % 15) * 400}
-          handleAddToCalClick={props.handleAddToCalClick}
+          handleCardActionClick={props.handleCardActionClick}
         />
       );
     }
     return arr;
   };
 
-  const handleSearchTerm = function(e) {
+  const handleSearchTerm = function (e) {
     setSearchTerm(e.target.value);
   };
 
-  const handleEnter = function(e) {
+  const handleEnter = function (e) {
     if (e.key === 'Enter') {
       setEvents(filter(searchTerm));
     }
   };
 
-  const handleClick = function(e) {
+  const handleClick = function (e) {
     setEvents(filter(searchTerm));
   };
 
-  const handleExpand = function() {
+  const handleExpand = function () {
     setPageLength(pageLength + 15);
     setExpandClicked(true);
     console.log('clicked', pageLength);
@@ -185,8 +185,8 @@ const SearchView = function(props) {
         {props.events.length ? (
           grid
         ) : (
-          <div>Sorry, we don't have any events for you to search today.</div>
-        )}
+            <div>Sorry, we don't have any events for you to search today.</div>
+          )}
       </Container>
       <Container maxWidth="lg" align="center">
         <ExpandMore
