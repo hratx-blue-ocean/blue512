@@ -1,11 +1,19 @@
 import React from 'react';
-import { Grid, Typography, Fab, TextField } from '@material-ui/core/';
+import {
+  Grid,
+  Typography,
+  Fab,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
+} from '@material-ui/core/';
 import AddIcon from '@material-ui/icons/Add';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker
+  KeyboardTimePicker
 } from '@material-ui/pickers';
 import moment from 'moment';
 import axios from 'axios';
@@ -20,33 +28,34 @@ export default class UnavailableTime extends React.Component {
       timeStart: moment().format('HH:mm:00'),
       timeEnd: moment().format('HH:mm:00'),
       eventName: '',
-      datepickerDate: new Date(),
-      datepickerStart: new Date(),
-      datepickerEnd: new Date(),
+      daySelected: '',
       unavailableTimes: []
     };
     this.handleTimeStartChange = this.handleTimeStartChange.bind(this);
     this.handleTimeEndChange = this.handleTimeEndChange.bind(this);
-    this.handleDateChange = this.handleDateChange.bind(this);
+    this.handleDayOfWeekChange = this.handleDayOfWeekChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getUnavailableTimes = this.getUnavailableTimes.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  handleDateChange(_, value) {
-    const date = moment(value, 'MM/DD/YYYY').format('YYYY-MM-DD');
-    this.setState({ date, datepickerDate: value });
-  }
-
   handleTimeStartChange(_, value) {
     const timeStart = moment(value, 'HH:mm a').format('HH:mm:00');
-    this.setState({ timeStart, datepickerStart: _ });
+    this.setState({ timeStart });
   }
 
   handleTimeEndChange(_, value) {
     const timeEnd = moment(value, 'HH:mm a').format('HH:mm:00');
-    this.setState({ timeEnd, datepickerEnd: _ });
+    this.setState({ timeEnd });
+  }
+
+  handleDayOfWeekChange(e) {
+    const daySelected = e.target.value;
+    const date = moment()
+      .isoWeekday(daySelected)
+      .format('YYYY-MM-DD');
+    this.setState({ date, daySelected });
   }
 
   handleSubmit() {
@@ -114,30 +123,40 @@ export default class UnavailableTime extends React.Component {
         </Typography>
 
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={8}>
             <TextField
               id="standard-name"
               label="Event Name"
               defaultValue=""
               onChange={e => this.handleNameChange(e.target.value)}
-              fullWidth={true}
+              style={{ minWidth: 250 }}
             />
+          </Grid>
+          <Grid item xs={4}>
+            <form autoComplete="off">
+              <FormControl style={{ minWidth: 120 }}>
+                <InputLabel htmlFor="dayOfTheWeek">Days</InputLabel>
+                <Select
+                  onChange={e => this.handleDayOfWeekChange(e)}
+                  inputProps={{
+                    name: 'day',
+                    id: 'dayOfTheWeek'
+                  }}
+                  value={this.state.daySelected}
+                >
+                  <MenuItem value={0}>Sundays</MenuItem>
+                  <MenuItem value={1}>Mondays</MenuItem>
+                  <MenuItem value={2}>Tuesdays</MenuItem>
+                  <MenuItem value={3}>Wednesdays</MenuItem>
+                  <MenuItem value={4}>Thursdays</MenuItem>
+                  <MenuItem value={5}>Fridays</MenuItem>
+                  <MenuItem value={6}>Saturdays</MenuItem>
+                </Select>
+              </FormControl>
+            </form>
           </Grid>
 
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid item xs={12}>
-              <KeyboardDatePicker
-                margin="normal"
-                id="date-picker-dialog"
-                label="Date"
-                format="MM/dd/yyyy"
-                value={this.state.datepickerDate}
-                onChange={this.handleDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date'
-                }}
-              />
-            </Grid>
             <Grid item xs={12} sm={6}>
               <KeyboardTimePicker
                 margin="normal"
