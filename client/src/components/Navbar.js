@@ -101,9 +101,10 @@ const useStyles = makeStyles(theme => ({
 export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
 
-  const signOut = function() {
+  const signOut = function (handlePageClick) {
     var auth2 = window.gapi.auth2.getAuthInstance();
-    auth2.signOut().then(() => {});
+    auth2.signOut().then(() => { handlePageClick('/') });
+
   };
 
   window.getCalData = id_token => {
@@ -225,12 +226,14 @@ export default function PrimarySearchAppBar(props) {
               data-onsuccess="onSignIn"
             />
             {props.isSignedIn ? (
-              <Button className={classes.button} onClick={signOut}>
+              <Button className={classes.button}
+                component={RouterLink}
+                to="/" onClick={() => { signOut(props.handlePageClick) }}>
                 Sign Out
               </Button>
             ) : (
-              <></>
-            )}
+                <></>
+              )}
           </div>
           {generateSettingsIcon()}
           <div className={classes.sectionMobile} />
