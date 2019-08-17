@@ -25,6 +25,7 @@ const getAllEventsULTRAMODE = id => {
       ANY(SELECT category_id
     FROM users_categories
     WHERE user_id=$1 AND preferred=false))
+    AND e.id != All(SELECT experience_id FROM users_experiences WHERE user_id = $1)
     AND not exists 
       (select 1
     from unavailable u

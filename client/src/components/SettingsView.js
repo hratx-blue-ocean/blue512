@@ -14,8 +14,6 @@ import {
   Slide
 } from '@material-ui/core/';
 
-
-
 export default class SettingsView extends React.Component {
   constructor(props) {
     super(props);
@@ -60,13 +58,11 @@ export default class SettingsView extends React.Component {
       .catch();
   }
   render() {
-
     return (
       <>
         {/* This is the master level container. It prevents the container from stretching beyond a certain width.
         So on a large screen, the horizontal width will max out at a certain size.  */}
         <Container maxWidth="lg" style={{ marginTop: 80 }}>
-
           {/* This is a "Grid container" (different than above "Container"). Grid items should be wrapped in this type of container. 
           This section holds the title text and avatar. */}
           <Slide in={true} timeout={400} direction="down">
@@ -75,18 +71,32 @@ export default class SettingsView extends React.Component {
                 <Avatar
                   alt="User Avatar"
                   src={this.props.user ? this.props.user.avatar_url : ''}
-                  style={{ marginTop: 10, marginRight: 10, width: 60, height: 60 }}
+                  style={{
+                    marginTop: 10,
+                    marginRight: 10,
+                    width: 60,
+                    height: 60
+                  }}
                 />
               </Grid>
               <Grid item align="center">
-                <Typography variant="h2" style={{ marginTop: 10 }} align="center" color="textSecondary">
+                <Typography
+                  variant="h2"
+                  style={{ marginTop: 10 }}
+                  align="center"
+                  color="textSecondary"
+                >
                   Hello {this.props.user ? this.props.user.first_name : ''}
                 </Typography>
               </Grid>
               <Grid item xs={12} style={{ marginTop: 20, marginBottom: 40 }}>
-                <Typography variant="subtitle1" align="center" color="textSecondary">
+                <Typography
+                  variant="subtitle1"
+                  align="center"
+                  color="textSecondary"
+                >
                   Help us custom tailor your CityScout experience!
-            </Typography>
+                </Typography>
               </Grid>
             </Grid>
           </Slide>
@@ -94,17 +104,18 @@ export default class SettingsView extends React.Component {
           {/* This container will hold both the settings toggles, and UnavailableTime
           They will display side by side on large screens, and will stack on small screens */}
           <Grid container>
-
             {/* UnavailableTime column (Will take up half screen space on "medium+" sizes, and full screen space on anything smaller*/}
             <Grid item xs={12} sm={12} md={6}>
               <Slide in={true} timeout={400} direction="right">
-                <Paper style={{
-                  padding: 20,
-                  margin: 10,
-                  display: 'flex',
-                  overflow: 'auto',
-                  flexDirection: 'column',
-                }}>
+                <Paper
+                  style={{
+                    padding: 20,
+                    margin: 10,
+                    display: 'flex',
+                    overflow: 'auto',
+                    flexDirection: 'column'
+                  }}
+                >
                   <UnavailableTime userToken={this.props.userToken} />
                 </Paper>
               </Slide>
@@ -113,15 +124,19 @@ export default class SettingsView extends React.Component {
             {/* UnavailableTime column (Will take up half screen space on "medium+" sizes, and full screen space on anything smaller*/}
             <Grid item xs={12} sm={12} md={6}>
               <Slide in={true} timeout={400} direction="left">
-                <Paper style={{
-                  padding: 20,
-                  margin: 10,
-                  display: 'flex',
-                  overflow: 'auto',
-                  flexDirection: 'column',
-                }}>
+                <Paper
+                  style={{
+                    padding: 20,
+                    margin: 10,
+                    display: 'flex',
+                    overflow: 'auto',
+                    flexDirection: 'column'
+                  }}
+                >
                   <PreferencesContainer
-                    categories={this.state.categories}
+                    categories={this.state.categories.sort((a, b) =>
+                      a < b ? -1 : 1
+                    )}
                     userPreferences={this.state.userPreferences}
                     handleChange={this.postNewPreference}
                     userToken={this.props.userToken}
@@ -130,7 +145,6 @@ export default class SettingsView extends React.Component {
               </Slide>
             </Grid>
           </Grid>
-
         </Container>
       </>
     );

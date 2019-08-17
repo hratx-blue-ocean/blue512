@@ -25,6 +25,7 @@ import Button from '@material-ui/core/Button';
 import { Grow, Fab, Snackbar, SnackbarContent } from '@material-ui/core/';
 import moment from 'moment';
 import Link from '@material-ui/core/Link';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -53,21 +54,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const theme = createMuiTheme({
-  palette: {
-    // primary: {
-    //   // main: "#00c853",
-    // },
-    secondary: {
-      main: '#f44336'
-    }
-  }
-});
 
 export default function CardMaker({
   event,
   animationTime,
-  handleCardActionClick
+  handleCardActionClick,
+  isSignedIn,
+  path,
+  handlePageClick,
+  handleMicroCardClick,
 }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -88,6 +83,11 @@ export default function CardMaker({
 
   function renderSnackBar() {
     setOpen(true);
+  }
+
+  function clickToDetail() {
+    handlePageClick("/detailed");
+    handleMicroCardClick(event);
   }
 
   function closeSnackBar(event, reason) {
@@ -145,9 +145,11 @@ export default function CardMaker({
         Even on cards where event titles wrap to the next line */}
         <CardContent style={{ minHeight: 140 }}>
           <Typography variant="h6">
-            <Link href={event.url} color="textPrimary">
+
+            <Link color="textPrimary" onClick={clickToDetail} to="/detailed" component={RouterLink} >
               {event.name}
             </Link>
+
           </Typography>
           <Typography variant="body2" color="textSecondary">
             {moment(event.time_start).format('ddd, MMM DD, h:mm a')}
@@ -171,17 +173,17 @@ export default function CardMaker({
 
           {/* This themeprovider overrides the default theme colors at this component level
           Using it to get the red color without using that color at the global level */}
-          <ThemeProvider theme={theme}>
-            <Fab
-              color="secondary"
-              aria-label="add"
-              onClick={() => {
-                handleCardActionClick(event, false);
-              }}
-            >
-              <CloseIcon />
-            </Fab>
-          </ThemeProvider>
+
+          <Fab
+            color="secondary"
+            aria-label="add"
+            onClick={() => {
+              handleCardActionClick(event, false);
+            }}
+          >
+            <CloseIcon />
+          </Fab>
+
 
           <IconButton
             className={clsx(classes.expand, {
@@ -212,11 +214,18 @@ export default function CardMaker({
           onClose={closeSnackBar}
           color="primary"
         >
-          <SnackbarContent
-            onClose={closeSnackBar}
-            variant="success"
-            message="Event successfully added to your Google calendar!"
-          />
+          {isSignedIn ?
+            <SnackbarContent
+              onClose={closeSnackBar}
+              variant="success"
+              message="Event successfully added to your Google calendar!"
+            /> :
+            <SnackbarContent
+              onClose={closeSnackBar}
+              variant="success"
+              message="Error: Please sign in to add events to your Google calendar"
+            />
+          }
         </Snackbar>
       </Card>
     </Grow>

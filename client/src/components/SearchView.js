@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles} from '@material-ui/core/styles';
 import {
   MenuItem,
   AppBar,
@@ -11,7 +11,7 @@ import {
   Button,
   IconButton,
   Container,
-  Grid
+  Grid, Slide 
 } from '@material-ui/core/';
 import CardContainer from './CardContainer.js';
 
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SearchView = function(props) {
+const SearchView = function (props) {
   const classes = useStyles();
 
   const [grid, setGrid] = useState(<Grid />);
@@ -74,8 +74,7 @@ const SearchView = function(props) {
     }
   });
 
-  const filter = function(search) {
-    console.log('filter called');
+  const filter = function (search) {
     if (!search.length) {
       return props.events;
     }
@@ -84,11 +83,6 @@ const SearchView = function(props) {
       const titleArr = event.name.split(/[\s-]/);
       for (let titleSegment of titleArr) {
         for (let searchSegment of searchArr) {
-          console.log(
-            new RegExp('^' + searchSegment + '.*', 'i').test(
-              titleSegment.toLowerCase()
-            )
-          );
           if (
             new RegExp('^' + searchSegment + '.*', 'i').test(
               titleSegment.toLowerCase()
@@ -100,11 +94,10 @@ const SearchView = function(props) {
       }
       return false;
     });
-    console.log(filteredEvents);
     return filteredEvents;
   };
 
-  const buildGrid = function(events, num = null) {
+  const buildGrid = function (events, num = null) {
     let arr = [];
     num = num || pageLength;
     for (let i = 0; i < events.length; i += 3) {
@@ -120,7 +113,7 @@ const SearchView = function(props) {
     return arr;
   };
 
-  const buildCards = function(i, events) {
+  const buildCards = function (i, events) {
     let arr = [];
     for (let j = i; j < i + 3; j++) {
       if (!events[j]) {
@@ -132,52 +125,56 @@ const SearchView = function(props) {
           event={events[j]}
           day={''}
           animationTime={(j % 15) * 400}
-          handleAddToCalClick={props.handleAddToCalClick}
+          handleCardActionClick={props.handleCardActionClick}
+          path={props.path}
+          handlePageClick={props.handlePageClick}
+          handleMicroCardClick={props.handleMicroCardClick}
         />
       );
     }
     return arr;
   };
 
-  const handleSearchTerm = function(e) {
+  const handleSearchTerm = function (e) {
     setSearchTerm(e.target.value);
   };
 
-  const handleEnter = function(e) {
+  const handleEnter = function (e) {
     if (e.key === 'Enter') {
       setEvents(filter(searchTerm));
     }
   };
 
-  const handleClick = function(e) {
+  const handleClick = function (e) {
     setEvents(filter(searchTerm));
   };
 
-  const handleExpand = function() {
+  const handleExpand = function () {
     setPageLength(pageLength + 15);
     setExpandClicked(true);
-    console.log('clicked', pageLength);
   };
 
   return (
     <>
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center', paddingTop: 20, paddingBottom: 15 }}>
         <div>
-          <div className={classes.search}>
-            <InputBase
-              onKeyPress={handleEnter}
-              onChange={handleSearchTerm}
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-            <span className={classes.searchIcon} onClick={handleClick}>
-              <SearchIcon />
-            </span>
-          </div>
+          <Slide in={true} timeout={400} direction="left">
+            <div className={classes.search}>
+              <InputBase
+                onKeyPress={handleEnter}
+                onChange={handleSearchTerm}
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+              <span className={classes.searchIcon} onClick={handleClick}>
+                <SearchIcon />
+              </span>
+            </div>
+          </Slide>
         </div>
       </div>
 
@@ -185,8 +182,8 @@ const SearchView = function(props) {
         {props.events.length ? (
           grid
         ) : (
-          <div>Sorry, we don't have any events for you to search today.</div>
-        )}
+            <div>Sorry, we don't have any events for you to search today.</div>
+          )}
       </Container>
       <Container maxWidth="lg" align="center">
         <ExpandMore
