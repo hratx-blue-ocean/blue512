@@ -57,7 +57,7 @@ export default function MicroCardContainer({
         onClick={() => (changeDetailsDay(event))}
         indicatorColor='primary'
         textColor='primary'
-        variant='fullWidth'
+        // variant='fullWidth'
         centered
       >
         <Tab label='Today' />
