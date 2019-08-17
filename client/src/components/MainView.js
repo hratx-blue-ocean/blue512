@@ -23,49 +23,49 @@ export default function MainView({
       {loaded ? (
         <div>
           <Container maxWidth="lg" align="center">
-              { name 
-                ? <>
-                    <Fade in={true} timeout={500}>
-                    <Typography variant="h2" style={{ marginTop: 10 }} align="center" color="textSecondary" style={{ marginTop: 100, marginBottom: 0 }}>
-                      {`Hello, ${name.first_name}`}
+            {name
+              ? <>
+                <Fade in={true} timeout={500}>
+                  <Typography variant="h2" style={{ marginTop: 10 }} align="center" color="textSecondary" style={{ marginTop: 100, marginBottom: 0 }}>
+                    {`Hello, ${name.first_name}`}
+                  </Typography>
+                </Fade>
+                <Fade in={true} timeout={800}>
+                  <Typography
+                    variant="h2"
+                    align="center"
+                    color="textSecondary"
+                    style={{ marginTop: 20, marginBottom: 10 }}
+                  >
+                    Here are your Top Picks
                       </Typography>
-                    </Fade>
-                    <Fade in={true} timeout={800}>
-                      <Typography
-                      variant="h2"
-                        align="center"
-                        color="textSecondary"
-                        style={{ marginTop: 20, marginBottom: 10 }}
-                      >
-                        Here are your Top Picks
+                </Fade>
+              </>
+              : <>
+                <Fade in={true} timeout={400}>
+                  <Typography
+                    variant="h2"
+                    style={{ marginTop: 10 }}
+                    align="center"
+                    color="textSecondary"
+                    style={{ marginTop: 100, marginBottom: 0 }}
+                  >
+                    Here are our suggestions
                       </Typography>
-                    </Fade>
-                  </>
-                :  <>
-                    <Fade in={true} timeout={400}>
-                    <Typography 
-                      variant="h2" 
-                      style={{ marginTop: 10 }} 
-                      align="center" 
-                      color="textSecondary" 
-                      style={{ marginTop: 100, marginBottom: 0 }}
-                    >
-                        Here are our suggestions
+                </Fade>
+                <Fade in={true} timeout={800}>
+                  <Typography
+                    variant="h5"
+                    align="center"
+                    color="textSecondary"
+                    style={{ marginTop: 20, marginBottom: 10 }}
+                  >
+                    Log in for a custom tailored experience
                       </Typography>
-                    </Fade>
-                    <Fade in={true} timeout={800}>
-                      <Typography
-                        variant="h5" 
-                        align="center" 
-                        color="textSecondary" 
-                        style={{ marginTop: 20, marginBottom: 10 }}
-                      >
-                        Log in for a custom tailored experience
-                      </Typography>
-                    </Fade>
-                  </>
-              }
-            
+                </Fade>
+              </>
+            }
+
             <Grid container>
               <CardContainer
                 event={eventsToday.length ? eventsToday[0] : ''}
@@ -91,16 +91,16 @@ export default function MainView({
           </Container>
         </div>
       ) : (
-        <div
-          style={{
-            paddingTop: '20vh',
-            display: 'flex',
-            justifyContent: 'center'
-          }}
-        >
-          <img src={spinner} alt="loading events..." />
-        </div>
-      )}
+          <div
+            style={{
+              paddingTop: '20vh',
+              display: 'flex',
+              justifyContent: 'center'
+            }}
+          >
+            <img src={spinner} alt="loading events..." />
+          </div>
+        )}
     </>
   );
 }
