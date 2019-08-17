@@ -22,7 +22,6 @@ describe('UnavailableTime component', () => {
     expect(wrapper.find(Typography).length).toBeGreaterThan(0);
     expect(wrapper.find(TextField).length).toBe(1);
     expect(wrapper.find(Fab).length).toBe(1);
-    expect(wrapper.find(KeyboardDatePicker).length).toBe(1); // only 1 DatePicker
     expect(wrapper.find(KeyboardTimePicker).length).toBe(2); // 2 TimePickers should render
   });
   // test('it calls getUnavailableTimes when props change', () => {

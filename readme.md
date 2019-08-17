@@ -1,25 +1,8 @@
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-	.markdown-body {
-		box-sizing: border-box;
-		min-width: 200px;
-		max-width: 980px;
-		margin: 0 auto;
-		padding: 45px;
-  }
-  td.tech{
-    font-Size: 11px;
-    padding-left: 15px
-  }
-  td.subheading {
-    font-Size: 18px;
-  }
-</style>
+# ![GIF OF DEMO](https://i.imgur.com/J2iznmk.png)
 
-
-
-# CityScout.io
-![LOGO HERE](https://github.com/hratx-blue-ocean/hratx41-lost-and-hound/blob/feature/readme/documentation/lostandhound_frontpage.png)
+# <p align="center">
+  <img width="800" height="500" src="https://i.imgur.com/hlvkYVt.png">
+</p>
 
 ## About
 
