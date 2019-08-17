@@ -1,6 +1,4 @@
-# <p align="center">
-  <img width="460" height="300" src="https://i.imgur.com/J2iznmk.png">
-</p>
+# ![GIF OF DEMO](https://i.imgur.com/J2iznmk.png)
 
 # <p align="center">
   <img width="460" height="300" src="https://i.imgur.com/hlvkYVt.png">
