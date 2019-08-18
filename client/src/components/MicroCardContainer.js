@@ -51,34 +51,59 @@ export default function MicroCardContainer({
 
   return (
     <>
-      <div style={{ height: 800 }}>
+
+      {/* <Grid item xs={12} sm={4}> */}
+      <Grid item xs={12}>
+      <Paper className={classes.root}>
         <Tabs
           value={value}
           onChange={handleChange}
           onClick={() => (changeDetailsDay(event))}
           indicatorColor='primary'
           textColor='primary'
-          variant='standard'
+          variant='fullWidth'
           centered
-
         >
           <Tab label='Today' />
           <Tab label='Tomorrow' />
-          <Tab label={overmorrow} />
+          <Tab label='Overmorrow' />
         </Tabs>
-        <Divider />
 
-
-
-        {/* <Paper className={classes.root}> */}
-        <Fade in={true} timeout={1000}>
-          <List className={classes.root} style={{ maxHeight: '95%', 'overflow-y': 'scroll' }}>
-
-            {selectedDaysEvents.map((event, index) => <MicroCardMaker key={event.experience_api_id} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
-          </List>
-        </Fade>
-        {/* </Paper> */}
-      </div>
+      <Paper className={classes.ListPaper}>
+        <List className={classes.root}>
+          {selectedDaysEvents.map(event => <MicroCardMaker key={event.name} event={event} handleMicroCardClick={handleMicroCardClick} />)}
+        </List>
+      </Paper>
+      </Paper>
+    </Grid>
     </>
   );
 }
+      // <div style={{ height: 800 }}>
+      //   <Tabs
+      //     value={value}
+      //     onChange={handleChange}
+      //     onClick={() => (changeDetailsDay(event))}
+      //     indicatorColor='primary'
+      //     textColor='primary'
+      //     variant='standard'
+      //     centered
+
+      //   >
+      //     <Tab label='Today' />
+      //     <Tab label='Tomorrow' />
+      //     <Tab label={overmorrow} />
+      //   </Tabs>
+      //   <Divider />
+
+
+
+      //   {/* <Paper className={classes.root}> */}
+      //   <Fade in={true} timeout={1000}>
+      //     <List className={classes.root} style={{ maxHeight: '95%', 'overflow-y': 'scroll' }}>
+
+      //       {selectedDaysEvents.map((event, index) => <MicroCardMaker key={event.experience_api_id} event={event} animationTimeout={animationTimeouts[index]} handleMicroCardClick={handleMicroCardClick} />)}
+      //     </List>
+      //   </Fade>
+      //   {/* </Paper> */}
+      // </div>

@@ -9,7 +9,8 @@ export default function DetailedView({ clickedMicroCard, events, eventsToday, ev
       <Container maxWidth="lg">
         <Grid container>
 
-          <Grid item xs={12} sm={12} md={6}>
+          {/* <Grid item xs={12} sm={12} md={6}> */}
+          <Grid item xs={12} sm={5} >
             <Paper style={{
               padding: 20,
               margin: 10,
@@ -28,7 +29,8 @@ export default function DetailedView({ clickedMicroCard, events, eventsToday, ev
             </Paper>
           </Grid>
 
-          <Grid item xs={12} sm={12} md={6} style={{ height: 800 }} >
+          {/* <Grid item xs={12} sm={12} md={6} style={{ height: 800 }} > */}
+          <Grid item sm={7}  >
             <Paper style={{
               padding: 20,
               margin: 10,

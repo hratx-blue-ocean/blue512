@@ -51,7 +51,7 @@ export default function Details({ event, openModal, closeModal, handleCardAction
     <Hidden only="xs">
       <Slide in={true} timeout={400} direction="left">
 
-        {/* <Grid item sm={8} xs={false} style={{ height: '90vh' }} > */}
+        <Grid item sm={8} xs={false} style={{ height: '90vh' }} >
         <div>
 
           {/* <Paper className={classes.root} style={{ maxHeight: '100vh', overflow: 'auto' }} > */}
@@ -83,7 +83,7 @@ export default function Details({ event, openModal, closeModal, handleCardAction
           </Typography>
 
           <Typography variant='h5' component='h5' className={classes.pad} >
-            @ {event.venue}  {event.location}
+            {event.venue}  {event.location}
           </Typography>
 
           <Typography variant='h6' component='h5' className={classes.pad}>
@@ -103,6 +103,7 @@ export default function Details({ event, openModal, closeModal, handleCardAction
 
           {/* </Paper> */}
         </div>
+        </Grid>
       </Slide>
     </Hidden>
 
