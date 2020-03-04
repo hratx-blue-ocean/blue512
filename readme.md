@@ -15,11 +15,11 @@
 
 ## Contributors
 
+[Charles Neblett](https://github.com/cnebs)
+
 [Landon Baker](https://github.com/landon-baker)
 
 [Hadley Crowl](https://github.com/hadleyac)
-
-[Charles Neblett](https://github.com/cnebs)
 
 [Trevor Cannon](https://github.com/VarCannon)
 
