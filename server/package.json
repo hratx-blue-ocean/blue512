@@ -15,7 +15,7 @@
     "debug": "^4.1.1",
     "dot": "^1.1.2",
     "env": "0.0.2",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "google-auth-library": "^5.2.0",
     "nodemon": "^1.19.1",
     "nyc": "^14.1.0",
